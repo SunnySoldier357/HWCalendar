@@ -17,21 +17,22 @@
         android:id="@+id/button"
         android:layout_width="89dp"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Add class"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:id="@+id/periods"
         android:layout_width="88dp"
         android:layout_height="462dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
-        android:layout_marginTop="8dp"
+        android:id="@+id/currentEvents"
         android:layout_width="272dp"
-        android:layout_height="242dp"
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:layout_height="244dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
