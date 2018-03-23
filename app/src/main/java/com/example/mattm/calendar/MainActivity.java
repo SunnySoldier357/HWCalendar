@@ -21,11 +21,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] periods = {"King", "Fowler", "Reinsch"};
 
 
         //for sample purposes
-        ListView periodsList = (ListView)findViewById(R.id.periodsList);
+        String[] periods = {"King", "Fowler", "Reinsch"};
+        ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, periods);
+        ListView periodsListView = (ListView)findViewById(R.id.periodsList);
+        periodsListView.setAdapter(periodsAdapter);
+
+        String[] events = {"Read crucible", "IB questions"};
+        ArrayAdapter<String> eventsAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, events);
+        ListView eventsListView = (ListView)findViewById(R.id.eventsList);
+        eventsListView.setAdapter(eventsAdapter);
 
 
         // DEBUG PURPOSES

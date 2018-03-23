@@ -20,7 +20,14 @@
             android:layout_width="89dp"
             android:layout_height="wrap_content" />
 
+
     </LinearLayout>
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="#000"
+        />
 
 
     <LinearLayout
@@ -32,6 +39,12 @@
             android:id="@+id/calendar"
             android:layout_width="wrap_content"
             android:layout_height="314dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#000"
+            />
 
         <ListView android:id="@+id/eventsList"
             android:layout_width="match_parent"
