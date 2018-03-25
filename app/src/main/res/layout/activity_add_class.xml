@@ -23,11 +23,12 @@
                   android:text="Name of Class:"
                   android:textSize="20dp"/>
 
-        <EditText android:layout_width="128dp"
+        <EditText android:id="@+id/className"
+                  android:layout_width="128dp"
                   android:layout_height="wrap_content"
                   android:layout_margin="8dp"
                   android:gravity="center"
-                  android:hint="King"/>
+                  android:hint="IB Lit"/>
     </TableRow>
 
     <TableRow android:layout_width="match_parent"
@@ -38,7 +39,8 @@
                   android:text="Name of Teacher:"
                   android:textSize="20dp"/>
 
-        <EditText android:layout_width="128dp"
+        <EditText android:id="@+id/teacherName"
+                  android:layout_width="128dp"
                   android:layout_height="wrap_content"
                   android:layout_margin="8dp"
                   android:gravity="center"
@@ -55,10 +57,20 @@
             android:text="Period:"
             android:textSize="20dp" />
 
-        <EditText android:layout_width="128dp"
+        <EditText android:id="@+id/period"
+                  android:layout_width="128dp"
                   android:layout_height="wrap_content"
                   android:layout_margin="8dp"
                   android:gravity="center"
-                  android:hint="King"/>
+                  android:hint="2"/>
     </TableRow>
+
+    <Button
+        android:id="@+id/addClassButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:onClick="onClickAddClass"
+        android:text="Add class" />
+
 </LinearLayout>
