@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             Toast.makeText(this, "ont work", Toast.LENGTH_SHORT).show();
         }
-
-
+        
         //for sample purposes
         periods.add("IB Math HL1");
         events.add("Soccer Practice");
@@ -71,5 +70,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }
-
 }

@@ -1,9 +1,9 @@
 package com.example.mattm.calendar;
 
-/**
- * Created by sande_gblcen6 on 25/3/2018.
- */
-
 public class Class
 {
+    // Public Properties
+    public String Name;
+    public int Period;
+    public Teacher Teacher;
 }
