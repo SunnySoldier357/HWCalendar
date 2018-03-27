@@ -81,4 +81,10 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }
+
+    public void signInButton_Clicked(View view)
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
