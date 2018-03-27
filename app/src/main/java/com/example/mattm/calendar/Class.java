@@ -4,6 +4,6 @@ public class Class
 {
     // Public Properties
     public String Name;
-    public int Period;
+    public String Period;
     public Teacher Teacher;
 }
