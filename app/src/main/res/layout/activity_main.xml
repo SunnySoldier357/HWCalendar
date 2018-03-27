@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/signInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:onClick="signInButton_Clicked"
+            android:text="Sign In" />
+
         <Button android:id="@+id/addClassButton"
             android:layout_width="89dp"
             android:layout_height="wrap_content"
