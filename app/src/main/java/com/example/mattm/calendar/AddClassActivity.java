@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddClassActivity extends AppCompatActivity
+public class AddClassActivity extends MainActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,10 +18,16 @@ public class AddClassActivity extends AppCompatActivity
     // Event Handlers
     public void addClassButton_Clicked(View view)
     {
+        String className = GetClassName();
+        String teacher = GetTeacher();
+        String period = GetPeriod();
+
+        Teacher t = new Teacher(className, teacher, period);
+
         Intent intentHome = new Intent(this, MainActivity.class);
-        intentHome.putExtra("className", GetClassName());
+        /*intentHome.putExtra("className", GetClassName());
         intentHome.putExtra("period", GetPeriod());
-        intentHome.putExtra("teacherName", GetTeacher());
+        intentHome.putExtra("teacherName", GetTeacher());*/
         startActivity(intentHome);
     }
 

@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
     // Private Properties
-    private ArrayList<String> periods = new ArrayList<>();
-    private ArrayList<String> events = new ArrayList<>();
+    public ArrayList<String> periods = new ArrayList<>();
+    public ArrayList<String> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         Bundle bundle = getIntent().getExtras();
-
         try
         {
             String className = bundle.getString("className").toString();
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
         {
             Toast.makeText(this, "wont work", Toast.LENGTH_SHORT).show();
         }
-
         try
         {
             String eventName = bundle.getString("eventName").toString();
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity
         catch (Exception e)
         {
             Toast.makeText(this, "ont work", Toast.LENGTH_SHORT).show();
-        }
-        
+        } */
+
         //for sample purposes
         periods.add("IB Math HL1");
         events.add("Soccer Practice");
@@ -64,6 +63,10 @@ public class MainActivity extends AppCompatActivity
         
         // DEBUG PURPOSES
         Toast.makeText(this, "hello KMS friends", Toast.LENGTH_SHORT).show();
+    }
+
+    public void buildList(String className){
+        periods.add(className);
     }
 
     // Event Handlers
