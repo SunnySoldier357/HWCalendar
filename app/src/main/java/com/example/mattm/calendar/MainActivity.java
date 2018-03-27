@@ -15,32 +15,38 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
-    ArrayList<String> periods = new ArrayList<>();
-    ArrayList<String> events = new ArrayList<>();
+public class MainActivity extends AppCompatActivity
+{
+    // Private Properties
+    private ArrayList<String> periods = new ArrayList<>();
+    private ArrayList<String> events = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Bundle bundle = getIntent().getExtras();
 
-        try{
+        try
+        {
             String className = bundle.getString("className").toString();
             periods.add(className);
 
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             Toast.makeText(this, "wont work", Toast.LENGTH_SHORT).show();
         }
 
-        try{
+        try
+        {
             String eventName = bundle.getString("eventName").toString();
             events.add(eventName);
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             Toast.makeText(this, "ont work", Toast.LENGTH_SHORT).show();
         }
         
@@ -55,18 +61,20 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> eventsAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, events);
         ListView eventsListView = (ListView)findViewById(R.id.eventsList);
         eventsListView.setAdapter(eventsAdapter);
-
-
+        
         // DEBUG PURPOSES
         Toast.makeText(this, "hello KMS friends", Toast.LENGTH_SHORT).show();
     }
 
-    public void addClassButton_Clicked(View view) {
+    // Event Handlers
+    public void addClassButton_Clicked(View view)
+    {
         Intent intent = new Intent(this, AddClassActivity.class);
         startActivity(intent);
     }
 
-    public void addEventButton_Clicked(View view) {
+    public void addEventButton_Clicked(View view)
+    {
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }

@@ -6,41 +6,44 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddEventActivity extends AppCompatActivity {
-
+public class AddEventActivity extends AppCompatActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
     }
 
-    public void onClickAddEvent(View view) {
+    // Event Handlers
+    public void addEventButton_Clicked(View view)
+    {
         Intent intentHome = new Intent(this, MainActivity.class);
-        intentHome.putExtra("eventName", getEventName());
-        intentHome.putExtra("date", getDate());
-        intentHome.putExtra("startTime", getTimeStart());
-        intentHome.putExtra("endTime", getTimeEnd());
+        intentHome.putExtra("date", GetDate());
+        intentHome.putExtra("endTime", GetEndTime());
+        intentHome.putExtra("eventName", GetEventName());
+        intentHome.putExtra("startTime", GetStartTime());
         startActivity(intentHome);
     }
 
-
-    public String getEventName(){
-        EditText name = findViewById(R.id.eventName);
-        return name.getText().toString();
+    // Accessors
+    public String GetDate()
+    {
+        return ((EditText) findViewById(R.id.date)).getText().toString();
     }
-
-    public String getDate() {
-        EditText date = findViewById(R.id.date);
-        return date.getText().toString();
+    
+    public String GetEndTime()
+    {
+        return ((EditText) findViewById(R.id.endTime)).getText().toString();
     }
-
-    public String getTimeStart() {
-        EditText startTime = findViewById(R.id.startTime);
-        return startTime.getText().toString();
+    
+    public String GetEventName()
+    {
+        return ((EditText) findViewById(R.id.eventName)).getText().toString();
     }
-
-    public String getTimeEnd() {
-        EditText endTime = findViewById(R.id.endTime);
-        return endTime.getText().toString();
+    
+    public String GetStartTime()
+    {
+        return ((EditText) findViewById(R.id.startTime)).getText().toString();
     }
 }
