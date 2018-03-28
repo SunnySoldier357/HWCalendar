@@ -6,7 +6,7 @@ import android.text.LoginFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class User
+public class User extends TableData
 {
     // Private Properties
     private ArrayList<Class> _Classes;

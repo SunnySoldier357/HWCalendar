@@ -1,6 +1,6 @@
 package com.example.mattm.calendar;
 
-public class Class
+public class Class extends TableData
 {
     // Public Properties
     public String Name;

@@ -1,22 +1,15 @@
 package com.example.mattm.calendar;
 
-public class Teacher extends MainActivity
+public class Teacher extends TableData
 {
-    public String className;
-    public String teacherName;
-    public String period;
+    private String className;
+    private String teacherName;
+    private String period;
 
-    public Teacher(String className, String teacherName, String period) {
+    public Teacher(String className, String teacherName, String period)
+    {
         this.className = className;
         this.teacherName = teacherName;
         this.period = period;
-
-        //buildList(className);
-        periods.add(className);
-    }
-
-    @Override
-    public String toString() {
-        return className;
     }
 }
