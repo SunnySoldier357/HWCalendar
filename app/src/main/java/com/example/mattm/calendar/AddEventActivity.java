@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class AddEventActivity extends AppCompatActivity
 {
@@ -13,6 +15,13 @@ public class AddEventActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        Spinner startSpinner = (Spinner) findViewById(R.id.startTimeSpinner);
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startSpinner.setAdapter(myAdapter);
     }
 
     // Event Handlers
