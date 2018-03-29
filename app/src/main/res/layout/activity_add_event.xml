@@ -93,11 +93,17 @@
             android:textSize="20sp" />
 
         <EditText android:id="@+id/endTime"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
             android:hint="5:00"/>
+
+        <Spinner android:id="@+id/endTimeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            />
     </TableRow>
 
     <Button

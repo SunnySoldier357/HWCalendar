@@ -17,11 +17,20 @@ public class AddEventActivity extends AppCompatActivity
         setContentView(R.layout.activity_add_event);
 
         Spinner startSpinner = (Spinner) findViewById(R.id.startTimeSpinner);
-
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddEventActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(myAdapter);
+
+        Spinner endSpinner = (Spinner) findViewById(R.id.endTimeSpinner);
+        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
+        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endSpinner.setAdapter(myAdapter2);
+
+
+        //todo: add am and pm spinners + date + gather the info from it
+
     }
 
     // Event Handlers
