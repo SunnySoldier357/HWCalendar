@@ -4,75 +4,45 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddEventActivity extends AppCompatActivity
 {
+    Spinner monthSpinner;
+    Spinner daySpinner;
+    Spinner yearSpinner;
+    Spinner startSpinner;
+    Spinner amPmStartSpinner;
+    Spinner endSpinner;
+    Spinner amPmEndSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-        Spinner monthSpinner = (Spinner) findViewById(R.id.month);
-        ArrayAdapter<String> myAdapter0 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.monthArray));
-        myAdapter0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        monthSpinner.setAdapter(myAdapter0);
-
-        Spinner daySpinner = (Spinner) findViewById(R.id.day);
-        ArrayAdapter<String> myAdapter9 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.dayArray));
-        myAdapter9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daySpinner.setAdapter(myAdapter9);
-
-        Spinner yearSpinner = (Spinner) findViewById(R.id.year);
-        ArrayAdapter<String> myAdapter10 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.yearArray));
-        myAdapter10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(myAdapter10);
-
-        Spinner startSpinner = (Spinner) findViewById(R.id.startTimeSpinner);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        startSpinner.setAdapter(myAdapter);
-
-        Spinner amPmStartSpinner = (Spinner) findViewById(R.id.amPmStart);
-        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.amPmArray));
-        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        amPmStartSpinner.setAdapter(myAdapter2);
-
-        Spinner endSpinner = (Spinner) findViewById(R.id.endTimeSpinner);
-        ArrayAdapter<String> myAdapter3 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
-        myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        endSpinner.setAdapter(myAdapter3);
-
-        Spinner amPmEndSpinner = (Spinner) findViewById(R.id.amPmEnd);
-        ArrayAdapter<String> myAdapter4 = new ArrayAdapter<String>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.amPmArray));
-        myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        amPmEndSpinner.setAdapter(myAdapter4);
-
-        //todo: gather the info from spinners
-
+        setUpSpinners();
     }
+
 
     // Event Handlers
     public void addEventButton_Clicked(View view)
     {
         String date = GetDate();
         String startTime = GetStartTime();
+        String startAmPm = GetStartAmPm();
         String endTime = GetEndTime();
+        String endAmPm = GetEndAmPm();
         String eventName = GetEventName();
 
         Intent intentHome = new Intent(this, MainActivity.class);
         /*
-        intentHome.putExtra("date", GetDate());
+        intentHome.putExtra("date", date);
         intentHome.putExtra("endTime", GetEndTime());
         intentHome.putExtra("eventName", GetEventName());
         intentHome.putExtra("startTime", GetStartTime());
@@ -81,25 +51,77 @@ public class AddEventActivity extends AppCompatActivity
     }
 
 
-
-
     // Accessors (gets the entered edit text data)
     public String GetDate()
     {
-        return ((EditText) findViewById(R.id.date)).getText().toString();
+        return monthSpinner.getSelectedItem().toString();
     }
 
     public String GetEventName()
     {
-        return ((EditText) findViewById(R.id.eventName)).getText().toString();
+        return monthSpinner.getSelectedItem().toString();
     }
 
     public String GetStartTime()
     {
-        return ((EditText) findViewById(R.id.startTime)).getText().toString();
+        return monthSpinner.getSelectedItem().toString();
     }
+
+    public String GetStartAmPm()
+    {
+        return amPmStartSpinner.getSelectedItem().toString();
+    }
+
     public String GetEndTime()
     {
-        return ((EditText) findViewById(R.id.endTime)).getText().toString();
+        return monthSpinner.getSelectedItem().toString();
     }
+
+    public String GetEndAmPm()
+    {
+        return amPmEndSpinner.getSelectedItem().toString();
+    }
+
+
+    //setup (onCreate)
+    public void setUpSpinners() {
+        monthSpinner = findViewById(R.id.month);
+        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.monthArray));
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthSpinner.setAdapter(monthAdapter);
+
+        daySpinner = findViewById(R.id.day);
+        ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.dayArray));
+        dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(dayAdapter);
+
+        yearSpinner = findViewById(R.id.year);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.yearArray));
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(yearAdapter);
+
+        startSpinner = findViewById(R.id.startTimeSpinner);
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startSpinner.setAdapter(timeAdapter);
+
+        amPmStartSpinner = findViewById(R.id.amPmStart);
+        ArrayAdapter<String> amPmAdapter = new ArrayAdapter<>(AddEventActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.amPmArray));
+        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        amPmStartSpinner.setAdapter(amPmAdapter);
+
+        endSpinner = findViewById(R.id.endTimeSpinner);
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endSpinner.setAdapter(timeAdapter);
+
+        amPmEndSpinner = findViewById(R.id.amPmEnd);
+        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        amPmEndSpinner.setAdapter(amPmAdapter);
+    }
+
 }

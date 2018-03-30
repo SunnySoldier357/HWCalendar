@@ -31,13 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:hint="soccer"/>
-
+            android:hint="soccer practice"/>
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         >
 
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Month:"
+            android:text=" "
             android:textSize="20sp" />
 
         <Spinner android:id="@+id/month"
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Day:"
+            android:text=" / "
             android:textSize="20sp" />
 
         <Spinner android:id="@+id/day"
@@ -72,39 +72,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Year:"
+            android:text=" / "
             android:textSize="20sp" />
 
         <Spinner android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-
-
-        <EditText android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="4/9/18"/>
     </TableRow>
 
     <TableRow android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Time:"
             android:textSize="20sp" />
-
-        <EditText android:id="@+id/startTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:hint="2:00"/>
 
         <Spinner android:id="@+id/startTimeSpinner"
             android:layout_width="wrap_content"
@@ -114,7 +102,7 @@
         <Spinner android:id="@+id/amPmStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             />
 
     </TableRow>
@@ -130,13 +118,6 @@
             android:layout_height="wrap_content"
             android:text="End Time:"
             android:textSize="20sp" />
-
-        <EditText android:id="@+id/endTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:hint="5:00"/>
 
         <Spinner android:id="@+id/endTimeSpinner"
             android:layout_width="wrap_content"

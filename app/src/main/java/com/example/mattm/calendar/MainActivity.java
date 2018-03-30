@@ -27,47 +27,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        Bundle bundle = getIntent().getExtras();
-        try
-        {
-            String className = bundle.getString("className").toString();
-            periods.add(className);
+        setUpData();
 
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this, "wont work", Toast.LENGTH_SHORT).show();
-        }
-        try
-        {
-            String eventName = bundle.getString("eventName").toString();
-            events.add(eventName);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this, "ont work", Toast.LENGTH_SHORT).show();
-        } */
-
-        //for sample purposes
-        periods.add("IB Math HL1");
-        events.add("Soccer Practice");
-
-        ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, periods);
-        ListView periodsListView = (ListView)findViewById(R.id.periodsList);
+        ArrayAdapter<String> periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
+        ListView periodsListView = findViewById(R.id.periodsList);
         periodsListView.setAdapter(periodsAdapter);
 
-        ArrayAdapter<String> eventsAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, events);
-        ListView eventsListView = (ListView)findViewById(R.id.eventsList);
+        ArrayAdapter<String> eventsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, events);
+        ListView eventsListView = findViewById(R.id.eventsList);
         eventsListView.setAdapter(eventsAdapter);
-        
-        // DEBUG PURPOSES
-        Toast.makeText(this, "hello KMS friends", Toast.LENGTH_SHORT).show();
     }
 
-    public void buildList(String className){
-        periods.add(className);
-    }
 
     // Event Handlers
     public void addClassButton_Clicked(View view)
@@ -86,5 +56,29 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+
+    //set up (onCreate):
+    public void setUpData() {
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        try
+        {
+            String className = bundle.getString("className");
+            periods.add(className);
+
+        }
+        catch (Exception e) { Log.e("Main Activity", "extra not found: " + e.toString()); }
+        try
+        {
+            String eventName = bundle.getString("date");
+            events.add(eventName);
+        }
+        catch (Exception e) { Log.e("Main Activity", "extra not found: " + e.toString()); }
+
+        //for sample purposes
+        periods.add("IB Math HL1");
+        events.add("Soccer Practice");
     }
 }
