@@ -1,10 +1,12 @@
-package com.example.mattm.calendar;
+package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.mattm.calendar.Models.Teacher;
+import com.example.mattm.calendar.R;
 
 public class AddClassActivity extends MainActivity
 {

@@ -1,4 +1,4 @@
-package com.example.mattm.calendar;
+package com.example.mattm.calendar.Models;
 
 import com.microsoft.windowsazure.mobileservices.table.DateTimeOffset;
 

@@ -1,4 +1,4 @@
-package com.example.mattm.calendar;
+package com.example.mattm.calendar.Models;
 
 import android.content.Context;
 
@@ -11,5 +11,5 @@ public class AzureService
     
     private MobileServiceClient client;
     
-    private String mobileBackendUrl = "https://myappname.azurewebsites.net";
+    private String mobileBackendUrl = "https://calendarkenmattsan.azurewebsites.net";
 }

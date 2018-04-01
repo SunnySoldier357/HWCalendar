@@ -1,7 +1,7 @@
-package com.example.mattm.calendar;
+package com.example.mattm.calendar.Models;
 
-import android.support.annotation.VisibleForTesting;
-import android.text.LoginFilter;
+import com.example.mattm.calendar.Models.Class;
+import com.example.mattm.calendar.Models.TableData;
 
 import java.util.ArrayList;
 import java.util.Collections;
