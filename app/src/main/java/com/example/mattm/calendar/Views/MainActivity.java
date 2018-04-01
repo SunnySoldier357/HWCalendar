@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.mattm.calendar.Models.AzureService;
 import com.example.mattm.calendar.R;
 import com.example.mattm.calendar.Views.AddClassActivity;
 import com.example.mattm.calendar.Views.AddEventActivity;
 import com.example.mattm.calendar.Views.LoginActivity;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -26,7 +28,17 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    
+        // Initialising AzureService Singleton class
+        try
+        {
+            AzureService.Initialise(this);
+        }
+        catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+    
         setUpData();
 
         ArrayAdapter<String> periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
