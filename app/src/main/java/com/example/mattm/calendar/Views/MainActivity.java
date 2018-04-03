@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     
-        // Initialising AzureService Singleton class            //this try/catch is not working!!! and causing crash
+        /* Initialising AzureService Singleton class            //this try/catch is not working!!! and causing crash
         try
         {
             AzureService.Initialise(this);
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         catch (MalformedURLException e)
         {
             e.printStackTrace();
-        }
+        }*/
     
         setUpData();
 
