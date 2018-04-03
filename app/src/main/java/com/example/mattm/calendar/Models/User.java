@@ -1,8 +1,5 @@
 package com.example.mattm.calendar.Models;
 
-import com.example.mattm.calendar.Models.Class;
-import com.example.mattm.calendar.Models.TableData;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

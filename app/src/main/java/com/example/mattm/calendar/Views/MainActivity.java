@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     
-        // Initialising AzureService Singleton class
+        // Initialising AzureService Singleton class            //this try/catch is not working!!! and causing crash
         try
         {
             AzureService.Initialise(this);
