@@ -8,9 +8,9 @@ public class User extends TableData
     // Private Properties
     private ArrayList<Class> _Classes;
     
-    private String _UserName; // Doe we need username and real name?
-    private String _FirstName;
-    private String _LastName;
+    private String UserName;
+    private String FirstName;
+    private String LastName;
     
     // Constructor
     public User()
@@ -26,17 +26,17 @@ public class User extends TableData
     
     public String GetUserName()
     {
-        return _UserName;
+        return UserName;
     }
     
     public String GetFirstName()
     {
-        return _FirstName;
+        return FirstName;
     }
     
     public String GetLastName()
     {
-        return _LastName;
+        return LastName;
     }
     
     // Mutators
@@ -54,17 +54,17 @@ public class User extends TableData
     
     public void SetUserName(String userName)
     {
-        _UserName = userName;
+        UserName = userName;
     }
     
     public void SetFirstName(String firstName)
     {
-        _FirstName = formatName(firstName);
+        FirstName = formatName(firstName);
     }
     
     public void SetLastName(String lastName)
     {
-        _LastName = formatName(lastName);
+        LastName = formatName(lastName);
     }
     
     // Private Methods

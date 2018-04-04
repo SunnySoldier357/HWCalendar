@@ -27,4 +27,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.microsoft.azure:azure-mobile-android:3.4.0@aar'
+    compile files('libs/gson-2.2.2.jar')
 }
