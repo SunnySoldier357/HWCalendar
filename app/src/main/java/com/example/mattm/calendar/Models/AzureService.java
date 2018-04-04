@@ -3,7 +3,6 @@ package com.example.mattm.calendar.Models;
 import android.content.Context;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
-import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.sync.MobileServiceSyncTable;
 
 import java.net.MalformedURLException;
@@ -31,7 +30,7 @@ public class AzureService
         client = new MobileServiceClient(mobileBackendUrl, context);
         
         // Initialising all tables
-        userTable = client.getSyncTable(User.class);
+        // userTable = client.getSyncTable(User.class);
     }
     
     // Static Methods
