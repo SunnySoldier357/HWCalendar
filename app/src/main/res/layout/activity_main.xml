@@ -25,13 +25,6 @@
             android:text="Add class"
             android:onClick="addClassButton_Clicked" />
 
-        <Button
-            android:layout_width="89dp"
-            android:layout_height="wrap_content"
-            android:text="Add Event"
-            android:onClick="addEventButton_Clicked"
-            />
-
 
         <ListView android:id="@+id/periodsList"
             android:layout_width="89dp"
