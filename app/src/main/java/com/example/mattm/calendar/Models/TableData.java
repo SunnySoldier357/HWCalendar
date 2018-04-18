@@ -7,20 +7,22 @@ import java.sql.Date;
 public abstract class TableData
 {
     // Private Properties
-    private DateTimeOffset updatedAt;
+    @com.google.gson.annotations.SerializedName("update")
+    private DateTimeOffset UpdatedAt;
     
-    private String id;
-    private String version;
+    @com.google.gson.annotations.SerializedName("id")
+    private String Id;
+    private String Version;
     
     // Accessors
-    public DateTimeOffset getUpdatedAt() { return updatedAt; }
+    public DateTimeOffset GetUpdatedAt() { return UpdatedAt; }
     
-    public String getId() { return id; }
-    public String getVersion() { return version; }
+    public String GetId() { return Id; }
+    public String GetVersion() { return Version; }
     
     // Mutators
-    protected final void setUpdatedAt(DateTimeOffset updatedAt) { this.updatedAt = updatedAt; }
+    protected final void SetUpdatedAt(DateTimeOffset updatedAt) { UpdatedAt = updatedAt; }
     
-    public final void setId(String id) { this.id = id; }
-    public final void setVersion(String version) { this.version = version; }
+    public final void SetId(String id) { Id = id; }
+    public final void SetVersion(String version) { Version = version; }
 }
