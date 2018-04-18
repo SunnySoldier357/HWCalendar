@@ -24,13 +24,12 @@
         android:text="Name:"
         android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/eventName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:hint="Chapter 6 Test" />
+    <EditText android:id="@+id/eventName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="8dp"
+              android:layout_gravity="center_horizontal"
+              android:hint="soccer practice" />
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -105,13 +104,12 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/addEventButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+    <Button android:id="@+id/addEventButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
         android:layout_marginTop="8dp"
-        android:onClick="addEventButton_Clicked"
-        android:text="Add assignment" />
+            android:onClick="addEventButton_Clicked"
+            android:text="Add event" />
 
 </LinearLayout>
