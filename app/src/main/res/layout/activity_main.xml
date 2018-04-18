@@ -35,7 +35,8 @@
 
         <ListView android:id="@+id/periodsList"
             android:layout_width="89dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
 
 
     </LinearLayout>

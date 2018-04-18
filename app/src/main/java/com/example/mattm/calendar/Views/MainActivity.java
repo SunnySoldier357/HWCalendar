@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -53,6 +54,13 @@ public class MainActivity extends AppCompatActivity
         ArrayAdapter<String> eventsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, events);
         ListView eventsListView = findViewById(R.id.eventsList);
         eventsListView.setAdapter(eventsAdapter);
+
+        periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                classButton_Clicked(view);
+            }
+        });
     }
 
 
@@ -75,24 +83,30 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void classButton_Clicked(View view){
+        Intent intent = new Intent(this,AddEventActivity.class);
+        startActivity(intent);
+    }
+
+
 
     //set up (onCreate):
     public void setUpData() {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        try
-        {
+        try {
             String className = bundle.getString("className");
             periods.add(className);
 
+        } catch (Exception e) {
+            Log.e("Main Activity", "extra not found: " + e.toString());
         }
-        catch (Exception e) { Log.e("Main Activity", "extra not found: " + e.toString()); }
-        try
-        {
+        try {
             String eventName = bundle.getString("date");
             events.add(eventName);
+        } catch (Exception e) {
+            Log.e("Main Activity", "extra not found: " + e.toString());
         }
-        catch (Exception e) { Log.e("Main Activity", "extra not found: " + e.toString()); }
 
         //for sample purposes
         periods.add("IB Math HL1");

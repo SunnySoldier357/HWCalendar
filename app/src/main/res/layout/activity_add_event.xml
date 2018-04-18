@@ -9,13 +9,14 @@
             android:rowCount="10"
             tools:context="com.example.mattm.calendar.Views.AddEventActivity" >
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="8dp"
-              android:layout_marginTop="8dp"
-              android:text="Add an Event:"
-              android:textSize="27sp"
-              android:textStyle="bold"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Add an Assignment:"
+        android:textSize="27sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,12 +24,13 @@
         android:text="Name:"
         android:textSize="20sp" />
 
-    <EditText android:id="@+id/eventName"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_margin="8dp"
-              android:layout_gravity="center_horizontal"
-              android:hint="soccer practice" />
+    <EditText
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:hint="Chapter 6 Test" />
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -103,12 +105,13 @@
 
     </LinearLayout>
 
-    <Button android:id="@+id/addEventButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
+    <Button
+        android:id="@+id/addEventButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
         android:layout_marginTop="8dp"
-            android:onClick="addEventButton_Clicked"
-            android:text="Add event" />
+        android:onClick="addEventButton_Clicked"
+        android:text="Add assignment" />
 
 </LinearLayout>
