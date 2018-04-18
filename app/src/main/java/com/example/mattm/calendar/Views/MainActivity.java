@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                classButton_Clicked(view);
+                classItem_Clicked(view);
             }
         });
     }
@@ -71,19 +71,13 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void addEventButton_Clicked(View view)
-    {
-        Intent intent = new Intent(this, AddEventActivity.class);
-        startActivity(intent);
-    }
-
     public void signInButton_Clicked(View view)
     {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void classButton_Clicked(View view){
+    public void classItem_Clicked(View view){
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
@@ -110,6 +104,8 @@ public class MainActivity extends AppCompatActivity
 
         //for sample purposes
         periods.add("IB Math HL1");
+        periods.add("Physics");
+        periods.add("Spanish");
         events.add("Soccer Practice");
     }
 }
