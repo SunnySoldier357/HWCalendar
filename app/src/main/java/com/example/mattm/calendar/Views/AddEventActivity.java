@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.mattm.calendar.R;
 
@@ -32,38 +34,76 @@ public class AddEventActivity extends AppCompatActivity
     // Event Handlers
     public void addEventButton_Clicked(View view)
     {
-        String date = GetDate();
+        boolean changeActivity = true;
+
+        String day = GetDay();
+        String month = GetMonth();
+        String year = GetYear();
         String startTime = GetStartTime();
         String startAmPm = GetStartAmPm();
         String endTime = GetEndTime();
         String endAmPm = GetEndAmPm();
         String eventName = GetEventName();
 
-        Intent intentHome = new Intent(this, MainActivity.class);
-        /*
-        intentHome.putExtra("date", date);
-        intentHome.putExtra("endTime", GetEndTime());
-        intentHome.putExtra("eventName", GetEventName());
-        intentHome.putExtra("startTime", GetStartTime());
-        */
-        startActivity(intentHome);
+        if(Integer.parseInt(day) == 31 && (month.equalsIgnoreCase("February")
+                || month.equalsIgnoreCase("April")
+                || month.equalsIgnoreCase("June")
+                || month.equalsIgnoreCase("September")
+                || month.equalsIgnoreCase("November")
+        )){
+            changeActivity = false;
+            Toast.makeText(this, "The month you selected doesn't have a 31st day", Toast.LENGTH_SHORT).show();
+        }
+
+        if(Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("february"))){
+            changeActivity = false;
+            Toast.makeText(this, "The month you selected doesn't have a 30th day", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+        if (changeActivity == true){
+            Intent intentHome = new Intent(this, MainActivity.class);
+            /*
+            intentHome.putExtra("date", date);
+            intentHome.putExtra("endTime", GetEndTime());
+            intentHome.putExtra("eventName", GetEventName());
+            intentHome.putExtra("startTime", GetStartTime());
+            */
+            startActivity(intentHome);
+        }
+
     }
 
 
+
     // Accessors (gets the entered edit text data)
-    public String GetDate()
+    public String GetDay()
+    {
+        return daySpinner.getSelectedItem().toString();
+    }
+
+    public String GetMonth()
     {
         return monthSpinner.getSelectedItem().toString();
+    }
+
+    public String GetYear()
+    {
+        return yearSpinner.getSelectedItem().toString();
     }
 
     public String GetEventName()
     {
-        return monthSpinner.getSelectedItem().toString();
+        String eventName;
+        EditText input = findViewById(R.id.eventName);
+        eventName = input.getText().toString();
+        return eventName;
     }
 
     public String GetStartTime()
     {
-        return monthSpinner.getSelectedItem().toString();
+        return startSpinner.getSelectedItem().toString();
     }
 
     public String GetStartAmPm()
@@ -73,7 +113,7 @@ public class AddEventActivity extends AppCompatActivity
 
     public String GetEndTime()
     {
-        return monthSpinner.getSelectedItem().toString();
+        return endSpinner.getSelectedItem().toString();
     }
 
     public String GetEndAmPm()
