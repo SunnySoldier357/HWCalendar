@@ -1,20 +1,13 @@
 package com.example.mattm.calendar.Models;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
-import com.microsoft.windowsazure.mobileservices.table.sync.MobileServiceSyncContext;
-import com.microsoft.windowsazure.mobileservices.table.sync.MobileServiceSyncTable;
-import com.microsoft.windowsazure.mobileservices.table.sync.localstore.ColumnDataType;
-import com.microsoft.windowsazure.mobileservices.table.sync.localstore.MobileServiceLocalStoreException;
-import com.microsoft.windowsazure.mobileservices.table.sync.localstore.SQLiteLocalStore;
-import com.microsoft.windowsazure.mobileservices.table.sync.synchandler.SimpleSyncHandler;
+import com.microsoft.windowsazure.mobileservices.MobileServiceException;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 public class AzureService
 {
@@ -28,23 +21,22 @@ public class AzureService
     
     private MobileServiceClient client;
     
-    private MobileServiceSyncTable<User> userTable;
+    private MobileServiceTable<User> userTable;
     
     private String mobileBackendUrl = "https://calendarkenmattsan.azurewebsites.net";
     
     // Constructor
-    private AzureService(Context context) throws MalformedURLException, InterruptedException, ExecutionException, MobileServiceLocalStoreException
+    private AzureService(Context context) throws MalformedURLException
     {
         this.context = context;
         client = new MobileServiceClient(mobileBackendUrl, context);
-        initialiseStore();
         
         // Initialising all tables
-        // userTable = client.getSyncTable(User.class);
+        userTable = client.getTable(User.class);
     }
     
     // Static Methods
-    public static void Initialise(Context context) throws MalformedURLException, InterruptedException, ExecutionException, MobileServiceLocalStoreException
+    public static void Initialise(Context context) throws MalformedURLException
     {
         if (currentInstance == null)
             currentInstance = new AzureService(context);
@@ -65,52 +57,9 @@ public class AzureService
         //User result = userTable.insert(user).get();
     }
     
-    // Private Methods
-    private AsyncTask<Void, Void, Void> initialiseStore()
-            throws MobileServiceLocalStoreException, ExecutionException, InterruptedException
+    public List<User> GetUsers() throws MobileServiceException
     {
-        /*
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params)
-            {
-                try
-                {
-                    MobileServiceSyncContext syncContext = client.getSyncContext();
-                    if (syncContext.isInitialized())
-                        return null;
-    
-                    SQLiteLocalStore localStore = new SQLiteLocalStore(client.getContext(), "offlineStore",
-                            null, 1);
-                    
-                    // Creating table definitions
-                    Map<String, ColumnDataType> userDefinition = new HashMap<>();
-                    userDefinition.put("Id", ColumnDataType.String);
-                    userDefinition.put("UserName", ColumnDataType.String);
-                    userDefinition.put("FirstName", ColumnDataType.String);
-                    userDefinition.put("LastName", ColumnDataType.String);
-                    userDefinition.put("Version", ColumnDataType.String);
-                    userDefinition.put("UpdatedAt", ColumnDataType.DateTimeOffset);
-                    
-                    // Defining the table in the local store
-                    localStore.defineTable("User", userDefinition);
-                    
-                    // Specifying a sync handler for conflict resolution
-                    SimpleSyncHandler handler = new SimpleSyncHandler();
-                    
-                    // Initialising the local store
-                    syncContext.initialize(localStore, handler).get();
-                }
-                catch (final Exception e)
-                {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-        return runAsyncTask(task);
-        */
+        //List<User> result = userTable.execute();
         return null;
     }
     
