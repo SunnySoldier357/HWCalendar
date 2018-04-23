@@ -9,13 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.mattm.calendar.Models.AzureService;
 import com.example.mattm.calendar.R;
-import com.example.mattm.calendar.Views.AddClassActivity;
-import com.example.mattm.calendar.Views.AddEventActivity;
-import com.example.mattm.calendar.Views.LoginActivity;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -29,21 +24,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
-        // Initialising AzureService Singleton class
-        try
-        {
-            AzureService.Initialise(this);
-        }
-        catch (MalformedURLException e)
-        {
-            System.out.println("Malformed URL Exception!");
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     
         setUpData();
 
