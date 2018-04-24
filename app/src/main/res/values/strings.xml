@@ -103,6 +103,7 @@
         <item>am</item>
         <item>pm</item>
     </string-array>
+    <string name="title_activity_authenticator">AuthenticatorActivity</string>
 
 
 </resources>

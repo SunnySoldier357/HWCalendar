@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -25,8 +25,10 @@
         </activity>
         <activity android:name=".Views.AddClassActivity" />
         <activity android:name=".Views.AddEventActivity" />
-        <activity android:name=".Views.LoginActivity"
-                  android:label="@string/title_activity_login"/>
+        <activity
+            android:name=".Views.AuthenticatorActivity"
+            android:label="@string/title_activity_authenticator"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

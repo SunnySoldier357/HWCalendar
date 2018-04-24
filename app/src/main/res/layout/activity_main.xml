@@ -19,6 +19,13 @@
             android:onClick="signInButton_Clicked"
             android:text="Sign In" />
 
+        <Button
+            android:id="@+id/logOutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="logOut_Clicked"
+            android:text="Log Out" />
+
         <Button android:id="@+id/addClassButton"
             android:layout_width="89dp"
             android:layout_height="wrap_content"

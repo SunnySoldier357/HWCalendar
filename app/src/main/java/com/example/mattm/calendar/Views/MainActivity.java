@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.mobile.auth.core.SignInStateChangeListener;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobile.client.AWSStartupHandler;
@@ -76,6 +78,9 @@ public class MainActivity extends AppCompatActivity
 
 
     // Event Handlers
+    public void logOut_Clicked(View view){
+        IdentityManager.getDefaultIdentityManager().signOut();
+    }
     public void addClassButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddClassActivity.class);
@@ -84,9 +89,10 @@ public class MainActivity extends AppCompatActivity
 
     public void signInButton_Clicked(View view)
     {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, AuthenticatorActivity.class);
         startActivity(intent);
     }
+
 
     public void classItem_Clicked(View view){
         Intent intent = new Intent(this,AddEventActivity.class);
