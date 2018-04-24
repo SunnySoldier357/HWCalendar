@@ -1,20 +1,29 @@
 package com.example.mattm.calendar.Models;
 
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+
 import java.sql.Timestamp;
 
+@DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
 public class Assignment {
+    private String userID;
     private Timestamp dueDate;
     private String assignmentName;
-    private String subject;
     private String description;
-
-    public Assignment(Timestamp dueDate, String assignmentName, String subject, String description) {
-        this.dueDate = dueDate;
-        this.assignmentName = assignmentName;
-        this.subject = subject;
-        this.description = description;
+    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
+    public String getUserID() {
+        return userID;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+    @DynamoDBRangeKey(attributeName = "dueDate")
+    @DynamoDBAttribute(attributeName = "dueDate")
     public Timestamp getDueDate() {
         return dueDate;
     }
@@ -22,7 +31,7 @@ public class Assignment {
     public void setDueDate(Timestamp dueDate) {
         this.dueDate = dueDate;
     }
-
+    @DynamoDBAttribute(attributeName = "assignment")
     public String getAssignmentName() {
         return assignmentName;
     }
@@ -30,15 +39,7 @@ public class Assignment {
     public void setAssignmentName(String assignmentName) {
         this.assignmentName = assignmentName;
     }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
+    @DynamoDBAttribute(attributeName = "description")
     public String getDescription() {
         return description;
     }

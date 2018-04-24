@@ -9,8 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.client.AWSStartupHandler;
+
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -18,13 +28,26 @@ public class MainActivity extends AppCompatActivity
     // Private Properties
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
+    DynamoDBMapper dynamoDBMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+            @Override
+            public void onComplete(AWSStartupResult awsStartupResult) {
+                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
+            }
+        }).execute();
+
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+        this.dynamoDBMapper = DynamoDBMapper.builder()
+                .dynamoDBClient(dynamoDBClient)
+                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                .build();
+        storeAssignment();
         setUpData();
 
         ArrayAdapter<String> periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
@@ -41,6 +64,22 @@ public class MainActivity extends AppCompatActivity
                 classItem_Clicked(view);
             }
         });
+    }
+
+    public void storeAssignment(){
+        final Assignment assignment = new Assignment();
+        assignment.setUserID("King_1/2_IBHistory");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        assignment.setDueDate(timestamp);
+        assignment.setAssignmentName("Pres");
+        assignment.setDescription("present to class");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dynamoDBMapper.save(assignment);
+                // Item saved
+            }
+        }).start();
     }
 
 
