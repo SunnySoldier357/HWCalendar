@@ -101,19 +101,20 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         try {
-            String className = bundle.getString("className");
+            String className = bundle.getString("ClassName");
             periods.add(className);
 
         } catch (Exception e) {
             Log.e("Main Activity", "extra not found: " + e.toString());
         }
+        /*
         try {
-            String eventName = bundle.getString("date");
+            String eventName = bundle.getString("dates");
             events.add(eventName);
         } catch (Exception e) {
             Log.e("Main Activity", "extra not found: " + e.toString());
         }
-
+        */
         //for sample purposes
         periods.add("IB Math HL1");
         periods.add("Physics");
