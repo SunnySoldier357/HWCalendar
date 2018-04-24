@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
 public class Assignment {
     private String userID;
-    private Timestamp dueDate;
+    private String dueDate;
     private String assignmentName;
     private String description;
     @DynamoDBHashKey(attributeName = "userId")
@@ -24,11 +24,11 @@ public class Assignment {
     }
     @DynamoDBRangeKey(attributeName = "dueDate")
     @DynamoDBAttribute(attributeName = "dueDate")
-    public Timestamp getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Timestamp dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
     @DynamoDBAttribute(attributeName = "assignment")

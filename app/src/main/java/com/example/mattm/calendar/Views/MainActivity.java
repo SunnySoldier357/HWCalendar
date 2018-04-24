@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
@@ -35,19 +37,10 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
 
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        this.dynamoDBMapper = DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
-        storeAssignment();
+        initAWS();
+        initDynamoDBMapper();
+
         setUpData();
 
         ArrayAdapter<String> periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
@@ -65,21 +58,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    public void storeAssignment(){
-        final Assignment assignment = new Assignment();
-        assignment.setUserID("King_1/2_IBHistory");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        assignment.setDueDate(timestamp);
-        assignment.setAssignmentName("Pres");
-        assignment.setDescription("present to class");
-        new Thread(new Runnable() {
+    public void initAWS(){
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
             @Override
-            public void run() {
-                dynamoDBMapper.save(assignment);
-                // Item saved
+            public void onComplete(AWSStartupResult awsStartupResult) {
+                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
             }
-        }).start();
+        }).execute();
+    }
+    public void initDynamoDBMapper(){
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+        this.dynamoDBMapper = DynamoDBMapper.builder()
+                .dynamoDBClient(dynamoDBClient)
+                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                .build();
     }
 
 
@@ -100,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
+
 
 
 
