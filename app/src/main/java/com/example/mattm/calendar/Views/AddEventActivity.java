@@ -46,7 +46,8 @@ public class AddEventActivity extends AppCompatActivity
         setUpSpinners();
     }
 
-    public void getInformation(){
+    public void getInformation()
+    {
         String TEMP_USER_ID = "TIMOTHY_1_IBMATH";
         EditText assignment = (EditText) findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
@@ -55,21 +56,27 @@ public class AddEventActivity extends AppCompatActivity
         String descriptionValue = description.getText().toString();
         storeAssignment(TEMP_USER_ID,dueDate,assignmentValue,descriptionValue);
     }
-    public void classButton_Clicked(View view){
+    
+    public void classButton_Clicked(View view)
+    {
         getInformation();
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
     }
 
-    public void initAWS(){
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+    public void initAWS()
+    {
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
+        {
             @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
+            public void onComplete(AWSStartupResult awsStartupResult)
+            {
                 Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
             }
         }).execute();
     }
-    public void initDynamoDBMapper(){
+    public void initDynamoDBMapper()
+    {
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         this.dynamoDBMapper = DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)
@@ -77,15 +84,18 @@ public class AddEventActivity extends AppCompatActivity
                 .build();
     }
 
-    public void storeAssignment(String user, String dueDate, String name, String description){
+    public void storeAssignment(String user, String dueDate, String name, String description)
+    {
         final Assignment assignment = new Assignment();
         assignment.setUserID(user);
         assignment.setDueDate(dueDate);
         assignment.setAssignmentName(name);
         assignment.setDescription(description);
-        new Thread(new Runnable() {
+        new Thread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 dynamoDBMapper.save(assignment);
             }
         }).start();
@@ -110,20 +120,20 @@ public class AddEventActivity extends AppCompatActivity
                 || month.equalsIgnoreCase("April")
                 || month.equalsIgnoreCase("June")
                 || month.equalsIgnoreCase("September")
-                || month.equalsIgnoreCase("November")
-        )){
+                || month.equalsIgnoreCase("November")))
+        {
             changeActivity = false;
             Toast.makeText(this, "The month you selected doesn't have a 31st day", Toast.LENGTH_SHORT).show();
         }
 
-        if(Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("february"))){
+        if(Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("february")))
+        {
             changeActivity = false;
             Toast.makeText(this, "The month you selected doesn't have a 30th day", Toast.LENGTH_SHORT).show();
         }
-
-
-
-        if (changeActivity == true){
+        
+        if (changeActivity == true)
+        {
             Intent intentHome = new Intent(this, MainActivity.class);
             /*
             intentHome.putExtra("date", date);
@@ -133,10 +143,7 @@ public class AddEventActivity extends AppCompatActivity
             */
             startActivity(intentHome);
         }
-
     }
-
-
 
     // Accessors (gets the entered edit text data)
     public String GetDay()
@@ -184,7 +191,8 @@ public class AddEventActivity extends AppCompatActivity
 
 
     //setup (onCreate)
-    public void setUpSpinners() {
+    public void setUpSpinners()
+    {
         monthSpinner = findViewById(R.id.month);
         ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(AddEventActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.monthArray));
@@ -224,5 +232,4 @@ public class AddEventActivity extends AppCompatActivity
         amPmEndSpinner.setAdapter(amPmAdapter);
         */
     }
-
 }

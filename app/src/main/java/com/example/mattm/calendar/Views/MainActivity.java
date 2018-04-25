@@ -29,20 +29,21 @@ import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity
 {
-    // Private Properties
+    // Public Properties
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
     public String ID;
     ArrayAdapter<String> periodsAdapter;
     ArrayAdapter<String> eventsAdapter;
     DynamoDBMapper dynamoDBMapper;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialising database stuff
         initAWS();
         initDynamoDBMapper();
         initAWSCognito();
@@ -59,34 +60,46 @@ public class MainActivity extends AppCompatActivity
         ListView eventsListView = findViewById(R.id.eventsList);
         eventsListView.setAdapter(eventsAdapter);
 
-        periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 classItem_Clicked(view);
             }
         });
     }
-    public void initAWS(){
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+    
+    public void initAWS()
+    {
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
+        {
             @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
+            public void onComplete(AWSStartupResult awsStartupResult)
+            {
                 Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
             }
         }).execute();
     }
-    public void initDynamoDBMapper(){
+    
+    public void initDynamoDBMapper()
+    {
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         this.dynamoDBMapper = DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)
                 .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
                 .build();
     }
-    public void initAWSCognito(){
+    
+    public void initAWSCognito()
+    {
         final CountDownLatch latch = new CountDownLatch(1);
         final String[] identityId = new String[1];
-        new Thread(new Runnable() {
+        new Thread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                         getApplicationContext(), // Context
                         "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
@@ -99,21 +112,28 @@ public class MainActivity extends AppCompatActivity
             }
         }).start();
 
-        try {
+        try
+        {
             latch.await();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
+        
         Log.d("TESTING", identityId[0]);
         ID = identityId[0];
         Log.d("TESTING", ID);
     }
+    
     // Event Handlers
-    public void logOut_Clicked(View view){
+    public void logOut_Clicked(View view)
+    {
         IdentityManager.getDefaultIdentityManager().signOut();
         periods.clear();
         periodsAdapter.notifyDataSetChanged();
     }
+    
     public void addClassButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddClassActivity.class);
@@ -126,24 +146,27 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
-    public void classItem_Clicked(View view){
+    public void classItem_Clicked(View view)
+    {
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
 
-
     //set up (onCreate):
-    public void setUpData() {
+    public void setUpData()
+    {
         final CountDownLatch latch = new CountDownLatch(1);
         final User[] value = new User[1];
-        new Thread(new Runnable() {
+        new Thread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 User currentUser = dynamoDBMapper.load(
                         User.class,
                         ID);
-                if(currentUser != null){
+                if(currentUser != null)
+                {
                     Log.d("TESTING", "AVAI");
                     value[0] = currentUser;
                     Log.d("TESTING", currentUser.getClasses().toString());
@@ -152,12 +175,18 @@ public class MainActivity extends AppCompatActivity
                 latch.countDown();
             }
         }).start();
-        try {
+        
+        try
+        {
             latch.await();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
-        if(value[0] != null){
+        
+        if(value[0] != null)
+        {
             periods = value[0].getClasses();
             Log.d("TESTING", value[0].getClasses().toString());
         }

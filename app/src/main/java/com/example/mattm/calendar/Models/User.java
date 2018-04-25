@@ -8,24 +8,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-User")
-
-public class User {
-    private String userId;
+public class User
+{
+    // Private Properties
     private ArrayList<String> classes;
+    
+    private String userId;
+    
+    // Accessors
+    @DynamoDBAttribute(attributeName = "classes")
+    public ArrayList<String> getClasses()
+    {
+        return classes;
+    }
+    
     @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
+    public String getUserId()
+    {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    @DynamoDBAttribute(attributeName = "classes")
-    public ArrayList<String> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(ArrayList<String> classes) {
+    // Mutators
+    public void setClasses(ArrayList<String> classes)
+    {
         this.classes = classes;
+    }
+    
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
     }
 }

@@ -17,39 +17,42 @@ import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.example.mattm.calendar.R;
 
-public class AuthenticatorActivity extends AppCompatActivity {
-
+public class AuthenticatorActivity extends AppCompatActivity
+{
+    // Public Properties
     public String LOG_TAG = "Authenticator";
+    
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authenticator);
 
         AWSMobileClient.getInstance().initialize(this).execute();
-        IdentityManager.getDefaultIdentityManager().addSignInStateChangeListener(new SignInStateChangeListener() {
+        IdentityManager.getDefaultIdentityManager().addSignInStateChangeListener(new SignInStateChangeListener()
+        {
             @Override
-            public void onUserSignedIn() {
+            public void onUserSignedIn()
+            {
                 Log.d(LOG_TAG, "User Signed In");
             }
 
             // Sign-out listener
             @Override
-            public void onUserSignedOut() {
-
+            public void onUserSignedOut()
+            {
                 Log.d(LOG_TAG, "User Signed Out");
                 showSignIn();
             }
         });
         showSignIn();
-
-
     }
-    private void showSignIn() {
-
+    
+    private void showSignIn()
+    {
         Log.d("Authenticator", "showSignIn");
 
         SignInUI signin = (SignInUI) AWSMobileClient.getInstance().getClient(AuthenticatorActivity.this, SignInUI.class);
         signin.login(AuthenticatorActivity.this, MainActivity.class).execute();
     }
-
 }

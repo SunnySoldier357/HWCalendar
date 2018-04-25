@@ -6,39 +6,54 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Classes")
-
-public class Subject {
-    private String teacherName;
+public class Subject
+{
+    // Private Properties
     private String period;
     private String subject;
+    private String teacherName;
+    
+    // Accessors
+    @DynamoDBRangeKey(attributeName = "period")
+    @DynamoDBAttribute(attributeName = "period")
+    public String getPeriod()
+    {
+        return period;
+    }
+    
+    @DynamoDBAttribute(attributeName = "subject")
+    public String getSubject()
+    {
+        return subject;
+    }
+    
     @DynamoDBHashKey(attributeName = "teacher")
     @DynamoDBAttribute(attributeName = "teacher")
-    public String getTeacherName() {
+    public String getTeacherName()
+    {
         return teacherName;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
-    @DynamoDBRangeKey(attributeName = "period")
-    @DynamoDBAttribute(attributeName = "period")
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
+    // Mutators
+    public void setPeriod(String period)
+    {
         this.period = period;
     }
-    @DynamoDBAttribute(attributeName = "subject")
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
+    
+    public void setSubject(String subject)
+    {
         this.subject = subject;
     }
+    
+    public void setTeacherName(String teacherName)
+    {
+        this.teacherName = teacherName;
+    }
 
-    public String toString(){
-        return this.teacherName + "_" + this.period + "_" + this.subject;
+    // Overridden Methods
+    @Override
+    public String toString()
+    {
+        return String.format("%s_%s_%s", getTeacherName(), getPeriod(), getSubject());
     }
 }

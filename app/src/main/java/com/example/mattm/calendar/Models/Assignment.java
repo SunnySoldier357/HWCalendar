@@ -8,43 +8,59 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 import java.sql.Timestamp;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
-public class Assignment {
-    private String userID;
-    private String dueDate;
+public class Assignment
+{
+    // Private Properties
     private String assignmentName;
     private String description;
+    private String dueDate;
+    private String userID;
+    
+    // Accessors
+    @DynamoDBAttribute(attributeName = "assignment")
+    public String getAssignmentName()
+    {
+        return assignmentName;
+    }
+    
+    @DynamoDBAttribute(attributeName = "description")
+    public String getDescription()
+    {
+        return description;
+    }
+    
+    @DynamoDBRangeKey(attributeName = "dueDate")
+    @DynamoDBAttribute(attributeName = "dueDate")
+    public String getDueDate()
+    {
+        return dueDate;
+    }
+    
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
-    public String getUserID() {
+    public String getUserID()
+    {
         return userID;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-    @DynamoDBRangeKey(attributeName = "dueDate")
-    @DynamoDBAttribute(attributeName = "dueDate")
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
-    }
-    @DynamoDBAttribute(attributeName = "assignment")
-    public String getAssignmentName() {
-        return assignmentName;
-    }
-
-    public void setAssignmentName(String assignmentName) {
+    // Mutators
+    public void setAssignmentName(String assignmentName)
+    {
         this.assignmentName = assignmentName;
     }
-    @DynamoDBAttribute(attributeName = "description")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
+    
+    public void setDescription(String description)
+    {
         this.description = description;
+    }
+    
+    public void setDueDate(String dueDate)
+    {
+        this.dueDate = dueDate;
+    }
+    
+    public void setUserID(String userID)
+    {
+        this.userID = userID;
     }
 }
