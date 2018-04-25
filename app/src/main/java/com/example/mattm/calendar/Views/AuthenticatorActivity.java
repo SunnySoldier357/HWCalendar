@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.SignInStateChangeListener;
