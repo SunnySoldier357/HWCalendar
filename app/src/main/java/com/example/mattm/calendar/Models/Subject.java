@@ -37,4 +37,8 @@ public class Subject {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    public String toString(){
+        return this.teacherName + "_" + this.period + "_" + this.subject;
+    }
 }

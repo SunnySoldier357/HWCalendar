@@ -6,14 +6,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.Subject;
 import com.example.mattm.calendar.Models.Teacher;
+import com.example.mattm.calendar.Models.User;
 import com.example.mattm.calendar.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddClassActivity extends MainActivity
 {
@@ -40,7 +46,48 @@ public class AddClassActivity extends MainActivity
             }
         }).execute();
     }
+    public void userDynamoClassAdd(final Subject subject){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                        getApplicationContext(), // Context
+                        "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
+                        Regions.US_WEST_2 // Region
+                );
+                String identityId = credentialsProvider.getIdentityId();
+                Log.d("LogTag", "my ID is " + identityId);
+                loadUser(identityId, subject);
 
+            }
+        }).start();
+    }
+    public void loadUser(final String userId, final Subject subject) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> dataCollector = new ArrayList<>();
+                User oldUser = dynamoDBMapper.load(
+                        User.class,
+                        userId);
+                User user = new User();
+                if(oldUser == null){
+                    user.setUserId(userId);
+                    dataCollector.add(subject.toString());
+                }else{
+                    user.setUserId(userId);
+                    dataCollector = oldUser.getClasses();
+                    dataCollector.add(subject.toString());
+                }
+                user.setClasses(dataCollector);
+                dynamoDBMapper.save(user);
+
+                // Item read
+                // Log.d("News Item:", newsItem.toString());
+            }
+        }).start();
+    }
     // Event Handlers
     public void addClassButton_Clicked(View view)
     {
@@ -51,10 +98,9 @@ public class AddClassActivity extends MainActivity
         subject.setTeacherName(teacher);
         subject.setSubject(className);
         subject.setPeriod(period);
-        Bundle bundle = new Bundle();
-        bundle.putString("Teacher", teacher);
-        bundle.putString("ClassName", className);
-        bundle.putString("Period", period);
+
+        userDynamoClassAdd(subject);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -66,7 +112,6 @@ public class AddClassActivity extends MainActivity
         //Teacher t = new Teacher(className, teacher, period);
 
         Intent intentHome = new Intent(this, MainActivity.class);
-        intentHome.putExtras(bundle);
         /*intentHome.putExtra("className", GetClassName());
         intentHome.putExtra("period", GetPeriod());
         intentHome.putExtra("teacherName", GetTeacher());*/
