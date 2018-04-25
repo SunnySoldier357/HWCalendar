@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         // Initialising database stuff
         initAWS();
         initDynamoDBMapper();
-        initAWSCognito();           //This line is causing an error!
+        initAWSCognito();
         setUpData();
         Log.d("TESTING MAIN", ID);
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
         try
         {
-            latch.await();              //THIS Line is causing an error
+            latch.await();
         }
         catch (InterruptedException e)
         {
