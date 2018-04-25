@@ -58,7 +58,6 @@
             android:layout_width="wrap_content"
             android:layout_height="300dp" />
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,29 +67,32 @@
 
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:background="@drawable/grey_dot" />
-            <ImageView android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:background="@drawable/grey_dot" />
+                       android:background="@drawable/grey_dot"
+                       android:layout_marginLeft="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginRight="32dp"/>
-
+                       android:layout_marginLeft="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="32dp"/>
+                       android:layout_marginLeft="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:background="@drawable/grey_dot" />
+                       android:background="@drawable/grey_dot"
+                       android:layout_marginLeft="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:background="@drawable/grey_dot" />
+                       android:background="@drawable/grey_dot"
+                       android:layout_marginLeft="16dp"/>
+            <ImageView android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="@drawable/grey_dot"
+                       android:layout_marginLeft="16dp"/>
 
         </LinearLayout>
 
-        
+
         <ListView android:id="@+id/eventsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
