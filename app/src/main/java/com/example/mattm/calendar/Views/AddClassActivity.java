@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AddClassActivity extends MainActivity
 {
@@ -28,82 +30,35 @@ public class AddClassActivity extends MainActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_class);
-        initAWS();
-        initDynamoDBMapper();
     }
-    
-    public void initDynamoDBMapper()
-    {
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        this.dynamoDBMapper = DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
-    }
-    
-    public void initAWS()
-    {
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
-        {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult)
-            {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
-    }
-    
-    public void userDynamoClassAdd(final Subject subject)
-    {
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                        getApplicationContext(), // Context
-                        "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
-                        Regions.US_WEST_2 // Region
-                );
-                String identityId = credentialsProvider.getIdentityId();
-                Log.d("LogTag", "my ID is " + identityId);
-                loadUser(identityId, subject);
 
-            }
-        }).start();
-    }
-    
-    public void loadUser(final String userId, final Subject subject)
-    {
-        new Thread(new Runnable()
-        {
+    public AsyncTask<String, Void, Void> dataSet(final Subject subject) {
+        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
             @Override
-            public void run()
-            {
+            protected Void doInBackground(String... strings) {
                 ArrayList<String> dataCollector = new ArrayList<>();
                 User oldUser = dynamoDBMapper.load(
                         User.class,
-                        userId);
+                        ID);
                 User user = new User();
                 if(oldUser == null)
                 {
-                    user.setUserId(userId);
+                    user.setUserId(ID);
                     dataCollector.add(subject.toString());
                 }
                 else
                 {
-                    user.setUserId(userId);
+                    user.setUserId(ID);
                     dataCollector = oldUser.getClasses();
                     dataCollector.add(subject.toString());
                 }
-                
+
                 user.setClasses(dataCollector);
                 dynamoDBMapper.save(user);
-
-                // Item read
-                // Log.d("News Item:", newsItem.toString());
+                return null;
             }
-        }).start();
+        };
+        return task;
     }
     
     // Event Handlers
@@ -116,8 +71,7 @@ public class AddClassActivity extends MainActivity
         subject.setTeacherName(teacher);
         subject.setSubject(className);
         subject.setPeriod(period);
-
-        userDynamoClassAdd(subject);
+        dataSet(subject).execute();
 
         new Thread(new Runnable()
         {

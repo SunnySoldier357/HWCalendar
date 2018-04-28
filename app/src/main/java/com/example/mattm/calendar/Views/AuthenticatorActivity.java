@@ -21,7 +21,7 @@ public class AuthenticatorActivity extends AppCompatActivity
 {
     // Public Properties
     public String LOG_TAG = "Authenticator";
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,7 +47,7 @@ public class AuthenticatorActivity extends AppCompatActivity
         });
         showSignIn();
     }
-    
+
     private void showSignIn()
     {
         Log.d("Authenticator", "showSignIn");

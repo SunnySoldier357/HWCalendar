@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.auth.core.IdentityManager;
@@ -26,6 +28,7 @@ import com.example.mattm.calendar.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -46,8 +49,16 @@ public class MainActivity extends AppCompatActivity
         // Initialising database stuff
         initAWS();
         initDynamoDBMapper();
-        initAWSCognito();
-        setUpData();
+       //initAWSCognito();
+        //setUpData();
+        try {
+            periods = dataSetup(getUserID().execute().get()).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(getApplicationContext(), "ID: " + ID, Toast.LENGTH_LONG);
         Log.d("TESTING MAIN", ID);
 
         Log.d("TESTING MAIN",periods.toString());
@@ -91,41 +102,6 @@ public class MainActivity extends AppCompatActivity
                 .build();
     }
     
-    public void initAWSCognito()
-    {
-        final CountDownLatch latch = new CountDownLatch(1);
-        final String[] identityId = new String[1];
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                        getApplicationContext(), // Context
-                        "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
-                        Regions.US_WEST_2 // Region
-                );
-                identityId[0] = credentialsProvider.getIdentityId();
-                latch.countDown();
-                Log.d("LogTag", "my ID is " + identityId[0]);
-                //dynamoLoad(identityId);
-            }
-        }).start();
-
-        try
-        {
-            latch.await();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        
-        Log.d("TESTING", identityId[0]);
-        ID = identityId[0];
-        Log.d("TESTING", ID);
-    }
-    
     // Event Handlers
     public void logOut_Clicked(View view)
     {
@@ -137,6 +113,7 @@ public class MainActivity extends AppCompatActivity
     public void addClassButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddClassActivity.class);
+        //intent.putExtra("ID", ID);
         startActivity(intent);
     }
 
@@ -150,6 +127,37 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
+    }
+    private AsyncTask<Void, Void, String> getUserID(){
+        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                        getApplicationContext(), // Context
+                        "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
+                        Regions.US_WEST_2 // Region
+                );
+                Log.d("Testing", credentialsProvider.getIdentityId());
+                ID = credentialsProvider.getIdentityId();
+                return credentialsProvider.getIdentityId();
+            }
+        };
+        return task;
+    }
+    private AsyncTask<String, Void, ArrayList<String>> dataSetup(final String userId){
+        AsyncTask<String, Void, ArrayList<String>> task = new AsyncTask<String, Void, ArrayList<String>>() {
+            @Override
+            protected ArrayList<String> doInBackground(String... strings) {
+                User currentUser = dynamoDBMapper.load(
+                        User.class,
+                        userId);
+                if(currentUser != null)
+                    return currentUser.getClasses();
+                else
+                    return new ArrayList<>();
+            }
+        };
+        return task;
     }
 
     //set up (onCreate):
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity
                 latch.countDown();
             }
         }).start();
-        
+
         try
         {
             latch.await();
@@ -184,7 +192,7 @@ public class MainActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
-        
+
         if(value[0] != null)
         {
             periods = value[0].getClasses();
