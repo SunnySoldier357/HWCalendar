@@ -3,25 +3,13 @@ package com.example.mattm.calendar.Views;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.Subject;
-import com.example.mattm.calendar.Models.Teacher;
 import com.example.mattm.calendar.Models.User;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class AddClassActivity extends MainActivity
 {
@@ -107,4 +95,6 @@ public class AddClassActivity extends MainActivity
     {
         return ((EditText) findViewById(R.id.teacherName)).getText().toString();
     }
+
+
 }
