@@ -8,18 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-
 import com.example.mattm.calendar.Models.AWSConnection;
-import com.example.mattm.calendar.Models.User;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
@@ -27,10 +22,8 @@ public class MainActivity extends AppCompatActivity
     // Public Properties
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
-    public String ID;
     ArrayAdapter<String> periodsAdapter;
     ArrayAdapter<String> eventsAdapter;
-    DynamoDBMapper dynamoDBMapper;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -90,7 +83,7 @@ public class MainActivity extends AppCompatActivity
     
     public void addClassButton_Clicked(View view)
     {
-        Intent intent = new Intent(this, AddClassActivity.class);
+        Intent intent = new Intent(this, AddSubjectActivity.class);
         //intent.putExtra("ID", ID);
         startActivity(intent);
     }
@@ -106,8 +99,4 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
-
-
-
-
 }

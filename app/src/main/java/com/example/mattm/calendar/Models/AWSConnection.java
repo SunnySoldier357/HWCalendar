@@ -53,7 +53,7 @@ public class AWSConnection
 
     }
 
-    private DynamoDBMapper initializeDynamoDBMapper(){
+    public DynamoDBMapper initializeDynamoDBMapper(){
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         return DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)
@@ -89,6 +89,47 @@ public class AWSConnection
             }
         };
         return task;
+    }
+
+    public AsyncTask<String, Void, Void> addSubject(final String subjectName) {
+        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
+            @Override
+            protected Void doInBackground(String... strings) {
+                ArrayList<String> dataCollector = new ArrayList<>();
+                User oldUser = dynamoDBMapper.load(
+                        User.class,
+                        userId);
+                Log.d("TESTING", "Is oldUser null? " + oldUser == null ? "Yes" : "No");
+                User user = new User();
+                if(null == oldUser)
+                {
+                    user.setUserId(userId);
+                    dataCollector.add(subjectName);
+                }
+                else
+                {
+                    user.setUserId(userId);
+                    dataCollector = oldUser.getClasses();
+                    dataCollector.add(subjectName);
+                }
+
+                user.setClasses(dataCollector);
+                dynamoDBMapper.save(user);
+                //dynamoDBMapper.save(subject);
+                return null;
+            }
+        };
+        return task;
+    }
+    public void saveSubject(final Subject subject){
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                dynamoDBMapper.save(subject);
+            }
+        }).start();
     }
     public Assignment AddAssignment()
     {
