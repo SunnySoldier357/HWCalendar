@@ -1,8 +1,6 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,21 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.auth.core.IdentityManager;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobile.client.AWSStartupHandler;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.User;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
@@ -46,22 +38,29 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Initialising database stuff
-        initAWS();
-        initDynamoDBMapper();
-       //initAWSCognito();
-        //setUpData();
+        Log.d("TESTING", "PART1");
+        AWSConnection awsConnection = null;
         try {
-            periods = dataSetup(getUserID().execute().get()).execute().get();
+            awsConnection = AWSConnection.getCurrentInstance(this);
+            Log.d("TESTING", "PART2");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("TESTING", "PART3");
+        Log.d("TESTING", "ID of User: " + awsConnection.getUserID());
+
+        try {
+            periods = awsConnection.getPeriods().execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "ID: " + ID, Toast.LENGTH_LONG);
-        Log.d("TESTING MAIN", ID);
-
-        Log.d("TESTING MAIN",periods.toString());
+        Log.d("TESTING", periods.toString());
 
         periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
         ListView periodsListView = findViewById(R.id.periodsList);
@@ -79,27 +78,6 @@ public class MainActivity extends AppCompatActivity
                 classItem_Clicked(view);
             }
         });
-    }
-    
-    public void initAWS()
-    {
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
-        {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult)
-            {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
-    }
-    
-    public void initDynamoDBMapper()
-    {
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        this.dynamoDBMapper = DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
     }
     
     // Event Handlers
@@ -128,76 +106,8 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
-    private AsyncTask<Void, Void, String> getUserID(){
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                        getApplicationContext(), // Context
-                        "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
-                        Regions.US_WEST_2 // Region
-                );
-                Log.d("Testing", credentialsProvider.getIdentityId());
-                ID = credentialsProvider.getIdentityId();
-                return credentialsProvider.getIdentityId();
-            }
-        };
-        return task;
-    }
-    private AsyncTask<String, Void, ArrayList<String>> dataSetup(final String userId){
-        AsyncTask<String, Void, ArrayList<String>> task = new AsyncTask<String, Void, ArrayList<String>>() {
-            @Override
-            protected ArrayList<String> doInBackground(String... strings) {
-                User currentUser = dynamoDBMapper.load(
-                        User.class,
-                        userId);
-                if(currentUser != null)
-                    return currentUser.getClasses();
-                else
-                    return new ArrayList<>();
-            }
-        };
-        return task;
-    }
 
-    //set up (onCreate):
-    public void setUpData()
-    {
-        final CountDownLatch latch = new CountDownLatch(1);
-        final User[] value = new User[1];
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                User currentUser = dynamoDBMapper.load(
-                        User.class,
-                        ID);
-                if(currentUser != null)
-                {
-                    Log.d("TESTING", "AVAI");
-                    value[0] = currentUser;
-                    Log.d("TESTING", currentUser.getClasses().toString());
 
-                }
-                latch.countDown();
-            }
-        }).start();
 
-        try
-        {
-            latch.await();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
 
-        if(value[0] != null)
-        {
-            periods = value[0].getClasses();
-            Log.d("TESTING", value[0].getClasses().toString());
-        }
-        events.add("Soccer Practice");
-    }
 }

@@ -17,9 +17,9 @@ public class UserViewModel
     
     public UserViewModel()
     {
-        awsConnection = new AWSConnection();
+        //awsConnection = new AWSConnection();
         
-        Users = awsConnection.GetUsers();
+        //Users = awsConnection.GetUsers();
     }
     
     // TODO: Use AWSConnection class to encapsulate getting and adding Users

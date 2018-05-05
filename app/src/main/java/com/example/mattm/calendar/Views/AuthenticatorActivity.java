@@ -15,7 +15,10 @@ import com.amazonaws.mobile.auth.ui.SignInUI;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
+
+import java.util.concurrent.ExecutionException;
 
 public class AuthenticatorActivity extends AppCompatActivity
 {
@@ -28,22 +31,27 @@ public class AuthenticatorActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authenticator);
 
-        AWSMobileClient.getInstance().initialize(this).execute();
+        //AWSMobileClient.getInstance().initialize(this).execute();
         IdentityManager.getDefaultIdentityManager().addSignInStateChangeListener(new SignInStateChangeListener()
         {
             @Override
             public void onUserSignedIn()
             {
                 Log.d(LOG_TAG, "User Signed In");
+                try {
+                    AWSConnection.getCurrentInstance(null).updateUserID().execute().get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
-            // Sign-out listener
             @Override
-            public void onUserSignedOut()
-            {
-                Log.d(LOG_TAG, "User Signed Out");
-                showSignIn();
+            public void onUserSignedOut() {
+
             }
+
         });
         showSignIn();
     }
