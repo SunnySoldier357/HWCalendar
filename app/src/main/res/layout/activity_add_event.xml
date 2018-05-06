@@ -45,7 +45,9 @@
 
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_gravity="center_horizontal">
+                  android:layout_gravity="center_horizontal"
+                  android:layout_marginLeft="-4dp"
+                  android:layout_marginRight="-4dp">
 
         <Spinner android:id="@+id/month"
                  android:layout_width="wrap_content"
@@ -54,7 +56,8 @@
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="/"
-                  android:textSize="20sp" />
+                  android:textSize="20sp"
+                  android:layout_margin="-4dp"/>
 
         <Spinner android:id="@+id/day"
                  android:layout_width="wrap_content"
@@ -63,7 +66,8 @@
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="/"
-                  android:textSize="20sp" />
+                  android:textSize="20sp"
+                  android:layout_margin="-4dp"/>
 
         <Spinner android:id="@+id/year"
                  android:layout_width="wrap_content"
@@ -93,10 +97,10 @@
     <EditText
         android:id="@+id/descriptionText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="94dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
-        android:hint="descr \n\n"
+        android:hint="description \n\n"
         android:background="@drawable/edittext_style"
         android:padding="8dp"/>
 

@@ -1,13 +1,16 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 
@@ -15,6 +18,8 @@ import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
@@ -24,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     public ArrayList<String> events = new ArrayList<>();
     ArrayAdapter<String> periodsAdapter;
     ArrayAdapter<String> eventsAdapter;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -71,6 +76,8 @@ public class MainActivity extends AppCompatActivity
                 classItem_Clicked(view);
             }
         });
+
+        calendar_Selector();
     }
     
     // Event Handlers
@@ -99,4 +106,24 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,AddEventActivity.class);
         startActivity(intent);
     }
+
+    public void calendar_Selector()             //this gets the day selected on the calendar
+    {
+        CalendarView mainCalendarView = findViewById(R.id.calendar);
+        mainCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
+                Calendar cal = Calendar.getInstance();  //converts  data to a date object
+                cal.set(year, month, dayOfMonth);
+
+                Date d = cal.getTime();     //Date object of selected day on calendar
+
+                Toast.makeText(MainActivity.this, d.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
 }
