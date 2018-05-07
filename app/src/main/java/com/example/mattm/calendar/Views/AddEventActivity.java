@@ -48,7 +48,7 @@ public class AddEventActivity extends AppCompatActivity
 
     public void getInformation()
     {
-        String TEMP_USER_ID = "TIMOTHY_1_IBMATH";
+        String TEMP_USER_ID = getIntent().getStringExtras("ClassName");
         EditText assignment = (EditText) findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
         String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";
