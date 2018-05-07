@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                classItem_Clicked(view);
+                classItem_Clicked(view, position);
             }
         });
 
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         IdentityManager.getDefaultIdentityManager().signOut();
         periods.clear();
         periodsAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
     }
     
     public void addClassButton_Clicked(View view)
@@ -101,9 +102,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void classItem_Clicked(View view)
+    public void classItem_Clicked(View view, int position)
     {
         Intent intent = new Intent(this,AddEventActivity.class);
+        intent.putExtra("ClassName", periodsAdapter.getItem(position).toString());
         startActivity(intent);
     }
 

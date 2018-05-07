@@ -65,6 +65,7 @@ public class AddSubjectActivity extends AppCompatActivity
         };
         return task;
     }
+
     
     // Event Handlers
     public void addClassButton_Clicked(View view)
