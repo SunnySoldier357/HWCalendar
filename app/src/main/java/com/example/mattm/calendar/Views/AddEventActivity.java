@@ -49,10 +49,10 @@ public class AddEventActivity extends AppCompatActivity
     public void getInformation()
     {
         String TEMP_USER_ID = "TIMOTHY_1_IBMATH";
-        EditText assignment = (EditText) findViewById(R.id.eventName);
+        EditText assignment = findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
-        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";
-        EditText description = (EditText) findViewById(R.id.descriptionText);
+        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";                //todo: make timestamp format (Date object)
+        EditText description = findViewById(R.id.descriptionText);
         String descriptionValue = description.getText().toString();
         storeAssignment(TEMP_USER_ID,dueDate,assignmentValue,descriptionValue);
     }

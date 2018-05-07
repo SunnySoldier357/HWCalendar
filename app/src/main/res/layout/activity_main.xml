@@ -17,19 +17,19 @@
             android:layout_width="89dp"
             android:layout_height="wrap_content"
             android:onClick="signInButton_Clicked"
-            android:text="Sign In" />
+            android:text="@string/am1" />
 
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="logOut_Clicked"
-            android:text="Log Out" />
+            android:text="@string/am2" />
 
         <Button android:id="@+id/addClassButton"
             android:layout_width="89dp"
             android:layout_height="wrap_content"
-            android:text="Add class"
+            android:text="@string/am3"
             android:onClick="addClassButton_Clicked" />
 
 
@@ -67,29 +67,34 @@
 
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
+                       android:layout_marginStart="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
+                       android:layout_marginStart="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
+                       android:layout_marginStart="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
+                       android:layout_marginStart="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
+                       android:layout_marginStart="16dp"/>
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
+                       android:contentDescription="@string/greyDot"
                        android:background="@drawable/grey_dot"
-                       android:layout_marginLeft="16dp"/>
-
+                       android:layout_marginStart="16dp"/>
         </LinearLayout>
         
         <ListView android:id="@+id/eventsList"

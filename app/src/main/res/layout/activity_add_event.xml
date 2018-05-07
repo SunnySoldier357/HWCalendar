@@ -14,14 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Add an Assignment:"
+        android:text="@string/ae1"
         android:textSize="27sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name:"
+        android:text="@string/ae2"
         android:textSize="20sp" />
 
     <EditText android:id="@+id/eventName"
@@ -31,7 +31,7 @@
               android:layout_height="wrap_content"
               android:layout_margin="8dp"
               android:layout_gravity="center_horizontal"
-              android:hint="soccer practice"
+              android:hint="@string/ae3"
               android:background="@drawable/edittext_style"
               android:paddingLeft="48dp"
               android:paddingRight="48dp"
@@ -40,7 +40,7 @@
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Date:"
+              android:text="@string/ae4"
               android:textSize="20sp"/>
 
     <LinearLayout android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="/"
+                  android:text="@string/ae5"
                   android:textSize="20sp"
                   android:layout_margin="-4dp"/>
 
@@ -65,7 +65,7 @@
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="/"
+                  android:text="@string/ae5"
                   android:textSize="20sp"
                   android:layout_margin="-4dp"/>
 
@@ -91,16 +91,16 @@
         android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description:"
+        android:text="@string/ae6"
         android:textSize="20sp" />
 
     <EditText
         android:id="@+id/descriptionText"
         android:layout_width="match_parent"
         android:layout_height="94dp"
-        android:layout_gravity="center_horizontal"
+        android:gravity="top"
         android:layout_margin="8dp"
-        android:hint="description \n\n"
+        android:hint="@string/ae7"
         android:background="@drawable/edittext_style"
         android:padding="8dp"/>
 
@@ -111,6 +111,6 @@
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
         android:onClick="classButton_Clicked"
-        android:text="Add event" />
+        android:text="@string/ae8" />
 
 </LinearLayout>

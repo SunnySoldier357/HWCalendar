@@ -11,13 +11,13 @@
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/title"
-              android:text="Create a New Class:"
+              android:text="@string/ac1"
               android:textStyle="bold"
               android:textSize="27sp"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Name of Class:"
+              android:text="@string/ac2"
               android:textSize="20sp"
         android:layout_marginTop="16dp"/>
 
@@ -25,7 +25,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/className"
-              android:hint="IB Lit"
+              android:hint="@string/ac3"
               android:background="@drawable/edittext_style"
               android:padding="8dp"/>
 
@@ -43,13 +43,13 @@
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name of Teacher:"
+                android:text="@string/ac4"
                 android:textSize="20sp" />
 
             <EditText android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/teacherName"
-                android:hint="King"
+                android:hint="@string/ac5"
                 android:background="@drawable/edittext_style"
                 android:padding="8dp"
                 android:layout_margin="8dp" />
@@ -63,13 +63,13 @@
             android:layout_row="0">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Period:"
+                android:text="@string/ac6"
                 android:textSize="20sp" />
 
             <EditText android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/period"
-                android:hint="2"
+                android:hint="@string/ac7"
                 android:background="@drawable/edittext_style"
                 android:padding="8dp"
                 android:layout_gravity="center_horizontal"
@@ -80,12 +80,11 @@
     </GridLayout>
 
 
-
     <Button android:id="@+id/addClassButton"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:onClick="addClassButton_Clicked"
-            android:text="Add class"
+            android:text="@string/ac8"
             android:layout_marginTop="16dp"
             style="@style/Widget.AppCompat.Button.Colored"/>
 

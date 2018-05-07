@@ -15,6 +15,34 @@
         completions."
     </string>
 
+    <!-- Strings for the activity_add_class -->
+    <string name="ac1">Create a new class</string>
+    <string name="ac2">Name of Class:</string>
+    <string name="ac3">IB Lit</string>
+    <string name="ac4">Name of Teacher:</string>
+    <string name="ac5">King</string>
+    <string name="ac6">Period:</string>
+    <string name="ac7">2</string>
+    <string name="ac8">Add Class:</string>
+
+    <!-- Strings for the activity_add_event -->
+    <string name="ae1">Add an assignment</string>
+    <string name="ae2">Name:</string>
+    <string name="ae3">soccer practice</string>
+    <string name="ae4">Date:</string>
+    <string name="ae5">/</string>
+    <string name="ae6">Description:</string>
+    <string name="ae7">description</string>
+    <string name="ae8">Add Event:</string>
+
+    <!-- Strings for the activity_main -->
+    <string name="am1">Sign In</string>
+    <string name="am2">Log Out</string>
+    <string name="am3">Add Class</string>
+
+    <!-- Description of Grey Dot -->
+    <string name="greyDot">a grey dot used between the calendar and assignments list</string>
+
     <string-array name="monthArray">
         <item>January</item>
         <item>February</item>
