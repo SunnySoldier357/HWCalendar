@@ -16,12 +16,17 @@ import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
+
+import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity
 {
     // Private Properties
+    private AWSConnection awsConnection;
+    
     private DynamoDBMapper dynamoDBMapper;
     
     private Spinner monthSpinner;
@@ -34,17 +39,63 @@ public class AddEventActivity extends AppCompatActivity
     private Spinner amPmEndSpinner;
     
     private Button addAssignment;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-        initAWS();
-        initDynamoDBMapper();
+    
+        try
+        {
+            awsConnection = AWSConnection.getCurrentInstance(null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         setUpSpinners();
     }
+    
+    // Event Handlers
+    public void addEventButton_Clicked(View view)
+    {
+        boolean changeActivity = true;
+    
+        String day = GetDay();
+        String month = GetMonth();
+    
+        if (Integer.parseInt(day) == 31 && (month.equalsIgnoreCase("February")
+                || month.equalsIgnoreCase("April")
+                || month.equalsIgnoreCase("June")
+                || month.equalsIgnoreCase("September")
+                || month.equalsIgnoreCase("November")))
+        {
+            changeActivity = false;
+            Toast.makeText(this, "The month you selected doesn't have a 31st day", Toast.LENGTH_SHORT).show();
+        }
+        else if (Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("February")))
+        {
+            changeActivity = false;
+            Toast.makeText(this, "The month you selected doesn't have a 30th day", Toast.LENGTH_SHORT).show();
+        }
+    
+        if (changeActivity)
+        {
+            Intent intentHome = new Intent(this, MainActivity.class);
+            startActivity(intentHome);
+        }
+    }
+    
+    public void classButton_Clicked(View view)
+    {
+        getInformation();
+        Intent intentHome = new Intent(this, MainActivity.class);
+        startActivity(intentHome);
+    }
 
+    // Public Methods
     public void getInformation()
     {
         String TEMP_USER_ID = getIntent().getStringExtra("ClassName");
@@ -56,140 +107,6 @@ public class AddEventActivity extends AppCompatActivity
         storeAssignment(TEMP_USER_ID,dueDate,assignmentValue,descriptionValue);
     }
     
-    public void classButton_Clicked(View view)
-    {
-        getInformation();
-        Intent intentHome = new Intent(this, MainActivity.class);
-        startActivity(intentHome);
-    }
-
-    public void initAWS()
-    {
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
-        {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult)
-            {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
-    }
-    public void initDynamoDBMapper()
-    {
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        this.dynamoDBMapper = DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
-    }
-
-    public void storeAssignment(String user, String dueDate, String name, String description)
-    {
-        final Assignment assignment = new Assignment();
-        assignment.setUserID(user);
-        assignment.setDueDate(dueDate);
-        assignment.setAssignmentName(name);
-        assignment.setDescription(description);
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                dynamoDBMapper.save(assignment);
-            }
-        }).start();
-    }
-
-
-    // Event Handlers
-    public void addEventButton_Clicked(View view)
-    {
-        boolean changeActivity = true;
-
-        String day = GetDay();
-        String month = GetMonth();
-        String year = GetYear();
-        String startTime = GetStartTime();
-        String startAmPm = GetStartAmPm();
-        String endTime = GetEndTime();
-        String endAmPm = GetEndAmPm();
-        String eventName = GetEventName();
-
-        if(Integer.parseInt(day) == 31 && (month.equalsIgnoreCase("February")
-                || month.equalsIgnoreCase("April")
-                || month.equalsIgnoreCase("June")
-                || month.equalsIgnoreCase("September")
-                || month.equalsIgnoreCase("November")))
-        {
-            changeActivity = false;
-            Toast.makeText(this, "The month you selected doesn't have a 31st day", Toast.LENGTH_SHORT).show();
-        }
-
-        if(Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("february")))
-        {
-            changeActivity = false;
-            Toast.makeText(this, "The month you selected doesn't have a 30th day", Toast.LENGTH_SHORT).show();
-        }
-        
-        if (changeActivity == true)
-        {
-            Intent intentHome = new Intent(this, MainActivity.class);
-            /*
-            intentHome.putExtra("date", date);
-            intentHome.putExtra("endTime", GetEndTime());
-            intentHome.putExtra("eventName", GetEventName());
-            intentHome.putExtra("startTime", GetStartTime());
-            */
-            startActivity(intentHome);
-        }
-    }
-
-    // Accessors (gets the entered edit text data)
-    public String GetDay()
-    {
-        return daySpinner.getSelectedItem().toString();
-    }
-
-    public String GetMonth()
-    {
-        return monthSpinner.getSelectedItem().toString();
-    }
-
-    public String GetYear()
-    {
-        return yearSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEventName()
-    {
-        String eventName;
-        EditText input = findViewById(R.id.eventName);
-        eventName = input.getText().toString();
-        return eventName;
-    }
-
-    public String GetStartTime()
-    {
-        return startSpinner.getSelectedItem().toString();
-    }
-
-    public String GetStartAmPm()
-    {
-        return amPmStartSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEndTime()
-    {
-        return endSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEndAmPm()
-    {
-        return amPmEndSpinner.getSelectedItem().toString();
-    }
-
-
-    //setup (onCreate)
     public void setUpSpinners()
     {
         monthSpinner = findViewById(R.id.month);
@@ -197,13 +114,13 @@ public class AddEventActivity extends AppCompatActivity
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.monthArray));
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthSpinner.setAdapter(monthAdapter);
-
+        
         daySpinner = findViewById(R.id.day);
         ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(AddEventActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.dayArray));
         dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daySpinner.setAdapter(dayAdapter);
-
+        
         yearSpinner = findViewById(R.id.year);
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(AddEventActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.yearArray));
@@ -230,5 +147,65 @@ public class AddEventActivity extends AppCompatActivity
         amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         amPmEndSpinner.setAdapter(amPmAdapter);
         */
+    }
+    
+    public void storeAssignment(String user, String dueDate, String name, String description)
+    {
+        final Assignment assignment = new Assignment();
+        assignment.setUserID(user);
+        assignment.setDueDate(dueDate);
+        assignment.setAssignmentName(name);
+        assignment.setDescription(description);
+        
+        // TODO: Move to AWSConnection class
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                dynamoDBMapper.save(assignment);
+            }
+        }).start();
+    }
+
+    // Accessors
+    public String GetDay()
+    {
+        return daySpinner.getSelectedItem().toString();
+    }
+    
+    public String GetEndAmPm()
+    {
+        return amPmEndSpinner.getSelectedItem().toString();
+    }
+    
+    public String GetEndTime()
+    {
+        return endSpinner.getSelectedItem().toString();
+    }
+    
+    public String GetEventName()
+    {
+        return ((EditText) findViewById(R.id.eventName)).getText().toString();
+    }
+
+    public String GetMonth()
+    {
+        return monthSpinner.getSelectedItem().toString();
+    }
+    
+    public String GetStartAmPm()
+    {
+        return amPmStartSpinner.getSelectedItem().toString();
+    }
+    
+    public String GetStartTime()
+    {
+        return startSpinner.getSelectedItem().toString();
+    }
+
+    public String GetYear()
+    {
+        return yearSpinner.getSelectedItem().toString();
     }
 }
