@@ -14,23 +14,6 @@ public class User
     
     private String userId;
     
-    // Constructors
-    public User()
-    {
-        this(new ArrayList<String>(), "");
-    }
-    
-    public User(String userId)
-    {
-        this (new ArrayList<String>(), userId);
-    }
-    
-    public User(ArrayList<String> classes, String userId)
-    {
-        this.classes = classes;
-        this.userId = userId;
-    }
-    
     // Accessors
     @DynamoDBAttribute(attributeName = "classes")
     public ArrayList<String> getClasses()

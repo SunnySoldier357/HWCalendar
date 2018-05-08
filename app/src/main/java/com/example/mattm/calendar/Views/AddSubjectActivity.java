@@ -1,6 +1,5 @@
 package com.example.mattm.calendar.Views;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,71 +14,71 @@ import com.example.mattm.calendar.Models.User;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class AddSubjectActivity extends AppCompatActivity
 {
-    // Private Properties
-    private AWSConnection awsConnection;
-    
-    private DynamoDBMapper dynamoDBMapper;
-    
-    private String ID;
-    
+    AWSConnection awsConnection;
+    String ID;
+    DynamoDBMapper dynamoDBMapper;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_class);
-        
-        try
-        {
+        try {
             awsConnection = AWSConnection.getCurrentInstance(null);
-        }
-        catch (Exception e)
-        {
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
         ID = awsConnection.getUserID();
         dynamoDBMapper = awsConnection.initializeDynamoDBMapper();
     }
 
-    // TODO: Move to AWSConnection class
-    public AsyncTask<String, Void, Void> dataSet(final Subject subject)
-    {
-        @SuppressLint("StaticFieldLeak")
-        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>()
-        {
+    public AsyncTask<String, Void, Void> dataSet(final Subject subject) {
+        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
             @Override
-            protected Void doInBackground(String... strings)
-            {
+            protected Void doInBackground(String... strings) {
                 ArrayList<String> dataCollector = new ArrayList<>();
                 User oldUser = dynamoDBMapper.load(
                         User.class,
                         ID);
-                
-                User user = new User(ID);
-                if (null != oldUser)
+                User user = new User();
+                if(oldUser == null)
+                {
+                    user.setUserId(ID);
+                    dataCollector.add(subject.toString());
+                }
+                else
+                {
+                    user.setUserId(ID);
                     dataCollector = oldUser.getClasses();
-                dataCollector.add(subject.toString());
+                    dataCollector.add(subject.toString());
+                }
 
                 user.setClasses(dataCollector);
                 dynamoDBMapper.save(user);
-                
                 return null;
             }
         };
         return task;
     }
+
     
     // Event Handlers
     public void addClassButton_Clicked(View view)
     {
-        final Subject subject = new Subject(GetPeriod(), GetSubject(), GetTeacher());
-        
+        final Subject subject = new Subject();
+        String className = GetClassName();
+        String teacher = GetTeacher();
+        String period = GetPeriod();
+        subject.setTeacherName(teacher);
+        subject.setSubject(className);
+        subject.setPeriod(period);
         dataSet(subject).execute();
 
-        // TODO: Move to AWSConnection class
         new Thread(new Runnable()
         {
             @Override
@@ -89,12 +88,18 @@ public class AddSubjectActivity extends AppCompatActivity
             }
         }).start();
 
+
+        //Teacher t = new Teacher(className, teacher, period);
+
         Intent intentHome = new Intent(this, MainActivity.class);
+        /*intentHome.putExtra("className", GetClassName());
+        intentHome.putExtra("period", GetPeriod());
+        intentHome.putExtra("teacherName", GetTeacher());*/
         startActivity(intentHome);
     }
 
     // Accessors
-    public String GetSubject()
+    public String GetClassName()
     {
         return ((EditText) findViewById(R.id.className)).getText().toString();
     }
@@ -108,4 +113,6 @@ public class AddSubjectActivity extends AppCompatActivity
     {
         return ((EditText) findViewById(R.id.teacherName)).getText().toString();
     }
+
+
 }

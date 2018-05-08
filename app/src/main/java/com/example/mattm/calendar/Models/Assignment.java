@@ -14,20 +14,6 @@ public class Assignment
     private String dueDate;
     private String userID;
     
-    // Constructors
-    public Assignment()
-    {
-        this ("", "", "", "");
-    }
-    
-    public Assignment(String assignmentName, String description, String dueDate, String userID)
-    {
-        this.assignmentName = assignmentName;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.userID = userID;
-    }
-    
     // Accessors
     @DynamoDBAttribute(attributeName = "assignment")
     public String getAssignmentName()
