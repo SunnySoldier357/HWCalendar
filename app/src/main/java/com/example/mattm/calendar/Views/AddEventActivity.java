@@ -1,8 +1,8 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,20 +19,21 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddEventActivity extends AppCompatActivity
 {
-    // Private Properties
     private DynamoDBMapper dynamoDBMapper;
-    
-    private Spinner monthSpinner;
-    private Spinner daySpinner;
-    private Spinner yearSpinner;
-    
-    private Spinner startSpinner;
-    private Spinner amPmStartSpinner;
-    private Spinner endSpinner;
-    private Spinner amPmEndSpinner;
-    
+    Spinner monthSpinner;
+    Spinner daySpinner;
+    Spinner yearSpinner;
+    Spinner startSpinner;
+    Spinner amPmStartSpinner;
+    Spinner endSpinner;
+    Spinner amPmEndSpinner;
     private Button addAssignment;
 
     @Override

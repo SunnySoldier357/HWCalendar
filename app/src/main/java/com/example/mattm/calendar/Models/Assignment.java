@@ -5,6 +5,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
+import java.sql.Timestamp;
+
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
 public class Assignment
 {

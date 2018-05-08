@@ -5,6 +5,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-User")
 public class User

@@ -14,7 +14,6 @@ public class Subject
     private String period;
     private String subject;
     private String teacherName;
-    
     private List<String> enrolledStudents;
     
     // Accessors
@@ -24,12 +23,20 @@ public class Subject
     {
         return period;
     }
+    public void setPeriod(String period)
+    {
+        this.period = period;
+    }
     
     @DynamoDBAttribute(attributeName = "subject")
     public String getSubject()
     {
         return subject;
     }
+    public void setSubject(String subject)
+{
+    this.subject = subject;
+}
     
     @DynamoDBHashKey(attributeName = "teacher")
     @DynamoDBAttribute(attributeName = "teacher")
@@ -37,34 +44,19 @@ public class Subject
     {
         return teacherName;
     }
-
-    @DynamoDBAttribute(attributeName = "enrolledStudents")
-    public List<String> getEnrolledStudents()
-    {
-        return enrolledStudents;
-    }
-    
-    // Mutators
-    public void setPeriod(String period)
-    {
-        this.period = period;
-    }
-    
-    public void setSubject(String subject)
-    {
-        this.subject = subject;
-    }
-    
     public void setTeacherName(String teacherName)
     {
         this.teacherName = teacherName;
     }
-    
-    public void setEnrolledStudents(List<String> enrolledStudents)
-    {
+
+    @DynamoDBAttribute(attributeName = "enrolledStudents")
+    public List<String> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public void setEnrolledStudents(List<String> enrolledStudents) {
         this.enrolledStudents = enrolledStudents;
     }
-    
     // Overridden Methods
     @Override
     public String toString()
