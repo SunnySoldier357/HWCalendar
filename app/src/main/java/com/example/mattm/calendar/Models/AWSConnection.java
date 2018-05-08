@@ -60,9 +60,8 @@ public class AWSConnection
                 User oldUser = dynamoDBMapper.load(
                         User.class,
                         getUserID());
-                User user = new User();
                 
-                user.setUserId(getUserID());
+                User user = new User(getUserID());
                 if (null != oldUser)
                     dataCollector = oldUser.getClasses();
                 dataCollector.add(subjectName);

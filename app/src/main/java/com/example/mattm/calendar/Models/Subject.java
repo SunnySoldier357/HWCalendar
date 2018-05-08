@@ -5,6 +5,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Classes")
@@ -16,6 +17,20 @@ public class Subject
     private String teacherName;
     
     private List<String> enrolledStudents;
+    
+    // Constructors
+    public Subject()
+    {
+        this("", "", "");
+    }
+    
+    public Subject(String period, String subject, String teacherName)
+    {
+        this.period = period;
+        this.subject = subject;
+        this.teacherName = teacherName;
+        enrolledStudents = new ArrayList<>();
+    }
     
     // Accessors
     @DynamoDBRangeKey(attributeName = "period")

@@ -3,7 +3,6 @@ package com.example.mattm.calendar.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,16 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
-
-import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity
 {
@@ -90,23 +83,20 @@ public class AddEventActivity extends AppCompatActivity
     
     public void classButton_Clicked(View view)
     {
-        getInformation();
+        Assignment assignment = new Assignment
+        (
+            ((EditText) findViewById(R.id.eventName)).getText().toString(),
+            ((EditText) findViewById(R.id.descriptionText)).getText().toString(),
+            String.format("%s-%s-%sT", GetYear(), GetMonth(), GetDay()),
+            getIntent().getStringExtra("ClassName")
+        );
+        saveAssignment(assignment);
+        
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
     }
-
-    // Public Methods
-    public void getInformation()
-    {
-        String TEMP_USER_ID = getIntent().getStringExtra("ClassName");
-        EditText assignment = (EditText) findViewById(R.id.eventName);
-        String assignmentValue = assignment.getText().toString();
-        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";
-        EditText description = (EditText) findViewById(R.id.descriptionText);
-        String descriptionValue = description.getText().toString();
-        storeAssignment(TEMP_USER_ID,dueDate,assignmentValue,descriptionValue);
-    }
     
+    // Public Methods
     public void setUpSpinners()
     {
         monthSpinner = findViewById(R.id.month);
@@ -149,14 +139,8 @@ public class AddEventActivity extends AppCompatActivity
         */
     }
     
-    public void storeAssignment(String user, String dueDate, String name, String description)
+    public void saveAssignment(final Assignment assignment)
     {
-        final Assignment assignment = new Assignment();
-        assignment.setUserID(user);
-        assignment.setDueDate(dueDate);
-        assignment.setAssignmentName(name);
-        assignment.setDescription(description);
-        
         // TODO: Move to AWSConnection class
         new Thread(new Runnable()
         {
