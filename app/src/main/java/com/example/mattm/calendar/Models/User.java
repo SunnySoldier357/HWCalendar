@@ -33,24 +33,24 @@ public class User
     
     // Accessors
     @DynamoDBAttribute(attributeName = "classes")
-    public ArrayList<String> GetClasses()
+    public ArrayList<String> getClasses()
     {
         return classes;
     }
     
     @DynamoDBHashKey(attributeName = "userId")
-    public String GetUserId()
+    public String getUserId()
     {
         return userId;
     }
 
     // Mutators
-    public void SetClasses(ArrayList<String> classes)
+    public void setClasses(ArrayList<String> classes)
     {
         this.classes = classes;
     }
     
-    public void SetUserId(String userId)
+    public void setUserId(String userId)
     {
         this.userId = userId;
     }

@@ -41,14 +41,14 @@ public class AddEventActivity extends AppCompatActivity
     
         try
         {
-            awsConnection = AWSConnection.GetCurrentInstance(null);
+            awsConnection = AWSConnection.getCurrentInstance(null);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         
-        SetUpSpinners();
+        setUpSpinners();
     }
     
     // Event Handlers
@@ -90,14 +90,14 @@ public class AddEventActivity extends AppCompatActivity
             String.format("%s-%s-%sT", GetYear(), GetMonth(), GetDay()),
             getIntent().getStringExtra("ClassName")
         );
-        SaveAssignment(assignment);
+        saveAssignment(assignment);
         
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
     }
     
     // Public Methods
-    public void SetUpSpinners()
+    public void setUpSpinners()
     {
         monthSpinner = findViewById(R.id.month);
         ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(AddEventActivity.this,
@@ -139,7 +139,7 @@ public class AddEventActivity extends AppCompatActivity
         */
     }
     
-    public void SaveAssignment(final Assignment assignment)
+    public void saveAssignment(final Assignment assignment)
     {
         // TODO: Move to AWSConnection class
         new Thread(new Runnable()

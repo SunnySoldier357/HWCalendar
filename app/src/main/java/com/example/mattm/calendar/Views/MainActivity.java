@@ -23,11 +23,11 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
 {
     // Public Properties
-    public ArrayAdapter<String> EventsAdapter;
-    public ArrayAdapter<String> PeriodsAdapter;
+    public ArrayAdapter<String> eventsAdapter;
+    public ArrayAdapter<String> periodsAdapter;
     
-    public ArrayList<String> Events = new ArrayList<>();
-    public ArrayList<String> Periods = new ArrayList<>();
+    public ArrayList<String> events = new ArrayList<>();
+    public ArrayList<String> periods = new ArrayList<>();
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         AWSConnection awsConnection = null;
         try
         {
-            awsConnection = AWSConnection.GetCurrentInstance(this);
+            awsConnection = AWSConnection.getCurrentInstance(this);
             Log.d("TESTING", "PART 2");
         }
         catch (Exception e) {
@@ -48,26 +48,26 @@ public class MainActivity extends AppCompatActivity
         }
         
         Log.d("TESTING", "PART 3");
-        Log.d("TESTING", "ID of User: " + awsConnection.GetUserID());
+        Log.d("TESTING", "ID of User: " + awsConnection.getUserID());
 
         try
         {
-            Periods = awsConnection.GetPeriods().execute().get();
+            periods = awsConnection.getPeriods().execute().get();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         
-        Log.d("TESTING", "List of Periods: " + Periods.toString());
+        Log.d("TESTING", "List of periods: " + periods.toString());
         
-        EventsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, Events);
+        eventsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, events);
         ListView eventsListView = findViewById(R.id.eventsList);
-        eventsListView.setAdapter(EventsAdapter);
+        eventsListView.setAdapter(eventsAdapter);
         
-        PeriodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, Periods);
+        periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
         ListView periodsListView = findViewById(R.id.periodsList);
-        periodsListView.setAdapter(PeriodsAdapter);
+        periodsListView.setAdapter(periodsAdapter);
         
         periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -78,21 +78,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        GetCalendarDay();
+        calendar_Selector();
     }
     
     // Event Handlers
     public void logOut_Clicked(View view)
     {
         IdentityManager.getDefaultIdentityManager().signOut();
-        Periods.clear();
-        PeriodsAdapter.notifyDataSetChanged();
+        periods.clear();
+        periodsAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
     }
     
     public void addClassButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddSubjectActivity.class);
+        //intent.putExtra("ID", ID);
         startActivity(intent);
     }
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity
     public void classItem_Clicked(View view, int position)
     {
         Intent intent = new Intent(this,AddEventActivity.class);
-        intent.putExtra("ClassName", PeriodsAdapter.getItem(position));
+        intent.putExtra("ClassName", periodsAdapter.getItem(position).toString());
         startActivity(intent);
     }
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Gets the day selected on the calendar
      */
-    public void GetCalendarDay()
+    public void calendar_Selector()
     {
         CalendarView mainCalendarView = findViewById(R.id.calendar);
         mainCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()

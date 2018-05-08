@@ -40,15 +40,15 @@ public class AWSConnection
             }
         }).execute();
         
-        dynamoDBMapper = InitializeDynamoDBMapper();
-        userId = UpdateUserID().execute().get();
+        dynamoDBMapper = initializeDynamoDBMapper();
+        userId = updateUserID().execute().get();
         
         // TODO: Remove when done testing this
-        Log.d("TESTING", "User ID: " + GetUserID());
+        Log.d("TESTING", "User ID: " + getUserID());
     }
     
     // Public Methods
-    public AsyncTask<String, Void, Void> AddSubject(final String subjectName)
+    public AsyncTask<String, Void, Void> addSubject(final String subjectName)
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>()
@@ -59,14 +59,14 @@ public class AWSConnection
                 ArrayList<String> dataCollector = new ArrayList<>();
                 User oldUser = dynamoDBMapper.load(
                         User.class,
-                        GetUserID());
+                        getUserID());
                 
-                User user = new User(GetUserID());
+                User user = new User(getUserID());
                 if (null != oldUser)
-                    dataCollector = oldUser.GetClasses();
+                    dataCollector = oldUser.getClasses();
                 dataCollector.add(subjectName);
             
-                user.SetClasses(dataCollector);
+                user.setClasses(dataCollector);
                 dynamoDBMapper.save(user);
 
                 return null;
@@ -75,7 +75,7 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<String, Void, ArrayList<String>> GetPeriods()
+    public AsyncTask<String, Void, ArrayList<String>> getPeriods()
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, ArrayList<String>> task = new AsyncTask<String, Void, ArrayList<String>>()
@@ -85,15 +85,15 @@ public class AWSConnection
             {
                 User currentUser = dynamoDBMapper.load(
                         User.class,
-                        GetUserID());
+                        getUserID());
                 
-                return null != currentUser ? currentUser.GetClasses() : new ArrayList<String>();
+                return null != currentUser ? currentUser.getClasses() : new ArrayList<String>();
             }
         };
         return task;
     }
     
-    public DynamoDBMapper InitializeDynamoDBMapper()
+    public DynamoDBMapper initializeDynamoDBMapper()
     {
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         return DynamoDBMapper.builder()
@@ -102,7 +102,7 @@ public class AWSConnection
                 .build();
     }
     
-    public void SaveSubject(final Subject subject)
+    public void saveSubject(final Subject subject)
     {
         new Thread(new Runnable()
         {
@@ -114,7 +114,7 @@ public class AWSConnection
         }).start();
     }
     
-    public AsyncTask<Void, Void, String> UpdateUserID()
+    public AsyncTask<Void, Void, String> updateUserID()
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>()
@@ -136,7 +136,7 @@ public class AWSConnection
     }
     
     // Accessors
-    public String GetUserID()
+    public String getUserID()
     {
         return userId;
     }
@@ -144,7 +144,7 @@ public class AWSConnection
     // Singleton Pattern
     private static AWSConnection currentInstance = null;
     
-    public static AWSConnection GetCurrentInstance(Context context) throws ExecutionException, InterruptedException
+    public static AWSConnection getCurrentInstance(Context context) throws ExecutionException, InterruptedException
     {
         return null == currentInstance ? currentInstance = new AWSConnection(context) : currentInstance;
     }
