@@ -33,19 +33,19 @@ public class AddSubjectActivity extends AppCompatActivity
         
         try
         {
-            awsConnection = AWSConnection.getCurrentInstance(null);
+            awsConnection = AWSConnection.GetCurrentInstance(null);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         
-        ID = awsConnection.getUserID();
-        dynamoDBMapper = awsConnection.initializeDynamoDBMapper();
+        ID = awsConnection.GetUserID();
+        dynamoDBMapper = awsConnection.InitializeDynamoDBMapper();
     }
 
     // TODO: Move to AWSConnection class
-    public AsyncTask<String, Void, Void> dataSet(final Subject subject)
+    public AsyncTask<String, Void, Void> DataSet(final Subject subject)
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>()
@@ -60,10 +60,10 @@ public class AddSubjectActivity extends AppCompatActivity
                 
                 User user = new User(ID);
                 if (null != oldUser)
-                    dataCollector = oldUser.getClasses();
+                    dataCollector = oldUser.GetClasses();
                 dataCollector.add(subject.toString());
 
-                user.setClasses(dataCollector);
+                user.SetClasses(dataCollector);
                 dynamoDBMapper.save(user);
                 
                 return null;
@@ -77,7 +77,7 @@ public class AddSubjectActivity extends AppCompatActivity
     {
         final Subject subject = new Subject(GetPeriod(), GetSubject(), GetTeacher());
         
-        dataSet(subject).execute();
+        DataSet(subject).execute();
 
         // TODO: Move to AWSConnection class
         new Thread(new Runnable()

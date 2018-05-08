@@ -35,47 +35,47 @@ public class Subject
     // Accessors
     @DynamoDBRangeKey(attributeName = "period")
     @DynamoDBAttribute(attributeName = "period")
-    public String getPeriod()
+    public String GetPeriod()
     {
         return period;
     }
     
     @DynamoDBAttribute(attributeName = "subject")
-    public String getSubject()
+    public String GetSubject()
     {
         return subject;
     }
     
     @DynamoDBHashKey(attributeName = "teacher")
     @DynamoDBAttribute(attributeName = "teacher")
-    public String getTeacherName()
+    public String GetTeacherName()
     {
         return teacherName;
     }
 
     @DynamoDBAttribute(attributeName = "enrolledStudents")
-    public List<String> getEnrolledStudents()
+    public List<String> GetEnrolledStudents()
     {
         return enrolledStudents;
     }
     
     // Mutators
-    public void setPeriod(String period)
+    public void SetPeriod(String period)
     {
         this.period = period;
     }
     
-    public void setSubject(String subject)
+    public void SetSubject(String subject)
     {
         this.subject = subject;
     }
     
-    public void setTeacherName(String teacherName)
+    public void SetTeacherName(String teacherName)
     {
         this.teacherName = teacherName;
     }
     
-    public void setEnrolledStudents(List<String> enrolledStudents)
+    public void SetEnrolledStudents(List<String> enrolledStudents)
     {
         this.enrolledStudents = enrolledStudents;
     }
@@ -84,6 +84,6 @@ public class Subject
     @Override
     public String toString()
     {
-        return String.format("%s_%s_%s", getTeacherName(), getPeriod(), getSubject());
+        return String.format("%s_%s_%s", GetTeacherName(), GetPeriod(), GetSubject());
     }
 }

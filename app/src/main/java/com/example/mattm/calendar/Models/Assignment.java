@@ -30,48 +30,48 @@ public class Assignment
     
     // Accessors
     @DynamoDBAttribute(attributeName = "assignment")
-    public String getAssignmentName()
+    public String GetAssignmentName()
     {
         return assignmentName;
     }
     
     @DynamoDBAttribute(attributeName = "description")
-    public String getDescription()
+    public String GetDescription()
     {
         return description;
     }
     
     @DynamoDBRangeKey(attributeName = "dueDate")
     @DynamoDBAttribute(attributeName = "dueDate")
-    public String getDueDate()
+    public String GetDueDate()
     {
         return dueDate;
     }
     
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
-    public String getUserID()
+    public String GetUserID()
     {
         return userID;
     }
 
     // Mutators
-    public void setAssignmentName(String assignmentName)
+    public void SetAssignmentName(String assignmentName)
     {
         this.assignmentName = assignmentName;
     }
     
-    public void setDescription(String description)
+    public void SetDescription(String description)
     {
         this.description = description;
     }
     
-    public void setDueDate(String dueDate)
+    public void SetDueDate(String dueDate)
     {
         this.dueDate = dueDate;
     }
     
-    public void setUserID(String userID)
+    public void SetUserID(String userID)
     {
         this.userID = userID;
     }

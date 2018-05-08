@@ -14,7 +14,7 @@ import com.example.mattm.calendar.R;
 public class AuthenticatorActivity extends AppCompatActivity
 {
     // Public Properties
-    public String LOG_TAG = "Authenticator";
+    public final String LOG_TAG = "Authenticator";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class AuthenticatorActivity extends AppCompatActivity
                 Log.d(LOG_TAG, "User Signed In");
                 try
                 {
-                    AWSConnection.getCurrentInstance(null).updateUserID().execute().get();
+                    AWSConnection.GetCurrentInstance(null).UpdateUserID().execute().get();
                 }
                 catch (Exception e)
                 {
