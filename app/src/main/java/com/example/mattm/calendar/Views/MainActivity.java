@@ -127,5 +127,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void goToNav_Clicked(View view){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+
 
 }
