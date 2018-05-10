@@ -20,11 +20,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddEventActivity extends AppCompatActivity
@@ -100,15 +96,15 @@ public class AddEventActivity extends AppCompatActivity
                                     dueDate);
                 Assignment assignment = new Assignment();
                 if (null != oldAssignment){
-                    assignmentName = oldAssignment.getAssignmentName();
-                    descriptionName = oldAssignment.getDescription();
+                    assignmentName = oldAssignment.GetAssignments();
+                    descriptionName = oldAssignment.GetDescriptions();
                 }
                 descriptionName.add(description);
                 assignmentName.add(name);
-                assignment.setAssignmentName(assignmentName);
-                assignment.setDescription(descriptionName);
-                assignment.setUserID(user);
-                assignment.setDueDate(dueDate);
+                assignment.SetAssignments(assignmentName);
+                assignment.SetDescriptions(descriptionName);
+                assignment.SetUserID(user);
+                assignment.SetDueDate(dueDate);
                 dynamoDBMapper.save(assignment);
                 return null;
             }

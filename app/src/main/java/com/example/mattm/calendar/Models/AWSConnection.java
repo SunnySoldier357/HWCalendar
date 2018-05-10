@@ -11,24 +11,13 @@ import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 
-import org.w3c.dom.Attr;
-
-import java.lang.reflect.Array;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class AWSConnection
@@ -114,12 +103,12 @@ public class AWSConnection
                     SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     String date = localDateFormat.format(new Date()) + "T";
                     Assignment template = new Assignment();
-                    template.setUserID(classes);
+                    template.SetUserID(classes);
                     DynamoDBQueryExpression<Assignment> queryExpression = new DynamoDBQueryExpression<Assignment>()
                             .withHashKeyValues(template);
                     List<Assignment> ass = dynamoDBMapper.query(Assignment.class, queryExpression);
                     for(Assignment assignment : ass){
-                        for(String ass1 : assignment.getAssignmentName())
+                        for(String ass1 : assignment.GetAssignments())
                         assignments.add(ass1);
                     }
                 }
