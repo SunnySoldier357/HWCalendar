@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,9 @@ import com.example.mattm.calendar.R;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AddEventActivity extends AppCompatActivity
 {
@@ -48,13 +51,14 @@ public class AddEventActivity extends AppCompatActivity
 
     public void getInformation()
     {
-        String TEMP_USER_ID = getIntent().getStringExtra("ClassName");
+        String USER_ID = getIntent().getStringExtra("ClassName");
         EditText assignment = (EditText) findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
         String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";
+        Log.d("TESTING", USER_ID);
         EditText description = (EditText) findViewById(R.id.descriptionText);
         String descriptionValue = description.getText().toString();
-        storeAssignment(TEMP_USER_ID,dueDate,assignmentValue,descriptionValue);
+        storeAssignment(USER_ID,dueDate,assignmentValue,descriptionValue).execute();
     }
     
     public void classButton_Clicked(View view)
@@ -83,22 +87,33 @@ public class AddEventActivity extends AppCompatActivity
                 .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
                 .build();
     }
-
-    public void storeAssignment(String user, String dueDate, String name, String description)
-    {
-        final Assignment assignment = new Assignment();
-        assignment.setUserID(user);
-        assignment.setDueDate(dueDate);
-        assignment.setAssignmentName(name);
-        assignment.setDescription(description);
-        new Thread(new Runnable()
-        {
+    public AsyncTask<Void, Void, Void> storeAssignment(final String user, final String dueDate, final String name, final String description){
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
-            public void run()
-            {
+            protected Void doInBackground(Void... voids) {
+                List<String> assignmentName = new ArrayList<>();
+                List<String> descriptionName = new ArrayList<>();
+                Log.d("TESTING", user + " | " + dueDate);
+                Assignment oldAssignment = dynamoDBMapper.load(
+                                    Assignment.class,
+                                    user,
+                                    dueDate);
+                Assignment assignment = new Assignment();
+                if (null != oldAssignment){
+                    assignmentName = oldAssignment.getAssignmentName();
+                    descriptionName = oldAssignment.getDescription();
+                }
+                descriptionName.add(description);
+                assignmentName.add(name);
+                assignment.setAssignmentName(assignmentName);
+                assignment.setDescription(descriptionName);
+                assignment.setUserID(user);
+                assignment.setDueDate(dueDate);
                 dynamoDBMapper.save(assignment);
+                return null;
             }
-        }).start();
+        };
+        return task;
     }
 
 

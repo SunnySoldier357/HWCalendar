@@ -10,10 +10,25 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 
+import org.w3c.dom.Attr;
+
+import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class AWSConnection
@@ -86,6 +101,29 @@ public class AWSConnection
                     return currentUser.getClasses();
                 else
                     return new ArrayList<>();
+            }
+        };
+        return task;
+    }
+    public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> periods){
+        AsyncTask<Void, Void, ArrayList<String>> task = new AsyncTask<Void, Void, ArrayList<String>>() {
+            @Override
+            protected ArrayList<String> doInBackground(Void... voids) {
+                ArrayList<String> assignments = new ArrayList<>();
+                for(String classes: periods){
+                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String date = localDateFormat.format(new Date()) + "T";
+                    Assignment template = new Assignment();
+                    template.setUserID(classes);
+                    DynamoDBQueryExpression<Assignment> queryExpression = new DynamoDBQueryExpression<Assignment>()
+                            .withHashKeyValues(template);
+                    List<Assignment> ass = dynamoDBMapper.query(Assignment.class, queryExpression);
+                    for(Assignment assignment : ass){
+                        for(String ass1 : assignment.getAssignmentName())
+                        assignments.add(ass1);
+                    }
+                }
+                return assignments;
             }
         };
         return task;

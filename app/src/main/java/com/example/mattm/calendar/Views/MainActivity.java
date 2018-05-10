@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             periods = awsConnection.getPeriods().execute().get();
+            events = awsConnection.getAssignments(periods).execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

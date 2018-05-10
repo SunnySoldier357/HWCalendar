@@ -5,62 +5,64 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
 public class Assignment
 {
     // Private Properties
-    private String assignmentName;
-    private String description;
+    private List<String> assignmentName;
+    private List<String> description;
     private String dueDate;
     private String userID;
-    
-    // Accessors
-    @DynamoDBAttribute(attributeName = "assignment")
-    public String getAssignmentName()
-    {
-        return assignmentName;
-    }
-    
-    @DynamoDBAttribute(attributeName = "description")
-    public String getDescription()
-    {
-        return description;
-    }
-    
-    @DynamoDBRangeKey(attributeName = "dueDate")
-    @DynamoDBAttribute(attributeName = "dueDate")
-    public String getDueDate()
-    {
-        return dueDate;
-    }
-    
+
+
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBAttribute(attributeName = "userId")
     public String getUserID()
     {
         return userID;
     }
-
-    // Mutators
-    public void setAssignmentName(String assignmentName)
-    {
-        this.assignmentName = assignmentName;
-    }
-    
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-    
-    public void setDueDate(String dueDate)
-    {
-        this.dueDate = dueDate;
-    }
-    
     public void setUserID(String userID)
     {
         this.userID = userID;
     }
+
+    @DynamoDBAttribute(attributeName = "assignmentName")
+    public List<String> getAssignmentName()
+    {
+        return assignmentName;
+    }
+    public void setAssignmentName(List<String> assignmentName)
+    {
+        this.assignmentName = assignmentName;
+    }
+    @DynamoDBAttribute(attributeName = "description")
+    public List<String> getDescription()
+    {
+        return description;
+    }
+    public void setDescription(List<String> description)
+    {
+        this.description = description;
+    }
+    
+    @DynamoDBRangeKey(attributeName = "dueDate")
+    public String getDueDate()
+    {
+        return dueDate;
+
+    }
+    public void setDueDate(String dueDate)
+    {
+        this.dueDate = dueDate;
+    }
+
+
+    // Mutators
+
+    
+
+    
+
 }
