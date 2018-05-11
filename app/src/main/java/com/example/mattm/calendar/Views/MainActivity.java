@@ -105,6 +105,12 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
     
+    public void goToNav_Clicked(View view)
+    {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+    
     public void logOut_Clicked(View view)
     {
         IdentityManager.getDefaultIdentityManager().signOut();

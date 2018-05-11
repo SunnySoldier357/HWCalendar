@@ -12,6 +12,12 @@
         android:orientation="vertical">
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="goToNav_Clicked"
+            android:text="test nav"/>
+
+        <Button
             android:id="@+id/signInButton"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="89dp"
