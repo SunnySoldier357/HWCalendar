@@ -94,7 +94,7 @@ public class AWSConnection
                 for (String classes: periods)
                 {
                     SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    // TODO: Are you even using this date Kenneth?
+                    // TODO: For Future use
                     String date = localDateFormat.format(new Date()) + "T";
                 
                     Assignment template = new Assignment();
