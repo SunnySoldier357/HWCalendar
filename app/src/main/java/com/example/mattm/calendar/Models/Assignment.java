@@ -38,7 +38,7 @@ public class Assignment
     }
     
     // Public Methods
-    public void AddAssignment(String assignmentName, String description)
+    public void addAssignment(String assignmentName, String description)
     {
         assignments.add(assignmentName);
         descriptions.add(description);
@@ -46,46 +46,46 @@ public class Assignment
     
     // Accessors
     @DynamoDBAttribute(attributeName = "assignmentName")
-    public List<String> GetAssignments()
+    public List<String> getAssignments()
     {
         return assignments;
     }
     
     @DynamoDBAttribute(attributeName = "description")
-    public List<String> GetDescriptions()
+    public List<String> getDescriptions()
     {
         return descriptions;
     }
     
     @DynamoDBRangeKey(attributeName = "dueDate")
-    public String GetDueDate()
+    public String getDueDate()
     {
         return dueDate;
     }
     
     @DynamoDBHashKey(attributeName = "userId")
-    public String GetUserID()
+    public String getUserID()
     {
         return userID;
     }
     
     // Mutators
-    public void SetAssignments(List<String> assignments)
+    public void setAssignments(List<String> assignments)
     {
         this.assignments = assignments;
     }
 
-    public void SetDescriptions(List<String> descriptions)
+    public void setDescriptions(List<String> descriptions)
     {
         this.descriptions = descriptions;
     }
     
-    public void SetDueDate(String dueDate)
+    public void setDueDate(String dueDate)
     {
         this.dueDate = dueDate;
     }
     
-    public void SetUserID(String userID)
+    public void setUserID(String userID)
     {
         this.userID = userID;
     }

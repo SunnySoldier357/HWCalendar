@@ -144,15 +144,15 @@ public class AddEventActivity extends AppCompatActivity
                 Assignment assignment = new Assignment();
                 if (null != oldAssignment)
                 {
-                    assignmentName = oldAssignment.GetAssignments();
-                    descriptionName = oldAssignment.GetDescriptions();
+                    assignmentName = oldAssignment.getAssignments();
+                    descriptionName = oldAssignment.getDescriptions();
                 }
                 descriptionName.add(description);
                 assignmentName.add(name);
-                assignment.SetAssignments(assignmentName);
-                assignment.SetDescriptions(descriptionName);
-                assignment.SetUserID(user);
-                assignment.SetDueDate(dueDate);
+                assignment.setAssignments(assignmentName);
+                assignment.setDescriptions(descriptionName);
+                assignment.setUserID(user);
+                assignment.setDueDate(dueDate);
                 dynamoDBMapper.save(assignment);
             
                 return null;

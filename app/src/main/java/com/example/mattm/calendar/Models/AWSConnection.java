@@ -98,13 +98,13 @@ public class AWSConnection
                     String date = localDateFormat.format(new Date()) + "T";
                 
                     Assignment template = new Assignment();
-                    template.SetUserID(classes);
+                    template.setUserID(classes);
                 
                     DynamoDBQueryExpression<Assignment> queryExpression = new DynamoDBQueryExpression<Assignment>()
                             .withHashKeyValues(template);
                     List<Assignment> ass = dynamoDBMapper.query(Assignment.class, queryExpression);
                     for(Assignment assignment : ass)
-                        assignments.addAll(assignment.GetAssignments());
+                        assignments.addAll(assignment.getAssignments());
                 }
             
                 return assignments;
