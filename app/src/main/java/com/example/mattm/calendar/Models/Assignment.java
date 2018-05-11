@@ -5,61 +5,87 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
 public class Assignment
 {
     // Private Properties
-    private String assignmentName;
-    private String description;
+    private List<String> assignments;
+    private List<String> descriptions;
+    
     private String dueDate;
     private String userID;
     
-    // Accessors
-    @DynamoDBAttribute(attributeName = "assignment")
-    public String getAssignmentName()
+    // Constructors
+    public Assignment()
     {
-        return assignmentName;
+        this("", "", new ArrayList<String>(), new ArrayList<String>());
+    }
+    
+    public Assignment(String userID, String dueDate)
+    {
+        this(userID, dueDate, new ArrayList<String>(), new ArrayList<String>());
+    }
+    
+    public Assignment(String userID, String dueDate, List<String> assignments, List<String> descriptions)
+    {
+        this.assignments = assignments;
+        this.descriptions = descriptions;
+        this.dueDate = dueDate;
+        this.userID = userID;
+    }
+    
+    // Public Methods
+    public void AddAssignment(String assignmentName, String description)
+    {
+        assignments.add(assignmentName);
+        descriptions.add(description);
+    }
+    
+    // Accessors
+    @DynamoDBAttribute(attributeName = "assignmentName")
+    public List<String> GetAssignments()
+    {
+        return assignments;
     }
     
     @DynamoDBAttribute(attributeName = "description")
-    public String getDescription()
+    public List<String> GetDescriptions()
     {
-        return description;
+        return descriptions;
     }
     
     @DynamoDBRangeKey(attributeName = "dueDate")
-    @DynamoDBAttribute(attributeName = "dueDate")
-    public String getDueDate()
+    public String GetDueDate()
     {
         return dueDate;
     }
     
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBAttribute(attributeName = "userId")
-    public String getUserID()
+    public String GetUserID()
     {
         return userID;
     }
-
+    
     // Mutators
-    public void setAssignmentName(String assignmentName)
+    public void SetAssignments(List<String> assignments)
     {
-        this.assignmentName = assignmentName;
+        this.assignments = assignments;
+    }
+
+    public void SetDescriptions(List<String> descriptions)
+    {
+        this.descriptions = descriptions;
     }
     
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-    
-    public void setDueDate(String dueDate)
+    public void SetDueDate(String dueDate)
     {
         this.dueDate = dueDate;
     }
     
-    public void setUserID(String userID)
+    public void SetUserID(String userID)
     {
         this.userID = userID;
     }

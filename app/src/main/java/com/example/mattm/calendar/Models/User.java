@@ -5,7 +5,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-User")
 public class User
@@ -14,6 +13,23 @@ public class User
     private ArrayList<String> classes;
     
     private String userId;
+    
+    // Constructors
+    public User()
+    {
+        this("", new ArrayList<String>());
+    }
+    
+    public User(String userId)
+    {
+        this(userId, new ArrayList<String>());
+    }
+    
+    public User(String userId, ArrayList<String> classes)
+    {
+        this.classes = classes;
+        this.userId = userId;
+    }
     
     // Accessors
     @DynamoDBAttribute(attributeName = "classes")
