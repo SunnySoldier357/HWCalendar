@@ -16,18 +16,22 @@ import android.widget.Toast;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity
 {
     // Private Properties
     private Button addAssignment;
+    private AWSConnection awsConnection;
     
     private DynamoDBMapper dynamoDBMapper;
     
@@ -44,8 +48,14 @@ public class AddEventActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-        initAWS();
-        initDynamoDBMapper();
+        try {
+            awsConnection = AWSConnection.getCurrentInstance(null);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dynamoDBMapper = awsConnection.initializeDynamoDBMapper();
         setUpSpinners();
     }
     
@@ -86,82 +96,20 @@ public class AddEventActivity extends AppCompatActivity
         }
     }
     
-    public void classButton_Clicked(View view)
-    {
+    public void classButton_Clicked(View view) {
         // Get Information
         String USER_ID = getIntent().getStringExtra("ClassName");
         EditText assignment = (EditText) findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
-        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay()+ "T";
+        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay() + "T";
         Log.d("TESTING", USER_ID);
         EditText description = (EditText) findViewById(R.id.descriptionText);
         String descriptionValue = description.getText().toString();
-        storeAssignment(USER_ID,dueDate,assignmentValue,descriptionValue).execute();
-        
+        awsConnection.storeAssignment(USER_ID, dueDate, assignmentValue, descriptionValue).execute();
+
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
     }
-    
-    // Public Methods
-    // TODO: Move these 3 methods to AWSConnection class
-    public void initAWS()
-    {
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler()
-        {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult)
-            {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
-    }
-    
-    public void initDynamoDBMapper()
-    {
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        this.dynamoDBMapper = DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
-    }
-    
-    public AsyncTask<Void, Void, Void> storeAssignment(
-            final String user, final String dueDate, final String name, final String description)
-    {
-        @SuppressLint("StaticFieldLeak")
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... voids)
-            {
-                List<String> assignmentName = new ArrayList<>();
-                List<String> descriptionName = new ArrayList<>();
-                Log.d("TESTING", user + " | " + dueDate);
-                Assignment oldAssignment = dynamoDBMapper.load(
-                        Assignment.class,
-                        user,
-                        dueDate);
-                Assignment assignment = new Assignment();
-                if (null != oldAssignment)
-                {
-                    assignmentName = oldAssignment.getAssignments();
-                    descriptionName = oldAssignment.getDescriptions();
-                }
-                descriptionName.add(description);
-                assignmentName.add(name);
-                assignment.setAssignments(assignmentName);
-                assignment.setDescriptions(descriptionName);
-                assignment.setUserID(user);
-                assignment.setDueDate(dueDate);
-                dynamoDBMapper.save(assignment);
-            
-                return null;
-            }
-        };
-    
-        return task;
-    }
-
     // Private Methods
     private void setUpSpinners()
     {
