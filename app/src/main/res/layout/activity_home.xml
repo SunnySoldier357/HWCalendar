@@ -12,15 +12,49 @@
         layout="@layout/app_bar_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
+    
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_home"
-        app:menu="@menu/activity_home_drawer" />
+        android:fitsSystemWindows="false" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- top green part -->
+            <include
+                layout="@layout/nav_header_home"
+                android:id="@+id/green_header"
+                />
+
+            <!-- this is the menu part -->
+            <android.support.design.widget.NavigationView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/activity_home_drawer"
+                android:background="#f6f6f6">
+            </android.support.design.widget.NavigationView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:id="@+id/classAddButton"
+                android:onClick="classAddButton_Clicked"
+                android:text="Add New Class"
+                style="@style/Widget.AppCompat.Button.Colored"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </android.support.design.widget.NavigationView >
 
 </android.support.v4.widget.DrawerLayout>

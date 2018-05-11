@@ -99,15 +99,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
                                         //goes to add a class activity
-        } else if (id == R.id.nav_slideshow) {
-            Intent intent = new Intent(this, AddSubjectActivity.class);
-            //intent.putExtra("ID", ID);
-            startActivity(intent);
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -115,4 +107,11 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void classAddButton_Clicked(View view) {
+        Intent intent = new Intent(this, AddSubjectActivity.class);
+        //intent.putExtra("ID", ID);
+        startActivity(intent);
+    }
+
 }
