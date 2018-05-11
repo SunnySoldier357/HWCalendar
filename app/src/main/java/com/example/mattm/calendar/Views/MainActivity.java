@@ -20,46 +20,56 @@ import com.example.mattm.calendar.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
 {
     // Public Properties
+    public ArrayAdapter<String> periodsAdapter;
+    public ArrayAdapter<String> eventsAdapter;
+    
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
-    ArrayAdapter<String> periodsAdapter;
-    ArrayAdapter<String> eventsAdapter;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Initialising database stuff
+        // TODO: Remove when done testing
         Log.d("TESTING", "PART1");
+        
         AWSConnection awsConnection = null;
-        try {
+        try
+        {
             awsConnection = AWSConnection.getCurrentInstance(this);
+            // TODO: Remove when done testing
             Log.d("TESTING", "PART2");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (Exception e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
         }
+    
+        // TODO: Remove when done testing
         Log.d("TESTING", "PART3");
         Log.d("TESTING", "ID of User: " + awsConnection.getUserID());
 
-        try {
+        try
+        {
             periods = awsConnection.getPeriods().execute().get();
             events = awsConnection.getAssignments(periods).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        }
+        catch (Exception e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
         }
-        Log.d("TESTING", periods.toString());
+    
+        // TODO: Remove when done testing
+        Log.d("TESTING", "List of periods: " + periods.toString());
 
         periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
         ListView periodsListView = findViewById(R.id.periodsList);
@@ -78,10 +88,23 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        calendar_Selector();
+        GetCalendarDay();
     }
     
     // Event Handlers
+    public void addClassButton_Clicked(View view)
+    {
+        Intent intent = new Intent(this, AddSubjectActivity.class);
+        startActivity(intent);
+    }
+    
+    public void classItem_Clicked(View view, int position)
+    {
+        Intent intent = new Intent(this,AddEventActivity.class);
+        intent.putExtra("ClassName", periodsAdapter.getItem(position));
+        startActivity(intent);
+    }
+    
     public void logOut_Clicked(View view)
     {
         IdentityManager.getDefaultIdentityManager().signOut();
@@ -90,43 +113,31 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
     }
     
-    public void addClassButton_Clicked(View view)
-    {
-        Intent intent = new Intent(this, AddSubjectActivity.class);
-        //intent.putExtra("ID", ID);
-        startActivity(intent);
-    }
-
     public void signInButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AuthenticatorActivity.class);
         startActivity(intent);
     }
-
-    public void classItem_Clicked(View view, int position)
-    {
-        Intent intent = new Intent(this,AddEventActivity.class);
-        intent.putExtra("ClassName", periodsAdapter.getItem(position).toString());
-        startActivity(intent);
-    }
-
-    public void calendar_Selector()             //this gets the day selected on the calendar
+    
+    // Public Methods
+    public void GetCalendarDay()
     {
         CalendarView mainCalendarView = findViewById(R.id.calendar);
-        mainCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        
+        mainCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-                Calendar cal = Calendar.getInstance();  //converts  data to a date object
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
+            {
+                // Converts data to a Date object
+                Calendar cal = Calendar.getInstance();
                 cal.set(year, month, dayOfMonth);
-
-                Date d = cal.getTime();     //Date object of selected day on calendar
+    
+                // Date object of selected day on calendar
+                Date d = cal.getTime();
 
                 Toast.makeText(MainActivity.this, d.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
-
 }
