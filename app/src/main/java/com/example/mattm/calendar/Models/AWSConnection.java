@@ -28,6 +28,8 @@ public class AWSConnection
     private DynamoDBMapper dynamoDBMapper;
     
     private String userId = null;
+
+    private String LOG_TAG = "Testing AWSConnection";
     
     // Constructors
     private AWSConnection(Context context) throws ExecutionException, InterruptedException
@@ -39,17 +41,12 @@ public class AWSConnection
             @Override
             public void onComplete(AWSStartupResult awsStartupResult)
             {
-                // TODO: Remove when done testing!
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
+                Log.d(LOG_TAG, "AWSMobileClient is instantiated and you are connected to AWS!");
             }
         }).execute();
         
         dynamoDBMapper = initializeDynamoDBMapper();
         userId = updateUserID().execute().get();
-    
-        // TODO: Remove when done testing!
-        Log.d("TESTING", "User ID: " + getUserID());
-
     }
     public AsyncTask<Void, Void, Void> storeAssignment(
             final String user, final String dueDate, final String name, final String description)
@@ -62,7 +59,6 @@ public class AWSConnection
             {
                 List<String> assignmentName = new ArrayList<>();
                 List<String> descriptionName = new ArrayList<>();
-                Log.d("TESTING", user + " | " + dueDate);
                 Assignment oldAssignment = dynamoDBMapper.load(
                         Assignment.class,
                         user,
@@ -84,7 +80,6 @@ public class AWSConnection
                 assignment.setUserID(user);
                 assignment.setDueDate(dueDate);
                 dynamoDBMapper.save(assignment);
-
                 return null;
             }
         };

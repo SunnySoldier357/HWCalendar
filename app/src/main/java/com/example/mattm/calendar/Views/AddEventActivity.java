@@ -102,7 +102,6 @@ public class AddEventActivity extends AppCompatActivity
         EditText assignment = (EditText) findViewById(R.id.eventName);
         String assignmentValue = assignment.getText().toString();
         String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay() + "T";
-        Log.d("TESTING", USER_ID);
         EditText description = (EditText) findViewById(R.id.descriptionText);
         String descriptionValue = description.getText().toString();
         awsConnection.storeAssignment(USER_ID, dueDate, assignmentValue, descriptionValue).execute();

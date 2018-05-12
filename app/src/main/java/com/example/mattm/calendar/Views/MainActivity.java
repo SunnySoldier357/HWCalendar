@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
+
+    private String LOG_TAG = "Testing MainActivity";
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,25 +39,16 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Initialising database stuff
-        // TODO: Remove when done testing
-        Log.d("TESTING", "PART1");
-        
         AWSConnection awsConnection = null;
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(this);
-            // TODO: Remove when done testing
-            Log.d("TESTING", "PART2");
         }
         catch (Exception e)
         {
             // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
         }
-    
-        // TODO: Remove when done testing
-        Log.d("TESTING", "PART3");
-        Log.d("TESTING", "ID of User: " + awsConnection.getUserID());
 
         try
         {
@@ -67,9 +60,10 @@ public class MainActivity extends AppCompatActivity
             // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
         }
-    
-        // TODO: Remove when done testing
-        Log.d("TESTING", "List of periods: " + periods.toString());
+
+        Log.d(LOG_TAG, "List of periods: " + periods.toString());
+        Log.d(LOG_TAG, "User: " + awsConnection.getUserID());
+        Log.d(LOG_TAG, "Assignments: " + events.toString());
 
         periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
         ListView periodsListView = findViewById(R.id.periodsList);
@@ -117,6 +111,7 @@ public class MainActivity extends AppCompatActivity
         periods.clear();
         periodsAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Logged Out");
     }
     
     public void signInButton_Clicked(View view)
