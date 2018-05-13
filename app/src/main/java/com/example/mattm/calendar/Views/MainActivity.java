@@ -224,18 +224,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {        //goes to the login screen
+        if (id == R.id.sign_in) {        //goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_gallery) {        //logs out
+        } else if (id == R.id.log_out) {        //logs out
             IdentityManager.getDefaultIdentityManager().signOut();
             periods.clear();
             periodsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
             Log.d(LOG_TAG, "Logged Out");
 
-        } else if (id == R.id.nav_manage) {         //preferences?
+        } else if (id == R.id.preferences) {         //preferences?
 
         }
 

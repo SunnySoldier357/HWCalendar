@@ -93,14 +93,14 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
                                         //goes to the login screen
-        if (id == R.id.nav_camera) {
+        if (id == R.id.sign_in) {
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
                                         //doesn't do anything, in the future will be used to logout
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.log_out) {
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
                                         //goes to add a class activity
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.preferences) {
 
         }
 
