@@ -46,7 +46,7 @@
                 android:layout_margin="8dp"
                 android:id="@+id/classAddButton"
                 android:onClick="classAddButton_Clicked"
-                android:text="Add New Class"
+                android:text="@string/ac1"
                 style="@style/Widget.AppCompat.Button.Colored"
                 />
 

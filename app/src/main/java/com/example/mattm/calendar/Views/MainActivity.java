@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Hamburger menu:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -208,7 +209,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_gallery)
         {
             // TODO: Add logout logic here
+            IdentityManager.getDefaultIdentityManager().signOut();
+            periods.clear();
+            periodsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+            Log.d(LOG_TAG, "Logged Out");
         }
         else if (id == R.id.nav_manage)
         {
