@@ -16,7 +16,7 @@
     </string>
 
     <!-- Strings for the activity_add_class -->
-    <string name="ac1">Create a new class</string>
+    <string name="ac1">Add a new class</string>
     <string name="ac2">Name of Class:</string>
     <string name="ac3">IB Lit</string>
     <string name="ac4">Name of Teacher:</string>

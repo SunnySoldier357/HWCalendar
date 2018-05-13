@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Hamburger menu:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,15 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
-
-
-
-
 
 
         //----------------------------------------------------------------------------------------------------------------------
@@ -139,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /*
-
+    todo: delete this
     public void addClassButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddSubjectActivity.class);
@@ -191,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     //---------------------------------------------------------------------------------------------------------------------
-
+    //more Hamburger menu:
 
 
     @Override
@@ -231,15 +223,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        //goes to the login screen
-        if (id == R.id.nav_camera) {
+
+        if (id == R.id.nav_camera) {        //goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
-            //doesn't do anything, in the future will be used to logout
-        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_gallery) {        //logs out
+            IdentityManager.getDefaultIdentityManager().signOut();
+            periods.clear();
+            periodsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-            //goes to add a class activity
-        } else if (id == R.id.nav_manage) {
+            Log.d(LOG_TAG, "Logged Out");
+
+        } else if (id == R.id.nav_manage) {         //preferences?
 
         }
 
