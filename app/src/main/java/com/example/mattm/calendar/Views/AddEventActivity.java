@@ -1,11 +1,8 @@
 package com.example.mattm.calendar.Views;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,18 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.mattm.calendar.Models.AWSConnection;
-import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity
@@ -48,13 +37,17 @@ public class AddEventActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-        try {
+        
+        try
+        {
             awsConnection = AWSConnection.getCurrentInstance(null);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (Exception e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
         }
+        
         dynamoDBMapper = awsConnection.initializeDynamoDBMapper();
         setUpSpinners();
     }
@@ -66,6 +59,7 @@ public class AddEventActivity extends AppCompatActivity
     
         String day = GetDay();
         String month = GetMonth();
+        
         // TODO: Are we doing anything with this?
         String year = GetYear();
         String startTime = GetStartTime();
@@ -96,7 +90,8 @@ public class AddEventActivity extends AppCompatActivity
         }
     }
     
-    public void classButton_Clicked(View view) {
+    public void classButton_Clicked(View view)
+    {
         // Get Information
         String USER_ID = getIntent().getStringExtra("ClassName");
         EditText assignment = (EditText) findViewById(R.id.eventName);
@@ -109,6 +104,7 @@ public class AddEventActivity extends AppCompatActivity
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
     }
+    
     // Private Methods
     private void setUpSpinners()
     {
@@ -129,6 +125,7 @@ public class AddEventActivity extends AppCompatActivity
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.yearArray));
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(yearAdapter);
+        
         // TODO: Do we need this?
         /*
         startSpinner = findViewById(R.id.startTimeSpinner);

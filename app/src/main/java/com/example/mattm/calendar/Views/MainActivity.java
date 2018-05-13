@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,8 +21,6 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.amazonaws.mobile.auth.core.IdentityManager;
-
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
@@ -30,15 +28,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+{
+    // Constants
+    private final String LOG_TAG = "Testing MainActivity";
+    
     // Public Properties
     public ArrayAdapter<String> periodsAdapter;
     public ArrayAdapter<String> eventsAdapter;
     
     public ArrayList<String> periods = new ArrayList<>();
     public ArrayList<String> events = new ArrayList<>();
-
-    private String LOG_TAG = "Testing MainActivity";
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -66,18 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
-
-
-
-
-
-
-        //----------------------------------------------------------------------------------------------------------------------
 
         // Initialising database stuff
         AWSConnection awsConnection = null;
@@ -102,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
 
+        // TODO: Remove when done testing
         Log.d(LOG_TAG, "List of periods: " + periods.toString());
         Log.d(LOG_TAG, "User: " + awsConnection.getUserID());
         Log.d(LOG_TAG, "Assignments: " + events.toString());
@@ -127,45 +118,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     
     // Event Handlers
-
-
-
-
+    public void classAddButton_Clicked(View view)
+    {
+        Intent intent = new Intent(this, AddSubjectActivity.class);
+        startActivity(intent);
+    }
+    
     public void classItem_Clicked(View view, int position)
     {
         Intent intent = new Intent(this,AddEventActivity.class);
         intent.putExtra("ClassName", periodsAdapter.getItem(position));
         startActivity(intent);
     }
-
-    /*
-
-    public void addClassButton_Clicked(View view)
-    {
-        Intent intent = new Intent(this, AddSubjectActivity.class);
-        startActivity(intent);
-    }
-    
-    public void goToNav_Clicked(View view)
-    {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-    
-    public void logOut_Clicked(View view)
-    {
-        IdentityManager.getDefaultIdentityManager().signOut();
-        periods.clear();
-        periodsAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Logged Out");
-    }
-    
-    public void signInButton_Clicked(View view)
-    {
-        Intent intent = new Intent(this, AuthenticatorActivity.class);
-        startActivity(intent);
-    }   */
     
     // Public Methods
     public void GetCalendarDay()
@@ -189,74 +153,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-
-    //---------------------------------------------------------------------------------------------------------------------
-
-
-
+    // Overridden Methods
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+    public void onBackPressed()
+    {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        else
             super.onBackPressed();
-        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+        
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+    
+    }
+    
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture)
+    {
+        // TODO: Do something?
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        //goes to the login screen
-        if (id == R.id.nav_camera) {
+        
+        
+        if (id == R.id.nav_camera)
+        {
+            // Goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
-            //doesn't do anything, in the future will be used to logout
-        } else if (id == R.id.nav_gallery) {
+        }
+        else if (id == R.id.nav_gallery)
+        {
+            // TODO: Add logout logic here
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-            //goes to add a class activity
-        } else if (id == R.id.nav_manage) {
-
+        }
+        else if (id == R.id.nav_manage)
+        {
+            // TODO: Go to add a class activity
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        
         return true;
-    }
-
-    public void classAddButton_Clicked(View view) {
-        Intent intent = new Intent(this, AddSubjectActivity.class);
-        //intent.putExtra("ID", ID);
-        startActivity(intent);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }

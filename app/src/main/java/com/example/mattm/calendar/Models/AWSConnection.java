@@ -48,44 +48,7 @@ public class AWSConnection
         dynamoDBMapper = initializeDynamoDBMapper();
         userId = updateUserID().execute().get();
     }
-    public AsyncTask<Void, Void, Void> storeAssignment(
-            final String user, final String dueDate, final String name, final String description)
-    {
-        @SuppressLint("StaticFieldLeak")
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... voids)
-            {
-                List<String> assignmentName = new ArrayList<>();
-                List<String> descriptionName = new ArrayList<>();
-                Assignment oldAssignment = dynamoDBMapper.load(
-                        Assignment.class,
-                        user,
-                        dueDate);
-                Assignment assignment = new Assignment();
-                if (null != oldAssignment)
-                {
-                    assignmentName = oldAssignment.getAssignments();
-                    descriptionName = oldAssignment.getDescriptions();
-                }
-                if(description.equals("")){
-                    descriptionName.add(" ");
-                }else{
-                    descriptionName.add(description);
-                }
-                assignmentName.add(name);
-                assignment.setAssignments(assignmentName);
-                assignment.setDescriptions(descriptionName);
-                assignment.setUserID(user);
-                assignment.setDueDate(dueDate);
-                dynamoDBMapper.save(assignment);
-                return null;
-            }
-        };
-        return task;
-    }
-
+    
     // Public Methods
     public AsyncTask<String, Void, Void> addSubject(final String subjectName)
     {
@@ -186,6 +149,46 @@ public class AWSConnection
                 dynamoDBMapper.save(subject);
             }
         }).start();
+    }
+    
+    public AsyncTask<Void, Void, Void> storeAssignment(
+            final String user, final String dueDate, final String name, final String description)
+    {
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... voids)
+            {
+                List<String> assignmentName = new ArrayList<>();
+                List<String> descriptionName = new ArrayList<>();
+                Assignment oldAssignment = dynamoDBMapper.load(
+                        Assignment.class,
+                        user,
+                        dueDate);
+                Assignment assignment = new Assignment();
+                if (null != oldAssignment)
+                {
+                    assignmentName = oldAssignment.getAssignments();
+                    descriptionName = oldAssignment.getDescriptions();
+                }
+                
+                if ("".equals(description))
+                    descriptionName.add(" ");
+                else
+                    descriptionName.add(description);
+                
+                assignmentName.add(name);
+                assignment.setAssignments(assignmentName);
+                assignment.setDescriptions(descriptionName);
+                assignment.setUserID(user);
+                assignment.setDueDate(dueDate);
+                dynamoDBMapper.save(assignment);
+                
+                return null;
+            }
+        };
+        return task;
     }
     
     public AsyncTask<Void, Void, String> updateUserID()
