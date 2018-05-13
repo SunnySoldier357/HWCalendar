@@ -101,22 +101,20 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemS
     {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        
-        // Goes to the login screen
-        if (id == R.id.nav_camera)
+                                        
+        if (id == R.id.sign_in) 
         {
+            // Goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_gallery)
+        } 
+        else if (id == R.id.log_out) 
         {
             // Doesn't do anything, in the future will be used to logout
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_manage)
+        } else if (id == R.id.preferences) 
         {
-            // Goes to add a class activity
-            // TODO: Do something?
+            //goes to add a class activity
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

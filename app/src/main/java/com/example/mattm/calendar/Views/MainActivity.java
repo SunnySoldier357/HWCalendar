@@ -198,26 +198,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        
-        
-        if (id == R.id.nav_camera)
-        {
+
+        if (id == R.id.sign_in) 
+        {        
             // Goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_gallery)
-        {
-            // TODO: Add logout logic here
+
+        } 
+        else if (id == R.id.log_out) 
+        {        
+            // Logs out
             IdentityManager.getDefaultIdentityManager().signOut();
             periods.clear();
             periodsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
             Log.d(LOG_TAG, "Logged Out");
-        }
-        else if (id == R.id.nav_manage)
-        {
-            // TODO: Go to add a class activity
+        } 
+        else if (id == R.id.preferences) 
+        {         
+            // Preferences?
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
