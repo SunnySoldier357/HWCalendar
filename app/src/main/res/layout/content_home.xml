@@ -9,23 +9,16 @@
     tools:showIn="@layout/app_bar_home"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="go to main"
-        android:onClick="goHomeButton_Clicked"/>
-
     <CalendarView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/calL">
+        android:id="@+id/calendar">
     </CalendarView>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cList">
+        android:id="@+id/eventsList">
 
     </ListView>
 
