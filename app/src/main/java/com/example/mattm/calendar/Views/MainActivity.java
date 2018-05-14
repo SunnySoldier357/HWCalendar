@@ -187,11 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     
     }
     
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture)
-    {
-        // TODO: Do something?
-    }
+    @Override           //for the hamburger menu. idk what it does.
+    public void onPointerCaptureChanged(boolean hasCapture) { }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

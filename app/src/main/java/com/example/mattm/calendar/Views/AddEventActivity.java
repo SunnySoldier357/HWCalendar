@@ -60,7 +60,7 @@ public class AddEventActivity extends AppCompatActivity
         String day = GetDay();
         String month = GetMonth();
         
-        // TODO: Are we doing anything with this?
+        // TODO: Are we doing anything with this?   -only if we do start time...
         String year = GetYear();
         String startTime = GetStartTime();
         String startAmPm = GetStartAmPm();
@@ -126,7 +126,7 @@ public class AddEventActivity extends AppCompatActivity
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(yearAdapter);
         
-        // TODO: Do we need this?
+        // TODO: Do we need this? -only if we are going to do start and end time for assignments / events
         /*
         startSpinner = findViewById(R.id.startTimeSpinner);
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(AddEventActivity.this,
