@@ -82,9 +82,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         catch (Exception e)
         {
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
+
+            // Temporary solution
             e.printStackTrace();
             Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
-    }
+        }
 
         try
         {
@@ -93,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         catch (Exception e)
         {
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
+
+            // Temporary solution
             e.printStackTrace();
             Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
@@ -156,6 +162,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, d.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Private Methods
+    private void setUpHeader()
+    {
+        // TODO: Connect this with AWS fopr the actual username - Kenneth
+        String usernameh1 = "mattTest sample";
+        String emailh1 = "spamybox6@gmail.com";
+
+        // Sets the Hamburger Menu header with login info
+        TextView tv_username = (TextView) findViewById(R.id.username_header);   
+        tv_username.setText(usernameh1);
+        TextView tv_email = (TextView) findViewById(R.id.email_header);
+        tv_email.setText(emailh1);
     }
 
     // Overridden Methods
@@ -226,15 +246,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         
         return true;
     }
-
-    private void setUpHeader(){
-        String usernameh1 = "mattTest sample";      //todo: connect this with AWS for the actual username - kenneth
-        String emailh1 = "spamybox6@gmail.com";
-
-        TextView tv_username = (TextView) findViewById(R.id.username_header);   //sets the hamburger menu header with login info
-        tv_username.setText(usernameh1);
-        TextView tv_email = (TextView) findViewById(R.id.email_header);
-        tv_email.setText(emailh1);
-    }
-
 }

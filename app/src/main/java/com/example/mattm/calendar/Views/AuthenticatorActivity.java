@@ -37,6 +37,9 @@ public class AuthenticatorActivity extends AppCompatActivity
                 }
                 catch (Exception e)
                 {
+                    // TODO: UI - Show error message to User in a way they will understand for different error messages
+
+                    // Temporary solution
                     e.printStackTrace();
                     Toast.makeText(AuthenticatorActivity.this, "Unable to connect to network", Toast.LENGTH_SHORT).show();
                 }
