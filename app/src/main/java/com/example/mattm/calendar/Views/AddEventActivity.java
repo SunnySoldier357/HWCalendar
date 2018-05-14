@@ -44,8 +44,8 @@ public class AddEventActivity extends AppCompatActivity
         }
         catch (Exception e)
         {
-            // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
+            Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
         
         dynamoDBMapper = awsConnection.initializeDynamoDBMapper();

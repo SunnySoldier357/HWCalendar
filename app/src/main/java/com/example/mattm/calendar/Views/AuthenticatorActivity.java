@@ -3,6 +3,7 @@ package com.example.mattm.calendar.Views;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.SignInStateChangeListener;
@@ -36,8 +37,8 @@ public class AuthenticatorActivity extends AppCompatActivity
                 }
                 catch (Exception e)
                 {
-                    // TODO: UI - Show error message to User in a way they will understand
                     e.printStackTrace();
+                    Toast.makeText(AuthenticatorActivity.this, "Unable to connect to network", Toast.LENGTH_SHORT).show();
                 }
             }
 

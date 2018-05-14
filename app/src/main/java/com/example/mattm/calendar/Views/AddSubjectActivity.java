@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.example.mattm.calendar.Models.AWSConnection;
@@ -37,8 +38,8 @@ public class AddSubjectActivity extends AppCompatActivity
         }
         catch (Exception e)
         {
-            // TODO: UI - Show error message to User in a way they will understand
             e.printStackTrace();
+            Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
         
         ID = awsConnection.getUserID();
