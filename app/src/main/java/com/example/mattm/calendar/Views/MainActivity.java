@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 {
     // Constants
     private final String LOG_TAG = "Testing MainActivity";
-    
+
+
     // Public Properties
     public ArrayAdapter<String> periodsAdapter;
     public ArrayAdapter<String> eventsAdapter;
@@ -49,30 +50,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Hamburger menu:
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setUpHeader();
+        setUpFloatingActionButton();
+
 
         // Initialising database stuff
         AWSConnection awsConnection = null;
@@ -121,13 +112,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                classItem_Clicked(view, position);
+                classItem_Clicked(position);
             }
         });
 
         GetCalendarDay();
     }
-    
+
+
+
     // Event Handlers
     public void classAddButton_Clicked(View view)
     {
@@ -135,13 +128,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
     
-    public void classItem_Clicked(View view, int position)
+    public void classItem_Clicked(int position)
     {
         Intent intent = new Intent(this,AddEventActivity.class);
         intent.putExtra("ClassName", periodsAdapter.getItem(position));
         startActivity(intent);
     }
-    
+
+    public void setUpFloatingActionButton(){
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        setUpHeader();
+    }
+
+
     // Public Methods
     public void GetCalendarDay()
     {
@@ -167,18 +176,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Private Methods
     private void setUpHeader()
     {
-        // TODO: Connect this with AWS fopr the actual username - Kenneth
+        // TODO: Connect this with AWS for the actual username - Kenneth
         String usernameh1 = "mattTest sample";
         String emailh1 = "spamybox6@gmail.com";
 
         // Sets the Hamburger Menu header with login info
-        TextView tv_username = (TextView) findViewById(R.id.username_header);   
+        TextView tv_username = findViewById(R.id.username_header);
         tv_username.setText(usernameh1);
-        TextView tv_email = (TextView) findViewById(R.id.email_header);
+        TextView tv_email = findViewById(R.id.email_header);
         tv_email.setText(emailh1);
     }
 
-    // Overridden Methods
+    // Overridden Methods - hamburger menu events
     @Override
     public void onBackPressed()
     {
@@ -220,30 +229,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.sign_in) 
-        {        
+        if (id == R.id.sign_in)
+        {
             // Goes to the login screen
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
-
-        } 
-        else if (id == R.id.log_out) 
-        {        
+        }
+        
+        else if (id == R.id.log_out)
+        {
             // Logs out
             IdentityManager.getDefaultIdentityManager().signOut();
             periods.clear();
             periodsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
             Log.d(LOG_TAG, "Logged Out");
-        } 
-        else if (id == R.id.preferences) 
-        {         
+        }
+        else if (id == R.id.preferences)
+        {
             // Preferences?
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        
+
         return true;
     }
 }
