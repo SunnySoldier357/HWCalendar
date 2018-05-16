@@ -22,14 +22,15 @@ import java.util.concurrent.ExecutionException;
 
 public class AWSConnection
 {
+    // Constants
+    private final String LOG_TAG = "Testing AWSConnection";
+    
     // Private Properties
     private Context context;
     
     private DynamoDBMapper dynamoDBMapper;
     
     private String userId = null;
-
-    private String LOG_TAG = "Testing AWSConnection";
     
     // Constructors
     private AWSConnection(Context context) throws ExecutionException, InterruptedException
@@ -99,8 +100,9 @@ public class AWSConnection
                 
                     DynamoDBQueryExpression<Assignment> queryExpression = new DynamoDBQueryExpression<Assignment>()
                             .withHashKeyValues(template);
-                    List<Assignment> ass = dynamoDBMapper.query(Assignment.class, queryExpression);
-                    for(Assignment assignment : ass)
+                    
+                    List<Assignment> results = dynamoDBMapper.query(Assignment.class, queryExpression);
+                    for (Assignment assignment : results)
                         assignments.addAll(assignment.getAssignments());
                 }
             
@@ -160,31 +162,16 @@ public class AWSConnection
             @Override
             protected Void doInBackground(Void... voids)
             {
-                List<String> assignmentName = new ArrayList<>();
-                List<String> descriptionName = new ArrayList<>();
-                Assignment oldAssignment = dynamoDBMapper.load(
-                        Assignment.class,
+                Assignment oldAssignment = dynamoDBMapper.load(Assignment.class, user, dueDate);
+                Assignment assignment = new Assignment(
                         user,
-                        dueDate);
-                Assignment assignment = new Assignment();
-                if (null != oldAssignment)
-                {
-                    assignmentName = oldAssignment.getAssignments();
-                    descriptionName = oldAssignment.getDescriptions();
-                }
-                
-                if ("".equals(description))
-                    descriptionName.add(" ");
-                else
-                    descriptionName.add(description);
-                
-                assignmentName.add(name);
-                assignment.setAssignments(assignmentName);
-                assignment.setDescriptions(descriptionName);
-                assignment.setUserID(user);
-                assignment.setDueDate(dueDate);
+                        dueDate,
+                        null != oldAssignment ? oldAssignment.getAssignments() : new ArrayList<String>(),
+                        null != oldAssignment ? oldAssignment.getDescriptions() : new ArrayList<String>()
+                );
+                assignment.addAssignment(name, "".equals(description) ? " " : description);
                 dynamoDBMapper.save(assignment);
-                
+    
                 return null;
             }
         };
