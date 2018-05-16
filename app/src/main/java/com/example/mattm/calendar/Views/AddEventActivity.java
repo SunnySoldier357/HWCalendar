@@ -56,43 +56,6 @@ public class AddEventActivity extends AppCompatActivity
     }
     
     // Event Handlers
-    public void addEventButton_Clicked(View view)
-    {
-        boolean changeActivity = true;
-    
-        String day = GetDay();
-        String month = GetMonth();
-        
-        // TODO: Are we doing anything with this?   -only if we do start time...
-        String year = GetYear();
-        String startTime = GetStartTime();
-        String startAmPm = GetStartAmPm();
-        String endTime = GetEndTime();
-        String endAmPm = GetEndAmPm();
-        String eventName = GetEventName();
-    
-        if (Integer.parseInt(day) == 31 && (month.equalsIgnoreCase("February")
-                || month.equalsIgnoreCase("April")
-                || month.equalsIgnoreCase("June")
-                || month.equalsIgnoreCase("September")
-                || month.equalsIgnoreCase("November")))
-        {
-            changeActivity = false;
-            Toast.makeText(this, "The month you selected doesn't have a 31st day", Toast.LENGTH_SHORT).show();
-        }
-        else if (Integer.parseInt(day) == 30 && (month.equalsIgnoreCase("February")))
-        {
-            changeActivity = false;
-            Toast.makeText(this, "The month you selected doesn't have a 30th day", Toast.LENGTH_SHORT).show();
-        }
-    
-        if (changeActivity)
-        {
-            Intent intentHome = new Intent(this, MainActivity.class);
-            startActivity(intentHome);
-        }
-    }
-    
     public void classButton_Clicked(View view)
     {
         // Get Information
@@ -128,29 +91,6 @@ public class AddEventActivity extends AppCompatActivity
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.yearArray));
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(yearAdapter);
-        
-        // TODO: Do we need this? -only if we are going to do start and end time for assignments / events
-        /*
-        startSpinner = findViewById(R.id.startTimeSpinner);
-        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.timeArray));
-        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        startSpinner.setAdapter(timeAdapter);
-
-        amPmStartSpinner = findViewById(R.id.amPmStart);
-        ArrayAdapter<String> amPmAdapter = new ArrayAdapter<>(AddEventActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.amPmArray));
-        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        amPmStartSpinner.setAdapter(amPmAdapter);
-
-        endSpinner = findViewById(R.id.endTimeSpinner);
-        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        endSpinner.setAdapter(timeAdapter);
-
-        amPmEndSpinner = findViewById(R.id.amPmEnd);
-        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        amPmEndSpinner.setAdapter(amPmAdapter);
-        */
     }
     
     // Accessors
