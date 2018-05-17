@@ -5,32 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
-
-import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity
 {
     // Private Properties
-    private Button addAssignment;
     private AWSConnection awsConnection;
-    
-    private DynamoDBMapper dynamoDBMapper;
     
     private Spinner monthSpinner;
     private Spinner daySpinner;
     private Spinner yearSpinner;
-    private Spinner startSpinner;
-    private Spinner amPmStartSpinner;
-    private Spinner endSpinner;
-    private Spinner amPmEndSpinner;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +40,6 @@ public class AddEventActivity extends AppCompatActivity
             Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
         
-        dynamoDBMapper = awsConnection.initializeDynamoDBMapper();
         setUpSpinners();
     }
     
@@ -59,13 +47,12 @@ public class AddEventActivity extends AppCompatActivity
     public void classButton_Clicked(View view)
     {
         // Get Information
-        String USER_ID = getIntent().getStringExtra("ClassName");
-        EditText assignment = (EditText) findViewById(R.id.eventName);
-        String assignmentValue = assignment.getText().toString();
-        String dueDate = GetYear() + "-" + GetMonth() + "-" + GetDay() + "T";
-        EditText description = (EditText) findViewById(R.id.descriptionText);
-        String descriptionValue = description.getText().toString();
-        awsConnection.storeAssignment(USER_ID, dueDate, assignmentValue, descriptionValue).execute();
+        awsConnection.storeAssignment(
+                getIntent().getStringExtra("ClassName"),
+                String.format("%s-%s-%sT", GetYear(), GetMonth(), GetDay()),
+                GetEventName(),
+                GetDescription()
+        ).execute();
 
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
@@ -98,6 +85,16 @@ public class AddEventActivity extends AppCompatActivity
     {
         return daySpinner.getSelectedItem().toString();
     }
+    
+    public String GetDescription()
+    {
+        return ((EditText) findViewById(R.id.descriptionText)).getText().toString();
+    }
+    
+    public String GetEventName()
+    {
+        return ((EditText) findViewById(R.id.eventName)).getText().toString();
+    }
 
     public String GetMonth()
     {
@@ -107,30 +104,5 @@ public class AddEventActivity extends AppCompatActivity
     public String GetYear()
     {
         return yearSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEventName()
-    {
-        return ((EditText) findViewById(R.id.eventName)).getText().toString();
-    }
-
-    public String GetStartTime()
-    {
-        return startSpinner.getSelectedItem().toString();
-    }
-
-    public String GetStartAmPm()
-    {
-        return amPmStartSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEndTime()
-    {
-        return endSpinner.getSelectedItem().toString();
-    }
-
-    public String GetEndAmPm()
-    {
-        return amPmEndSpinner.getSelectedItem().toString();
     }
 }
