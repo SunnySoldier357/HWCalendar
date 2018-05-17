@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Calendar</string>
     <string name="title_activity_login">Sign in</string>
-
+    
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -14,7 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-
+    
     <!-- Strings for the activity_add_class -->
     <string name="ac1">Add a new class</string>
     <string name="ac2">Name of Class:</string>
@@ -24,7 +24,7 @@
     <string name="ac6">Period:</string>
     <string name="ac7">2</string>
     <string name="ac8">Add Class:</string>
-
+    
     <!-- Strings for the activity_add_event -->
     <string name="ae1">Add an assignment</string>
     <string name="ae2">Name:</string>
@@ -34,15 +34,15 @@
     <string name="ae6">Description:</string>
     <string name="ae7">description</string>
     <string name="ae8">Add Event:</string>
-
+    
     <!-- Strings for the activity_main -->
     <string name="am1">Sign In</string>
     <string name="am2">Log Out</string>
     <string name="am3">Add Class</string>
-
+    
     <!-- Description of Grey Dot -->
     <string name="greyDot">a grey dot used between the calendar and assignments list</string>
-
+    
     <string-array name="monthArray">
         <item>January</item>
         <item>February</item>
@@ -57,7 +57,7 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-
+    
     <string-array name="dayArray">
         <item>1</item>
         <item>2</item>
@@ -91,7 +91,7 @@
         <item>30</item>
         <item>31</item>
     </string-array>
-
+    
     <string-array name="yearArray">
         <item>2018</item>
         <item>2019</item>
@@ -100,7 +100,7 @@
         <item>2022</item>
         <item>2023</item>
     </string-array>
-
+    
     <string-array name="timeArray">
         <item>1:00</item>
         <item>1:30</item>
@@ -126,7 +126,7 @@
         <item>12:00</item>
         <item>12:30</item>
     </string-array>
-
+    
     <string-array name="amPmArray">
         <item>am</item>
         <item>pm</item>
@@ -139,6 +139,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

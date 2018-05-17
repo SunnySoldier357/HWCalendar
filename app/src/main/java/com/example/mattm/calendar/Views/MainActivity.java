@@ -122,8 +122,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Event Handlers
     public void subjectAddButton_Clicked(View view)
     {
-        Intent intent = new Intent(this, AddSubjectActivity.class);
-        startActivity(intent);
+        // Close the hamburger menu first
+        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+        
+        AddSubjectDialogFragment dialog = new AddSubjectDialogFragment();
+        dialog.show(getSupportFragmentManager(), "Dialog");
+        // Intent intent = new Intent(this, AddSubjectActivity.class);
+        // startActivity(intent);
     }
     
     public void subjectItem_Clicked(int position)
