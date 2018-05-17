@@ -51,7 +51,7 @@ public class AWSConnection
     }
     
     // Public Methods
-    public AsyncTask<String, Void, Void> addSubject(final String subjectName)
+    public AsyncTask<String, Void, Void> addSubject(final Subject subject)
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>()
@@ -67,10 +67,11 @@ public class AWSConnection
                 User user = new User(userId);
                 if (null != oldUser)
                     dataCollector = oldUser.getClasses();
-                dataCollector.add(subjectName);
+                dataCollector.add(subject.toString());
             
                 user.setClasses(dataCollector);
                 dynamoDBMapper.save(user);
+                dynamoDBMapper.save(subject);
             
                 return null;
             }
