@@ -7,18 +7,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.widget.ArrayAdapter;
+
+import com.example.mattm.calendar.Models.AWSConnection;
+
+import java.util.ArrayList;
+
+import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 
 public class AddSubjectDialogFragment extends DialogFragment
 {
+    // Private Properties
+    private ArrayList<String> subjects;
+    
+    private AWSConnection awsConnection;
+    
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        try
+        {
+            awsConnection = AWSConnection.getCurrentInstance(null);
+            subjects = ConvertListToReadable(awsConnection.getSubjects().execute().get());
+        }
+        catch (Exception e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
+            e.printStackTrace();
+        }
+        
+        // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
+        ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, subjects);
+        
         // Using Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Classes")
-                .setMessage("Test Message")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener()
+                .setAdapter(subjectsAdapter, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // Do Something if the class is clicked
+                    }
+                })
+                .setPositiveButton("Add Class", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
