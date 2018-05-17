@@ -70,6 +70,7 @@ public class AWSConnection
                 dataCollector.add(subject.toString());
             
                 user.setClasses(dataCollector);
+                
                 dynamoDBMapper.save(user);
                 dynamoDBMapper.save(subject);
             
@@ -114,7 +115,7 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<String, Void, ArrayList<String>> getPeriods()
+    public AsyncTask<String, Void, ArrayList<String>> getSubjects()
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, ArrayList<String>> task = new AsyncTask<String, Void, ArrayList<String>>()
@@ -131,27 +132,6 @@ public class AWSConnection
         };
         
         return task;
-    }
-    
-    public DynamoDBMapper initializeDynamoDBMapper()
-    {
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
-        return DynamoDBMapper.builder()
-                .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                .build();
-    }
-    
-    public void saveSubject(final Subject subject)
-    {
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                dynamoDBMapper.save(subject);
-            }
-        }).start();
     }
     
     public AsyncTask<Void, Void, Void> storeAssignment(
@@ -200,6 +180,16 @@ public class AWSConnection
         };
         
         return task;
+    }
+    
+    // Private Methods
+    private DynamoDBMapper initializeDynamoDBMapper()
+    {
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+        return DynamoDBMapper.builder()
+                .dynamoDBClient(dynamoDBClient)
+                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                .build();
     }
     
     // Accessors

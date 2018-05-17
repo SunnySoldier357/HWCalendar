@@ -30,18 +30,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     // Constants
     private final String LOG_TAG = "Testing MainActivity";
-
-
-    // Public Properties
-    public ArrayAdapter<String> periodsAdapter;
-    public ArrayAdapter<String> eventsAdapter;
     
-    public ArrayList<String> periods = new ArrayList<>();
-    public ArrayList<String> events = new ArrayList<>();
+    // Public Properties
+    public ArrayAdapter<String> subjectsAdapter;
+    public ArrayAdapter<String> assignmentsAdapter;
+    
+    public ArrayList<String> subjects = new ArrayList<>();
+    public ArrayList<String> assignments = new ArrayList<>();
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Hamburger menu:
+        // Hamburger menu
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,8 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         setUpFloatingActionButton();
-
-
+        
         // Initialising database stuff
         AWSConnection awsConnection = null;
         try
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         try
         {
-            periods = awsConnection.getPeriods().execute().get();
-            events = awsConnection.getAssignments(periods).execute().get();
+            subjects = ConvertListToReadable(awsConnection.getSubjects().execute().get());
+            assignments = awsConnection.getAssignments(subjects).execute().get();
         }
         catch (Exception e)
         {
@@ -95,62 +95,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // TODO: Remove when done testing
-        Log.d(LOG_TAG, "List of periods: " + periods.toString());
+        Log.d(LOG_TAG, "List of subjects: " + subjects.toString());
         Log.d(LOG_TAG, "User: " + awsConnection.getUserID());
-        Log.d(LOG_TAG, "Assignments: " + events.toString());
+        Log.d(LOG_TAG, "Assignments: " + assignments.toString());
+        
+        subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, subjects);
+        ListView subjectsListView = findViewById(R.id.periodsList);
+        subjectsListView.setAdapter(subjectsAdapter);
 
-        periodsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, periods);
-        ListView periodsListView = findViewById(R.id.periodsList);
-        periodsListView.setAdapter(periodsAdapter);
+        assignmentsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, assignments);
+        ListView assignmentsListView = findViewById(R.id.eventsList);
+        assignmentsListView.setAdapter(assignmentsAdapter);
 
-        eventsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, events);
-        ListView eventsListView = findViewById(R.id.eventsList);
-        eventsListView.setAdapter(eventsAdapter);
-
-        periodsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        subjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                classItem_Clicked(position);
+                subjectItem_Clicked(position);
             }
         });
 
         GetCalendarDay();
     }
-
-
-
+    
     // Event Handlers
-    public void classAddButton_Clicked(View view)
+    public void subjectAddButton_Clicked(View view)
     {
         Intent intent = new Intent(this, AddSubjectActivity.class);
         startActivity(intent);
     }
     
-    public void classItem_Clicked(int position)
+    public void subjectItem_Clicked(int position)
     {
         Intent intent = new Intent(this,AddEventActivity.class);
-        intent.putExtra("ClassName", periodsAdapter.getItem(position));
+        intent.putExtra("ClassName", subjectsAdapter.getItem(position));
         startActivity(intent);
     }
-
-    public void setUpFloatingActionButton(){
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        setUpHeader();
-    }
-
-
+    
     // Public Methods
     public void GetCalendarDay()
     {
@@ -186,8 +168,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView tv_email = findViewById(R.id.email_header);
         tv_email.setText(emailh1);
     }
+    
+    public void setUpFloatingActionButton()
+    {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        
+        setUpHeader();
+    }
 
-    // Overridden Methods - hamburger menu events
+    // Overridden Methods
     @Override
     public void onBackPressed()
     {
@@ -219,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     
     }
     
-    @Override           //for the hamburger menu. idk what it does.
+    @Override
     public void onPointerCaptureChanged(boolean hasCapture) { }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -235,13 +233,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, AuthenticatorActivity.class);
             startActivity(intent);
         }
-        
         else if (id == R.id.log_out)
         {
             // Logs out
             IdentityManager.getDefaultIdentityManager().signOut();
-            periods.clear();
-            periodsAdapter.notifyDataSetChanged();
+            subjects.clear();
+            subjectsAdapter.notifyDataSetChanged();
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
             Log.d(LOG_TAG, "Logged Out");
         }

@@ -5,6 +5,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,28 @@ public class Subject
         this.period = period;
         this.subject = subject;
         this.teacherName = teacherName;
+    }
+    
+    // Static Methods
+    public static ArrayList<String> ConvertListToReadable(ArrayList<String> list)
+    {
+        ArrayList<String> result = new ArrayList<>();
+        
+        for (String dbKey: list)
+            result.add(ConvertToReadable(dbKey));
+        
+        return result;
+    }
+    
+    /**
+     * Converts a string that represents the Subject key in the Database into a String that only has the subject
+     * for display purposes
+     * @param dbKey The String that represents the Database key for any Subject
+     * @return A String that represents the name of the Subject for display purposes
+     */
+    public static String ConvertToReadable(String dbKey)
+    {
+        return dbKey.split("_")[2];
     }
     
     // Accessors
