@@ -7,7 +7,8 @@
             android:columnCount="1"
             android:orientation="vertical"
             android:rowCount="10"
-            tools:context="com.example.mattm.calendar.Views.AddEventActivity" >
+            tools:context="com.example.mattm.calendar.Views.AddEventActivity"
+            android:background="@color/lines">
 
     <TextView
         android:layout_width="wrap_content"
@@ -111,6 +112,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
         android:onClick="classButton_Clicked"
-        android:text="@string/ae8" />
+        android:text="@string/ae8"
+        />
 
 </LinearLayout>

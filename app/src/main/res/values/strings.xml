@@ -27,12 +27,12 @@
     
     <!-- Strings for the activity_add_event -->
     <string name="ae1">Add an assignment</string>
-    <string name="ae2">Name:</string>
-    <string name="ae3">soccer practice</string>
+    <string name="ae2">Assignment:</string>
+    <string name="ae3">Textbook Reading</string>
     <string name="ae4">Date:</string>
     <string name="ae5">/</string>
     <string name="ae6">Description:</string>
-    <string name="ae7">description</string>
+    <string name="ae7">Read and Take Notes from Tindall and Shi on Pages 111 - 222</string>
     <string name="ae8">Add Event:</string>
     
     <!-- Strings for the activity_main -->
