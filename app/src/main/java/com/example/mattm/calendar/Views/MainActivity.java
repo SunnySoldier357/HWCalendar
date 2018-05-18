@@ -239,11 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.log_out)
         {
             // Logs out
-            IdentityManager.getDefaultIdentityManager().signOut();
-            subjects.clear();
-            subjectsAdapter.notifyDataSetChanged();
-            Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-            Log.d(LOG_TAG, "Logged Out");
+            logOutFunction();
         }
         else if (id == R.id.preferences)
         {
@@ -254,5 +250,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    public void logOutFunction() {
+        IdentityManager.getDefaultIdentityManager().signOut();
+        subjects.clear();
+        subjectsAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Logged Out");
     }
 }
