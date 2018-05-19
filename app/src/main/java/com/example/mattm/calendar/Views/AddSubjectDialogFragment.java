@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.mattm.calendar.Models.AWSConnection;
+import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,8 @@ public class AddSubjectDialogFragment extends DialogFragment
                     public void onClick(DialogInterface dialog, int which)
                     {
                         // Do Something if the class is clicked
+                        Toast.makeText(getActivity(), String.format("'%s' class selected!", subjects.get(which)),
+                                Toast.LENGTH_LONG).show();
                     }
                 })
                 .setPositiveButton("Add Class", new DialogInterface.OnClickListener()
@@ -66,6 +70,8 @@ public class AddSubjectDialogFragment extends DialogFragment
                     public void onClick(DialogInterface dialog, int which)
                     {
                         // Nothing is required here
+                        // TODO: Remove wen done testing
+                        Toast.makeText(getActivity(), "Dialog Canceled", Toast.LENGTH_LONG).show();
                     }
                 });
         
