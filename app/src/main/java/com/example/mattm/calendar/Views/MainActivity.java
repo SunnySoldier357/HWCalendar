@@ -32,7 +32,7 @@ import java.util.Date;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity
 {
     // Constants
     private final String LOG_TAG = "Testing MainActivity";
@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         setUpFloatingActionButton();
         
@@ -223,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) { }
 
+    /*
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
@@ -232,9 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.sign_in)
         {
-            // Goes to the login screen
-            Intent intent = new Intent(this, AuthenticatorActivity.class);
-            startActivity(intent);
+
         }
         else if (id == R.id.log_out)
         {
@@ -250,13 +246,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    } */
+
+    public void signInFunction(View view) {
+        // Goes to the login screen
+        closeDrawerFunction();
+        Intent intent = new Intent(this, AuthenticatorActivity.class);
+        startActivity(intent);
     }
 
-    public void logOutFunction() {
+    public void logOutFunction(View view) { //logs out
         IdentityManager.getDefaultIdentityManager().signOut();
         subjects.clear();
         subjectsAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
         Log.d(LOG_TAG, "Logged Out");
+        closeDrawerFunction();
+    }
+
+    public void closeDrawerFunction() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }

@@ -15,7 +15,7 @@
     <android.support.design.widget.NavigationView android:layout_width="wrap_content"
                                                   android:layout_height="match_parent"
                                                   android:layout_gravity="start"
-                                                  android:background="#f6f6f6"
+                                                  android:background="#f1f8f8"
                                                   android:fitsSystemWindows="false">
         
         <LinearLayout android:layout_width="match_parent"
@@ -27,11 +27,6 @@
                      layout="@layout/nav_header_home" />
             
             <!-- this is the menu part -->
-            <android.support.design.widget.NavigationView android:id="@+id/nav_view"
-                                                          android:layout_width="match_parent"
-                                                          android:layout_height="wrap_content"
-                                                          android:background="#f6f6f6"
-                                                          app:menu="@menu/activity_home_drawer"/>
             
             <Button android:id="@+id/subjectAddButton"
                     style="@style/Widget.AppCompat.Button.Colored"
