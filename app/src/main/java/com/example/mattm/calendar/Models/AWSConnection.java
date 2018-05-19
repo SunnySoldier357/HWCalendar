@@ -172,7 +172,6 @@ public class AWSConnection
                         "us-west-2:b63ba028-3e34-42f1-9b9b-6d90f70c6ac7", // Identity Pool ID
                         Regions.US_WEST_2 // Region
                 );
-                //Log.d(LOG_TAG, String.valueOf(credentialsProvider.getCredentials()));
                 userId = credentialsProvider.getIdentityId();
                 
                 return userId;

@@ -49,7 +49,7 @@ public class AuthenticatorActivity extends AppCompatActivity
             public void onUserSignedOut()
             {
                 // TODO: Do something here like return to login page?
-                Toast.makeText(AuthenticatorActivity.this, "does this logout?", Toast.LENGTH_LONG).show();
+                Toast.makeText(AuthenticatorActivity.this, "Does this logout?", Toast.LENGTH_LONG).show();
             }
         });
         

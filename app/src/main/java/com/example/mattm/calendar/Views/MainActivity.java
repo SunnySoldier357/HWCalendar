@@ -156,17 +156,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Private Methods
-    private void setUpHeader()
+    public void closeDrawerFunction()
     {
-        // TODO: Connect this with AWS for the actual username - Kenneth
-        String usernameh1 = "mattTest sample";
-        String emailh1 = "spamybox6@gmail.com";
-
-        // Sets the Hamburger Menu header with login info
-        TextView tv_username = findViewById(R.id.username_header);
-        tv_username.setText(usernameh1);
-        TextView tv_email = findViewById(R.id.email_header);
-        tv_email.setText(emailh1);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+    
+    public void logOutFunction(View view)
+    {
+        // Logs out
+        IdentityManager.getDefaultIdentityManager().signOut();
+        subjects.clear();
+        subjectsAdapter.notifyDataSetChanged();
+        
+        // TODO: Remove when done testing
+        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Logged Out");
+        closeDrawerFunction();
     }
     
     public void setUpFloatingActionButton()
@@ -181,8 +187,30 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        
+    
         setUpHeader();
+    }
+    
+    private void setUpHeader()
+    {
+        // TODO: Connect this with AWS for the actual username - Kenneth
+        String usernameh1 = "mattTest sample";
+        String emailh1 = "spamybox6@gmail.com";
+
+        // Sets the Hamburger Menu header with login info
+        TextView tv_username = findViewById(R.id.username_header);
+        tv_username.setText(usernameh1);
+        TextView tv_email = findViewById(R.id.email_header);
+        tv_email.setText(emailh1);
+    }
+    
+    public void signInFunction(View view)
+    {
+        // Goes to the login screen
+        closeDrawerFunction();
+        
+        Intent intent = new Intent(this, AuthenticatorActivity.class);
+        startActivity(intent);
     }
 
     // Overridden Methods
@@ -219,53 +247,4 @@ public class MainActivity extends AppCompatActivity
     
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) { }
-
-    /*
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.sign_in)
-        {
-
-        }
-        else if (id == R.id.log_out)
-        {
-            // Logs out
-            logOutFunction();
-        }
-        else if (id == R.id.preferences)
-        {
-            // Preferences?
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
-    } */
-
-    public void signInFunction(View view) {
-        // Goes to the login screen
-        closeDrawerFunction();
-        Intent intent = new Intent(this, AuthenticatorActivity.class);
-        startActivity(intent);
-    }
-
-    public void logOutFunction(View view) { //logs out
-        IdentityManager.getDefaultIdentityManager().signOut();
-        subjects.clear();
-        subjectsAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Logged Out");
-        closeDrawerFunction();
-    }
-
-    public void closeDrawerFunction() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-    }
 }
