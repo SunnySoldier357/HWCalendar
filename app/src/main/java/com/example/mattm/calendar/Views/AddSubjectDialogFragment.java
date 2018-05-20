@@ -1,5 +1,6 @@
 package com.example.mattm.calendar.Views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -7,7 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mattm.calendar.Models.AWSConnection;
@@ -43,8 +47,14 @@ public class AddSubjectDialogFragment extends DialogFragment
         ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, subjects);
         
         // Using Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); //builder of the dialog
+
+        final EditText input =  new EditText(builder.getContext()); //sets the editText (search bar)
+        input.setHint("Search for a class");
+        //input.setBackgroundResource(R.drawable.edittext_style);
+
         builder.setTitle("Classes")
+                .setView(input)
                 .setAdapter(subjectsAdapter, new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -60,6 +70,9 @@ public class AddSubjectDialogFragment extends DialogFragment
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
+                        String search = input.getText().toString();     //todo: use this to search for classes, recommend using a thread - kenneth
+                        //Toast.makeText(builder.getContext(), search, Toast.LENGTH_SHORT).show();
+
                         Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
                         getActivity().startActivity(intent);
                     }

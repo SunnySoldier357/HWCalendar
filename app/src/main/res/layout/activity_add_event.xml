@@ -3,12 +3,11 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
             android:columnCount="1"
             android:orientation="vertical"
             android:rowCount="10"
             tools:context="com.example.mattm.calendar.Views.AddEventActivity"
-            android:background="@color/lines">
+            android:background="@color/colorBackground">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ae2"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginStart="8dp"/>
 
     <EditText android:id="@+id/eventName"
               android:layout_marginEnd="100dp"
@@ -42,7 +42,8 @@
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/ae4"
-              android:textSize="20sp"/>
+              android:textSize="20sp"
+              android:layout_marginStart="8dp"/>
 
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -93,7 +94,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ae6"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginStart="8dp"/>
 
     <EditText
         android:id="@+id/descriptionText"
