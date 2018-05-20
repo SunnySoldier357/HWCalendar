@@ -197,10 +197,8 @@ public class MainActivity extends AppCompatActivity
         String emailh1 = "spamybox6@gmail.com";
 
         // Sets the Hamburger Menu header with login info
-        TextView tv_username = findViewById(R.id.username_header);
-        tv_username.setText(usernameh1);
-        TextView tv_email = findViewById(R.id.email_header);
-        tv_email.setText(emailh1);
+        ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
+        ((TextView) findViewById(R.id.email_header)).setText(emailh1);
     }
     
     public void signInFunction(View view)

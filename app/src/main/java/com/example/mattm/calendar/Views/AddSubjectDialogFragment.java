@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.mattm.calendar.Models.AWSConnection;
-import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
 
