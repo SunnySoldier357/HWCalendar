@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
@@ -11,8 +12,10 @@ import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.mattm.calendar.Views.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,13 +54,13 @@ public class AWSConnection
     }
     
     // Public Methods
-    public AsyncTask<String, Void, Void> addSubject(final Subject subject)
+    public AsyncTask<Subject, Void, Void> addSubject(final Subject subject)
     {
         @SuppressLint("StaticFieldLeak")
-        AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>()
+        AsyncTask<Subject, Void, Void> task = new AsyncTask<Subject, Void, Void>()
         {
             @Override
-            protected Void doInBackground(String... strings)
+            protected Void doInBackground(Subject... subjects)
             {
                 ArrayList<String> dataCollector = new ArrayList<>();
                 User oldUser = dynamoDBMapper.load(
@@ -65,22 +68,39 @@ public class AWSConnection
                         userId);
             
                 User user = new User(userId);
-                if (null != oldUser)
+                if (null != oldUser) {
                     dataCollector = oldUser.getClasses();
-                dataCollector.add(subject.toString());
+                    for(String classes : dataCollector){
+                        if(!classes.equals(subject.toString())){
+                            dataCollector.add(subject.toString());
+                        }else{
+                            // TODO: MAKE TOAST THAT SAYS 'YOU ARE ALREADY ENROLLED IN THIS CLASS'
+                        }
+                    }
+                }
+
             
                 user.setClasses(dataCollector);
                 
                 dynamoDBMapper.save(user);
                 dynamoDBMapper.save(subject);
-            
+
                 return null;
             }
         };
-    
+
         return task;
     }
-    
+    public AsyncTask<Void, Void, List<Subject>> getDialogSubject(){
+        AsyncTask<Void, Void, List<Subject>> task = new AsyncTask<Void, Void, List<Subject>>() {
+            @Override
+            protected List<Subject> doInBackground(Void... voids) {
+                return dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
+            }
+        };
+        return task;
+    }
+
     public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> periods)
     {
         @SuppressLint("StaticFieldLeak")
