@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Subject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
@@ -21,7 +25,7 @@ import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 public class AddSubjectDialogFragment extends DialogFragment
 {
     // Private Properties
-    private List<Subject> subjects;
+    private ArrayList<Subject> subjects;
     
     private AWSConnection awsConnection;
     
@@ -33,6 +37,15 @@ public class AddSubjectDialogFragment extends DialogFragment
         {
             awsConnection = AWSConnection.getCurrentInstance(null);
             subjects = awsConnection.getDialogSubject().execute().get();
+            Collections.sort(subjects, new Comparator<Subject>()
+            {
+                @Override
+                public int compare(Subject o1, Subject o2)
+                {
+                    return o1.getSubject().compareTo(o2.getSubject());
+                }
+            });
+            Log.d("Sandeep", "The sorted subjects: " + subjects.toString());
         }
         catch (Exception e)
         {

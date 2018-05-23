@@ -64,21 +64,23 @@ public class AWSConnection
                 User oldUser = dynamoDBMapper.load(
                         User.class,
                         userId);
-            
-                User user = new User(userId);
-                if (null != oldUser) {
+                
+                if (null != oldUser)
+                {
                     dataCollector = oldUser.getClasses();
-                    for(String classes : dataCollector){
-                        if(!classes.equals(subject.toString())){
-                            dataCollector.add(subject.toString());
-                        }else{
-                            // TODO: MAKE TOAST THAT SAYS 'YOU ARE ALREADY ENROLLED IN THIS CLASS'
-                        }
+                    
+                    if (!dataCollector.contains(subject.toString()))
+                        dataCollector.add(subject.toString());
+                    else
+                    {
+                        // TODO: MAKE TOAST THAT SAYS 'YOU ARE ALREADY ENROLLED IN THIS CLASS'
                     }
                 }
-
-            
-                user.setClasses(dataCollector);
+                User user = new User(userId, dataCollector);
+                
+                // TODO: Remove when done testing
+                Log.d("Sandeep", "The subject being added is: " + subject.toString());
+                Log.d("Sandeep", "The list of subjects in the user: " + user.getClasses().toString());
                 
                 dynamoDBMapper.save(user);
                 dynamoDBMapper.save(subject);
@@ -124,15 +126,16 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<Void, Void, List<Subject>> getDialogSubject()
+    public AsyncTask<Void, Void, ArrayList<Subject>> getDialogSubject()
     {
         @SuppressLint("StaticFieldLeak")
-        AsyncTask<Void, Void, List<Subject>> task = new AsyncTask<Void, Void, List<Subject>>()
+        AsyncTask<Void, Void, ArrayList<Subject>> task = new AsyncTask<Void, Void, ArrayList<Subject>>()
         {
             @Override
-            protected List<Subject> doInBackground(Void... voids)
+            protected ArrayList<Subject> doInBackground(Void... voids)
             {
-                return dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
+                List<Subject> result =  dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
+                return new ArrayList<>(result);
             }
         };
         

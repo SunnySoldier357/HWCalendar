@@ -6,6 +6,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Classes")
@@ -45,6 +46,8 @@ public class Subject
         for (Subject item: list)
             result.add(item.getSubject());
     
+        Collections.sort(result);
+        
         return result;
     }
     
