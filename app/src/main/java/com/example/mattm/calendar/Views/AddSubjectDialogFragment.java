@@ -1,13 +1,13 @@
 package com.example.mattm.calendar.Views;
 
-import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +18,6 @@ import com.example.mattm.calendar.Models.Subject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 
@@ -56,7 +55,7 @@ public class AddSubjectDialogFragment extends DialogFragment
         final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ConvertListToReadable(subjects));
         
         // Using Builder class for convenient dialog construction
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final Builder builder = new Builder(getActivity());
     
         // Sets the EditText (search bar)
         final EditText input =  new EditText(builder.getContext());
@@ -64,7 +63,7 @@ public class AddSubjectDialogFragment extends DialogFragment
 
         builder.setTitle("Classes")
                 .setView(input)
-                .setAdapter(subjectsAdapter, new DialogInterface.OnClickListener()
+                .setAdapter(subjectsAdapter, new OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -75,7 +74,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                                 Toast.LENGTH_LONG).show();
                     }
                 })
-                .setPositiveButton("Create Class", new DialogInterface.OnClickListener()
+                .setPositiveButton("Create Class", new OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -87,7 +86,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                         getActivity().startActivity(intent);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                .setNegativeButton("Cancel", new OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
