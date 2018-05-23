@@ -29,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
-
 public class MainActivity extends AppCompatActivity
 {
     // Constants
@@ -116,6 +114,28 @@ public class MainActivity extends AppCompatActivity
     }
     
     // Event Handlers
+    public void logOutButton_Clicked(View view)
+    {
+        // Logs out
+        IdentityManager.getDefaultIdentityManager().signOut();
+        subjects.clear();
+        subjectsAdapter.notifyDataSetChanged();
+    
+        // TODO: Remove when done testing
+        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Logged Out");
+        closeDrawerFunction();
+    }
+    
+    public void signInButton_Clicked(View view)
+    {
+        // Goes to the login screen
+        closeDrawerFunction();
+        
+        Intent intent = new Intent(this, AuthenticatorActivity.class);
+        startActivity(intent);
+    }
+    
     public void subjectAddButton_Clicked(View view)
     {
         // Close the hamburger menu first
@@ -155,26 +175,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Private Methods
-    public void closeDrawerFunction()
+    private void closeDrawerFunction()
     {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
     
-    public void logOutFunction(View view)
-    {
-        // Logs out
-        IdentityManager.getDefaultIdentityManager().signOut();
-        subjects.clear();
-        subjectsAdapter.notifyDataSetChanged();
-        
-        // TODO: Remove when done testing
-        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Logged Out");
-        closeDrawerFunction();
-    }
-    
-    public void setUpFloatingActionButton()
+    private void setUpFloatingActionButton()
     {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -199,15 +206,6 @@ public class MainActivity extends AppCompatActivity
         // Sets the Hamburger Menu header with login info
         ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
         ((TextView) findViewById(R.id.email_header)).setText(emailh1);
-    }
-    
-    public void signInFunction(View view)
-    {
-        // Goes to the login screen
-        closeDrawerFunction();
-        
-        Intent intent = new Intent(this, AuthenticatorActivity.class);
-        startActivity(intent);
     }
 
     // Overridden Methods

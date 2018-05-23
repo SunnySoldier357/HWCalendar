@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
@@ -15,7 +14,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExp
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.example.mattm.calendar.Views.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class AWSConnection
     
     private DynamoDBMapper dynamoDBMapper;
     
-    private String userId = null;
+    private String userId;
     
     // Constructors
     private AWSConnection(Context context) throws ExecutionException, InterruptedException
@@ -91,15 +89,6 @@ public class AWSConnection
 
         return task;
     }
-    public AsyncTask<Void, Void, List<Subject>> getDialogSubject(){
-        AsyncTask<Void, Void, List<Subject>> task = new AsyncTask<Void, Void, List<Subject>>() {
-            @Override
-            protected List<Subject> doInBackground(Void... voids) {
-                return dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
-            }
-        };
-        return task;
-    }
 
     public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> periods)
     {
@@ -132,6 +121,21 @@ public class AWSConnection
             }
         };
     
+        return task;
+    }
+    
+    public AsyncTask<Void, Void, List<Subject>> getDialogSubject()
+    {
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<Void, Void, List<Subject>> task = new AsyncTask<Void, Void, List<Subject>>()
+        {
+            @Override
+            protected List<Subject> doInBackground(Void... voids)
+            {
+                return dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
+            }
+        };
+        
         return task;
     }
     

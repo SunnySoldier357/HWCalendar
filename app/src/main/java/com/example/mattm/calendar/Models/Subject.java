@@ -5,7 +5,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +38,13 @@ public class Subject
     }
     
     // Static Methods
-    public static ArrayList<String> ConvertListToReadable(ArrayList<String> list)
+    public static ArrayList<String> ConvertListToReadable(List<Subject> list)
     {
         ArrayList<String> result = new ArrayList<>();
         
-        for (String dbKey: list)
-            result.add(ConvertToReadable(dbKey));
-        
+        for (Subject item: list)
+            result.add(item.getSubject());
+    
         return result;
     }
     
