@@ -78,10 +78,6 @@ public class AWSConnection
                 }
                 User user = new User(userId, dataCollector);
                 
-                // TODO: Remove when done testing
-                Log.d("Sandeep", "The subject being added is: " + subject.toString());
-                Log.d("Sandeep", "The list of subjects in the user: " + user.getClasses().toString());
-                
                 dynamoDBMapper.save(user);
                 dynamoDBMapper.save(subject);
 

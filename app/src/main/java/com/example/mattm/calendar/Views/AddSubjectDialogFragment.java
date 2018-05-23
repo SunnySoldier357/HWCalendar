@@ -45,7 +45,6 @@ public class AddSubjectDialogFragment extends DialogFragment
                     return o1.getSubject().compareTo(o2.getSubject());
                 }
             });
-            Log.d("Sandeep", "The sorted subjects: " + subjects.toString());
         }
         catch (Exception e)
         {
