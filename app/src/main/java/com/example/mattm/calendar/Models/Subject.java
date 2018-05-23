@@ -45,8 +45,16 @@ public class Subject
         
         for (Subject item: list)
             result.add(item.getSubject());
+        
+        return result;
+    }
     
-        Collections.sort(result);
+    public static ArrayList<String> ConvertArrayListToReadable(List<String> list)
+    {
+        ArrayList<String> result = new ArrayList<>();
+        
+        for (String dbKey: list)
+            result.add(ConvertToReadable(dbKey));
         
         return result;
     }

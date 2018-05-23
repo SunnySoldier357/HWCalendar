@@ -36,14 +36,6 @@ public class AddSubjectDialogFragment extends DialogFragment
         {
             awsConnection = AWSConnection.getCurrentInstance(null);
             subjects = awsConnection.getDialogSubject().execute().get();
-            Collections.sort(subjects, new Comparator<Subject>()
-            {
-                @Override
-                public int compare(Subject o1, Subject o2)
-                {
-                    return o1.getSubject().compareTo(o2.getSubject());
-                }
-            });
         }
         catch (Exception e)
         {

@@ -17,6 +17,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -131,7 +133,18 @@ public class AWSConnection
             protected ArrayList<Subject> doInBackground(Void... voids)
             {
                 List<Subject> result =  dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
-                return new ArrayList<>(result);
+                
+                ArrayList<Subject> unsorted = new ArrayList<>(result);
+                Collections.sort(unsorted, new Comparator<Subject>()
+                {
+                    @Override
+                    public int compare(Subject o1, Subject o2)
+                    {
+                        return o1.getSubject().compareTo(o2.getSubject());
+                    }
+                });
+                
+                return unsorted;
             }
         };
         
@@ -149,8 +162,16 @@ public class AWSConnection
                 User currentUser = dynamoDBMapper.load(
                         User.class,
                         userId);
-            
-                return null != currentUser ? currentUser.getClasses() : new ArrayList<String>();
+                
+                if (null != currentUser)
+                {
+                    ArrayList<String> result = currentUser.getClasses();
+                    Collections.sort(result);
+                    
+                    return result;
+                }
+                else
+                    return new ArrayList<>();
             }
         };
         

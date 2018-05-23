@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadable;
+
 public class MainActivity extends AppCompatActivity
 {
     // Constants
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         {
             subjects = awsConnection.getSubjects().execute().get();
             assignments = awsConnection.getAssignments(subjects).execute().get();
+            subjects = ConvertArrayListToReadable(subjects);
         }
         catch (Exception e)
         {
