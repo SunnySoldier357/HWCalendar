@@ -24,6 +24,7 @@ public class AddSubjectDialogFragment extends DialogFragment
 {
     // Private Properties
     private ArrayList<String> readableSubjects;
+    
     private ArrayList<Subject> showSubjects;
     private ArrayList<Subject> subjects;
     

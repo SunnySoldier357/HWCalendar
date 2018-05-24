@@ -6,6 +6,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @DynamoDBTable(tableName = "calendar-mobilehub-934323895-Assignment")
@@ -55,6 +56,14 @@ public class Assignment
     public List<String> getDescriptions()
     {
         return descriptions;
+    }
+    
+    public Date getDate()
+    {
+        String[] split = getDueDate().split("-");
+        return new Date(Integer.parseInt(split[0]),
+                Integer.parseInt(split[1]),
+                Integer.parseInt(split[2]));
     }
     
     @DynamoDBRangeKey(attributeName = "dueDate")
