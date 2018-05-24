@@ -27,7 +27,7 @@ public class AddSubjectDialogFragment extends DialogFragment
 {
     // Private Properties
     private ArrayList<Subject> subjects;
-    private ArrayList<Subject> availableSubjects;
+    private ArrayList<Subject> showSubjects;
     private AWSConnection awsConnection;
 
 
@@ -47,12 +47,13 @@ public class AddSubjectDialogFragment extends DialogFragment
             e.printStackTrace();
         }
 
+
+        showSubjects = subjects;    //temporary arrayList to show in the dialog
         searchLoop();
 
 
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
-        final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ConvertListToReadable(availableSubjects));
-        
+        final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ConvertListToReadable(showSubjects));
         // Using Builder class for convenient dialog construction
         final Builder builder = new Builder(getActivity());
     
@@ -68,8 +69,8 @@ public class AddSubjectDialogFragment extends DialogFragment
                     public void onClick(DialogInterface dialog, int which)
                     {
                         // Do Something if the class is clicked
-                        awsConnection.addSubject(subjects.get(which)).execute();
-                        Toast.makeText(getActivity(), String.format("'%s' class selected!", availableSubjects.get(which)),
+                        awsConnection.addSubject(showSubjects.get(which)).execute();
+                        Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
                                 Toast.LENGTH_LONG).show();
                     }
                 })
@@ -101,21 +102,18 @@ public class AddSubjectDialogFragment extends DialogFragment
     }
 
     public void searchLoop() {
-        availableSubjects = subjects;
 
+        int size = showSubjects.size();
 
-            String sample = "SS";
-            Log.d("TEMP", subjects.toString() + "");
-            Log.d("TEMP", availableSubjects.toString() + "");
+        String sample = "";   //todo: set this up with the edit text search bar and a thread - matt
 
-            final int size = availableSubjects.size();
-
-            for (int i=0; i<size; i++){
-                if(!availableSubjects.get(i).toString().contains(sample)){
-                    availableSubjects.remove(i);
-                }
-
+        for (int i=0; i<size; i++){                                 //removes classes that are not searched for
+            if(!showSubjects.get(i).getSubject().contains(sample)){
+                showSubjects.remove(i);
+                i--;
+                size--;
             }
+        }
 
 
 
