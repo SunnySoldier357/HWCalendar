@@ -6,10 +6,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,42 +16,41 @@ import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Subject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 
 public class AddSubjectDialogFragment extends DialogFragment
 {
     // Private Properties
-    private ArrayList<Subject> subjects;
     private ArrayList<Subject> showSubjects;
+    private ArrayList<Subject> subjects;
+    
     private AWSConnection awsConnection;
-
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(null);
             subjects = awsConnection.getDialogSubject().execute().get();
+            removePeriodDuplicates(subjects);
         }
         catch (Exception e)
         {
             // TODO: UI - Show error message to User in a way they will understand for different error messages
             e.printStackTrace();
         }
-
-
-        showSubjects = subjects;    //temporary arrayList to show in the dialog
+    
+        // Temporary arrayList to show in the dialog
+        showSubjects = subjects;
         searchLoop();
-
-
+        
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
-        final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ConvertListToReadable(showSubjects));
+        final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, ConvertListToReadable(showSubjects));
+        
         // Using Builder class for convenient dialog construction
         final Builder builder = new Builder(getActivity());
     
@@ -101,23 +98,30 @@ public class AddSubjectDialogFragment extends DialogFragment
         return builder.create();
     }
 
-    public void searchLoop() {
-
+    // Public Methods
+    public void searchLoop()
+    {
         int size = showSubjects.size();
 
-        String sample = "";   //todo: set this up with the edit text search bar and a thread - matt
-
-        for (int i=0; i<size; i++){                                 //removes classes that are not searched for
-            if(!showSubjects.get(i).getSubject().contains(sample)){
+        // TODO: Set this up with the edit text search bar and a thread (Mateo)
+        String sample = "";
+    
+        // Removes classes that are not searched for
+        for (int i = 0; i < size; i++)
+        {
+            if (!showSubjects.get(i).getSubject().contains(sample))
+            {
                 showSubjects.remove(i);
                 i--;
                 size--;
             }
         }
-
-
-
     }
-
-
+    
+    // Private Methods
+    private void removePeriodDuplicates(ArrayList<Subject> duplicates)
+    {
+        ArrayList<Subject> clean = new ArrayList<>();
+        // TODO: Remove subjects that have the same teacher and name but different periods
+    }
 }

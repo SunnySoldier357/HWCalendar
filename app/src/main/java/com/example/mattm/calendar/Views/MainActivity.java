@@ -37,11 +37,11 @@ public class MainActivity extends AppCompatActivity
     private final String LOG_TAG = "Testing MainActivity";
     
     // Public Properties
-    public ArrayAdapter<String> subjectsAdapter;
     public ArrayAdapter<String> assignmentsAdapter;
+    public ArrayAdapter<String> subjectsAdapter;
     
-    public ArrayList<String> subjects = new ArrayList<>();
     public ArrayList<String> assignments = new ArrayList<>();
+    public ArrayList<String> subjects = new ArrayList<>();
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,10 +123,11 @@ public class MainActivity extends AppCompatActivity
         IdentityManager.getDefaultIdentityManager().signOut();
         subjects.clear();
         subjectsAdapter.notifyDataSetChanged();
-    
-        // TODO: Remove when done testing
+        
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+        // TODO: Remove when done testing
         Log.d(LOG_TAG, "Logged Out");
+        
         closeDrawerFunction();
     }
     
@@ -240,9 +241,5 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
     
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    
     }
-    
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) { }
 }
