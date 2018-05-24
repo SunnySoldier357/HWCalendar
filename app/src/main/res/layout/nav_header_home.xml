@@ -36,18 +36,6 @@
         <Button android:layout_width="70dp"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/sign_in_button"
-                android:gravity="center"
-                android:onClick="signInButton_Clicked"
-                android:text="sign in"
-                android:textColor="#ffffff"/>
-
-        <!-- TODO: just have one button - kenneth needs sign-in boolean -->
-
-        <Button android:layout_width="70dp"
-                android:layout_height="35dp"
-                android:layout_gravity="end"
                 android:background="@drawable/sign_in_button"
                 android:gravity="center"
                 android:onClick="logOutButton_Clicked"

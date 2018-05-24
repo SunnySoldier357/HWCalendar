@@ -12,6 +12,8 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
+import java.util.concurrent.ExecutionException;
+
 public class AuthenticatorActivity extends AppCompatActivity
 {
     // Constants
@@ -22,7 +24,15 @@ public class AuthenticatorActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authenticator);
-        
+        AWSConnection awsConnection;
+        try {
+            awsConnection = AWSConnection.getCurrentInstance(this);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         IdentityManager.getDefaultIdentityManager().addSignInStateChangeListener(new SignInStateChangeListener()
         {
             @Override

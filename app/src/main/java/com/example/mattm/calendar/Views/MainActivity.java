@@ -123,21 +123,16 @@ public class MainActivity extends AppCompatActivity
         IdentityManager.getDefaultIdentityManager().signOut();
         subjects.clear();
         subjectsAdapter.notifyDataSetChanged();
+        assignments.clear();
+        assignmentsAdapter.notifyDataSetChanged();
+        Intent intent = new Intent(this,AuthenticatorActivity.class);
+        startActivity(intent);
         
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
         // TODO: Remove when done testing
         Log.d(LOG_TAG, "Logged Out");
         
         closeDrawerFunction();
-    }
-    
-    public void signInButton_Clicked(View view)
-    {
-        // Goes to the login screen
-        closeDrawerFunction();
-        
-        Intent intent = new Intent(this, AuthenticatorActivity.class);
-        startActivity(intent);
     }
     
     public void subjectAddButton_Clicked(View view)
