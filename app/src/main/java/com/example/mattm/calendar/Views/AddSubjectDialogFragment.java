@@ -16,12 +16,14 @@ import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Subject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertListToReadable;
 
 public class AddSubjectDialogFragment extends DialogFragment
 {
     // Private Properties
+    private ArrayList<String> readableSubjects;
     private ArrayList<Subject> showSubjects;
     private ArrayList<Subject> subjects;
     
@@ -35,7 +37,6 @@ public class AddSubjectDialogFragment extends DialogFragment
         {
             awsConnection = AWSConnection.getCurrentInstance(null);
             subjects = awsConnection.getDialogSubject().execute().get();
-            removePeriodDuplicates(subjects);
         }
         catch (Exception e)
         {
@@ -45,11 +46,13 @@ public class AddSubjectDialogFragment extends DialogFragment
     
         // Temporary arrayList to show in the dialog
         showSubjects = subjects;
+        readableSubjects = ConvertListToReadable(showSubjects);
+        removePeriodDuplicates(readableSubjects, showSubjects);
         searchLoop();
         
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
         final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, ConvertListToReadable(showSubjects));
+                android.R.layout.simple_list_item_1, readableSubjects);
         
         // Using Builder class for convenient dialog construction
         final Builder builder = new Builder(getActivity());
@@ -69,6 +72,9 @@ public class AddSubjectDialogFragment extends DialogFragment
                         awsConnection.addSubject(showSubjects.get(which)).execute();
                         Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
                                 Toast.LENGTH_LONG).show();
+    
+                        ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
+                        chooseDialog.show(getActivity().getSupportFragmentManager(), "Dialog2");
                     }
                 })
                 .setPositiveButton("Create Class", new OnClickListener()
@@ -119,9 +125,21 @@ public class AddSubjectDialogFragment extends DialogFragment
     }
     
     // Private Methods
-    private void removePeriodDuplicates(ArrayList<Subject> duplicates)
+    private void removePeriodDuplicates(ArrayList<String> duplicateStr, ArrayList<Subject> duplicateSub)
     {
-        ArrayList<Subject> clean = new ArrayList<>();
-        // TODO: Remove subjects that have the same teacher and name but different periods
+        ArrayList<Integer> toRemove = new ArrayList<>();
+        for (int i = 1; i < duplicateStr.size(); i++)
+        {
+            if (duplicateStr.get(i - 1).equals(duplicateStr.get(i)))
+                toRemove.add(i);
+        }
+        
+        Collections.reverse(toRemove);
+        
+        for (int index: toRemove)
+        {
+            duplicateStr.remove(index);
+            duplicateSub.remove(index);
+        }
     }
 }
