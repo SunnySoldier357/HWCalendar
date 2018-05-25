@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +33,10 @@ public class AddSubjectDialogFragment extends DialogFragment
     
     private AWSConnection awsConnection;
 
+    EditText input;
+
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -44,22 +51,24 @@ public class AddSubjectDialogFragment extends DialogFragment
             // TODO: UI - Show error message to User in a way they will understand for different error messages
             e.printStackTrace();
         }
-    
+
+
+        final Builder builder = new Builder(getActivity());
+        input =  new EditText(builder.getContext());
+
+
         // Temporary arrayList to show in the dialog
         showSubjects = subjects;
-        readableSubjects = ConvertListToReadable(showSubjects);
-        removePeriodDuplicates(readableSubjects, showSubjects);
-        searchLoop();
-        
+
+        createLists();
+        searchTextEntered();
+
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
         final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, readableSubjects);
-        
+
         // Using Builder class for convenient dialog construction
-        final Builder builder = new Builder(getActivity());
-    
-        // Sets the EditText (search bar)
-        final EditText input =  new EditText(builder.getContext());
+
         input.setHint("Search for a class");
 
         builder.setTitle("Classes")
@@ -73,7 +82,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                         awsConnection.addSubject(showSubjects.get(which)).execute();
                         Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
                                 Toast.LENGTH_LONG).show();
-    
+
                         ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
                         chooseDialog.show(getActivity().getSupportFragmentManager(), "Dialog2");
                     }
@@ -100,30 +109,87 @@ public class AddSubjectDialogFragment extends DialogFragment
                         Toast.makeText(getActivity(), "Dialog Canceled", Toast.LENGTH_LONG).show();
                     }
                 });
-        
+
         // Create the AlertDialog object and return it
         return builder.create();
     }
 
+
+    //----------------------------------------------------------------------------------------refresh dialog / listView method needed
+
+
+
     // Public Methods
-    public void searchLoop()
+
+    public void searchTextEntered(){                        //method that detects changes in the search bar
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchLoop(s.toString());       //goes to the search algorithm
+
+
+                /*
+                if(s.toString().equals("")){            //todo: get the algorithm to work so it doesn't just remove items but also adds them back as the user deletes characters
+                    initList();   //resets listVew
+                }
+                else {
+                    //Toast.makeText(getActivity(), s.toString(), Toast.LENGTH_SHORT).show();  //testing purposes:
+                    searchLoop(s.toString());
+                } */
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    public void initList() {    //resets the listView to all original / available subjects
+        showSubjects = subjects;
+    }
+
+
+    public void searchLoop(String s)    //algorithm that performs the search function
     {
         int size = showSubjects.size();
 
-        // TODO: Set this up with the edit text search bar and a thread (Mateo)
-        String sample = "";
-    
+        String sample = s;        //for testing purposes
+
         // Removes classes that are not searched for
         for (int i = 0; i < size; i++)
         {
             if (!showSubjects.get(i).getSubject().contains(sample))
             {
+                Log.d("TEMP", showSubjects.toString());
                 showSubjects.remove(i);
                 i--;
                 size--;
             }
         }
+
+        createLists();
     }
+
+
+    public void createLists(){          //converts lists to readable format
+
+        readableSubjects = ConvertListToReadable(showSubjects);
+        removePeriodDuplicates(readableSubjects, showSubjects);
+
+        //for testing purposes - do not delete - shows that listViews change in the log, but are not displayed
+        Log.d("TEMP", "\n");                                                    //todo: make it so the listView updates!!!
+        Log.d("TEMP", showSubjects.toString() + "final");
+        Log.d("TEMP", readableSubjects.toString() + "final");
+    }
+
+
+
     
     // Private Methods
     private void removePeriodDuplicates(ArrayList<String> duplicateStr, ArrayList<Subject> duplicateSub)
