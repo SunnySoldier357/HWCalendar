@@ -33,10 +33,8 @@ public class AddSubjectDialogFragment extends DialogFragment
     
     private AWSConnection awsConnection;
 
-    EditText input;
-
-
-
+    private EditText input;
+    
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -51,12 +49,11 @@ public class AddSubjectDialogFragment extends DialogFragment
             // TODO: UI - Show error message to User in a way they will understand for different error messages
             e.printStackTrace();
         }
-
-
+    
+        // Using Builder class for convenient dialog construction
         final Builder builder = new Builder(getActivity());
         input =  new EditText(builder.getContext());
-
-
+        
         // Temporary arrayList to show in the dialog
         showSubjects = subjects;
 
@@ -66,9 +63,7 @@ public class AddSubjectDialogFragment extends DialogFragment
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
         final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, readableSubjects);
-
-        // Using Builder class for convenient dialog construction
-
+        
         input.setHint("Search for a class");
 
         builder.setTitle("Classes")
@@ -113,85 +108,99 @@ public class AddSubjectDialogFragment extends DialogFragment
         // Create the AlertDialog object and return it
         return builder.create();
     }
-
-
-    //----------------------------------------------------------------------------------------refresh dialog / listView method needed
-
-
-
+    
     // Public Methods
-
-    public void searchTextEntered(){                        //method that detects changes in the search bar
-        input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchLoop(s.toString());       //goes to the search algorithm
-
-
-                /*
-                if(s.toString().equals("")){            //todo: get the algorithm to work so it doesn't just remove items but also adds them back as the user deletes characters
-                    initList();   //resets listVew
-                }
-                else {
-                    //Toast.makeText(getActivity(), s.toString(), Toast.LENGTH_SHORT).show();  //testing purposes:
-                    searchLoop(s.toString());
-                } */
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+    /**
+     * Converts lists to readable format
+     */
+    public void createLists()
+    {
+        readableSubjects = ConvertListToReadable(showSubjects);
+        removePeriodDuplicates(readableSubjects, showSubjects);
+        
+        // For testing purposes - do not delete - shows that listViews change in the log,
+        // but are not displayed
+        // TODO: make it so the listView updates!!!
+        // TODO: Remove when done testing
+        Log.d("TEMP", "\n");
+        Log.d("TEMP", showSubjects.toString() + "final");
+        Log.d("TEMP", readableSubjects.toString() + "final");
     }
-
-    public void initList() {    //resets the listView to all original / available subjects
-        showSubjects = subjects;
-    }
-
-
-    public void searchLoop(String s)    //algorithm that performs the search function
+    
+    /**
+     * Algorithm that performs the search function
+     * @param s The String that is used to look for results
+     */
+    public void searchLoop(String s)
     {
         int size = showSubjects.size();
-
-        String sample = s;        //for testing purposes
-
+        
+        // For testing purposes
+        String sample = s;
+        
         // Removes classes that are not searched for
         for (int i = 0; i < size; i++)
         {
             if (!showSubjects.get(i).getSubject().contains(sample))
             {
+                // TODO: Remove when done testing
                 Log.d("TEMP", showSubjects.toString());
+                
                 showSubjects.remove(i);
                 i--;
                 size--;
             }
         }
-
+        
         createLists();
     }
+    
+    /**
+     * Method that detects changes in the search bar.
+     */
+    public void searchTextEntered()
+    {
+        input.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                // Goes to the search algorithm
+                searchLoop(s.toString());
 
-    public void createLists(){          //converts lists to readable format
+                //TODO: Get the algorithm to work so it doesn't just remove items
+                // but also adds them back as the user deletes characters
+                
+                /*
+                if(s.toString().equals(""))
+                    initList();   //resets listVew
+                else
+                {
+                    //Toast.makeText(getActivity(), s.toString(), Toast.LENGTH_SHORT).show();  //testing purposes:
+                    searchLoop(s.toString());
+                }
+                */
+            }
 
-        readableSubjects = ConvertListToReadable(showSubjects);
-        removePeriodDuplicates(readableSubjects, showSubjects);
-
-        //for testing purposes - do not delete - shows that listViews change in the log, but are not displayed
-        Log.d("TEMP", "\n");                                                    //todo: make it so the listView updates!!!
-        Log.d("TEMP", showSubjects.toString() + "final");
-        Log.d("TEMP", readableSubjects.toString() + "final");
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
     }
-
-
-
+    
+    // TODO: refresh dialog / listView method needed
     
     // Private Methods
+    /**
+     * Resets the listView to all original/available subjects
+     */
+    private void initList()
+    {
+        showSubjects = subjects;
+    }
+    
     private void removePeriodDuplicates(ArrayList<String> duplicateStr, ArrayList<Subject> duplicateSub)
     {
         ArrayList<Integer> toRemove = new ArrayList<>();

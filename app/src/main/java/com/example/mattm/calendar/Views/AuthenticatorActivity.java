@@ -18,18 +18,23 @@ public class AuthenticatorActivity extends AppCompatActivity
 {
     // Constants
     public final String LOG_TAG = "Authenticator";
+    
+    // Private Properties
+    private AWSConnection awsConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authenticator);
-        AWSConnection awsConnection;
-        try {
+        
+        try
+        {
             awsConnection = AWSConnection.getCurrentInstance(this);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (Exception e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
             e.printStackTrace();
         }
 
