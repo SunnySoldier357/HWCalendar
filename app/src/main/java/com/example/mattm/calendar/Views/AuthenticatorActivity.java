@@ -12,8 +12,6 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
-import java.util.concurrent.ExecutionException;
-
 public class AuthenticatorActivity extends AppCompatActivity
 {
     // Constants
