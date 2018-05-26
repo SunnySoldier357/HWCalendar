@@ -25,9 +25,11 @@ import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadable;
 
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity
     
     // TODO: Figure a way to pass info from this page to SubjectDetailsDialogFragment
     public int position;
+    
+    // Private Properties
+    private AWSConnection awsConnection = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         setUpFloatingActionButton();
         
         // Initialising database stuff
-        AWSConnection awsConnection = null;
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(this);
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity
                 subjectItem_Clicked(position);
             }
         });
-
+    
         GetCalendarDay();
     }
     
@@ -172,10 +176,20 @@ public class MainActivity extends AppCompatActivity
     
                 // Date object of selected day on calendar
                 Date d = cal.getTime();
-
-                Toast.makeText(MainActivity.this, d.toString(), Toast.LENGTH_SHORT).show();
+                
+                showAssignments(d);
             }
         });
+        
+        // Gets current day
+        String[] date = (new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()))
+                .replace("T", "")
+                .split("-");;
+        Date current = new Date(Integer.parseInt(date[0]),
+                Integer.parseInt(date[1]),
+                Integer.parseInt(date[2]));
+        
+        showAssignments(current);
     }
 
     // Private Methods
@@ -209,6 +223,11 @@ public class MainActivity extends AppCompatActivity
         // Sets the Hamburger Menu header with login info
         ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
         ((TextView) findViewById(R.id.email_header)).setText(emailh1);
+    }
+    
+    private void showAssignments(Date dateSelected)
+    {
+        
     }
 
     // Overridden Methods

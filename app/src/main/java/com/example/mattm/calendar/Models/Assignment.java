@@ -64,7 +64,9 @@ public class Assignment
      */
     public Date getDate()
     {
-        String[] split = getDueDate().split("-");
+        String[] split = getDueDate()
+                .replace("T", "")
+                .split("-");
         return new Date(Integer.parseInt(split[0]),
                 Integer.parseInt(split[1]),
                 Integer.parseInt(split[2]));
