@@ -58,6 +58,10 @@ public class Assignment
         return descriptions;
     }
     
+    /**
+     * Formats the String dueDate as an actual Date.
+     * @return A Date object that represents the dueDate.
+     */
     public Date getDate()
     {
         String[] split = getDueDate().split("-");

@@ -42,7 +42,7 @@ public class AddSubjectDialogFragment extends DialogFragment
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(null);
-            subjects = awsConnection.getDialogSubject().execute().get();
+            subjects = awsConnection.getSubjects().execute().get();
         }
         catch (Exception e)
         {

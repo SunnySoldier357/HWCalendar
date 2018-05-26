@@ -54,6 +54,13 @@ public class AWSConnection
     }
     
     // Public Methods
+    
+    /**
+     * Adds a subject to the AWS Database and saves the changes to both the subject and the user.
+     * @param subject The Subject object that needs to be added to the AWS Database.
+     * @return An AsyncTask that returns nothing but executes the command to insert the Subject
+     *         into the database.
+     */
     public AsyncTask<Subject, Void, Void> addSubject(final Subject subject)
     {
         @SuppressLint("StaticFieldLeak")
@@ -89,8 +96,14 @@ public class AWSConnection
 
         return task;
     }
-
-    public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> periods)
+    
+    /**
+     * Queries the AWS Database and returns all Assignments.
+     * @param subjects An ArrayList that contains all the subjects of the user.
+     * @return An AsyncTask that when executed returns an ArrayList of all the Assignments the user
+     *         has.
+     */
+    public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> subjects)
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, ArrayList<String>> task = new AsyncTask<Void, Void, ArrayList<String>>()
@@ -100,7 +113,7 @@ public class AWSConnection
             {
                 ArrayList<String> assignments = new ArrayList<>();
             
-                for (String classes: periods)
+                for (String classes: subjects)
                 {
                     SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     // TODO: For Future use
@@ -124,7 +137,12 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<Void, Void, ArrayList<Subject>> getDialogSubject()
+    /**
+     * Queries the AWS Database and returns all Subjects.
+     * @return An AsyncTask that when executed returns an ArrayList of all the Subjects the user
+     *         has.
+     */
+    public AsyncTask<Void, Void, ArrayList<Subject>> getSubjects()
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, ArrayList<Subject>> task = new AsyncTask<Void, Void, ArrayList<Subject>>()
@@ -151,7 +169,12 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<String, Void, ArrayList<String>> getSubjects()
+    /**
+     * Queries the AWS Database and returns all Subjects.
+     * @return An AsyncTask that when executed returns an ArrayList of all the Subjects the user
+     *         has, formatted as Strings.
+     */
+    public AsyncTask<String, Void, ArrayList<String>> getSubjectsAsStrings()
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, ArrayList<String>> task = new AsyncTask<String, Void, ArrayList<String>>()

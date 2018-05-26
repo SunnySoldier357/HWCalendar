@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         AWSConnection awsConnection = null;
         try
         {
-            awsConnection = AWSConnection.getCurrentInstance(this);
+            awsConnection = AWSConnection.getCurrentInstance(this); awsConnection.getAssignments()
         }
         catch (Exception e)
         {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
         try
         {
-            subjects = awsConnection.getSubjects().execute().get();
+            subjects = awsConnection.getSubjectsAsStrings().execute().get();
             assignments = awsConnection.getAssignments(subjects).execute().get();
             subjects = ConvertArrayListToReadable(subjects);
         }
