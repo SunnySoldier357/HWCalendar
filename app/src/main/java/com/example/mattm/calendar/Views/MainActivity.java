@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity
     public ArrayList<String> assignments = new ArrayList<>();
     public ArrayList<String> subjects = new ArrayList<>();
     
+    // TODO: Figure a way to pass info from this page to SubjectDetailsDialogFragment
+    public int position;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -137,8 +140,7 @@ public class MainActivity extends AppCompatActivity
     
     public void subjectAddButton_Clicked(View view)
     {
-        // Close the hamburger menu first
-        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+        closeDrawerFunction();
         
         AddSubjectDialogFragment dialog = new AddSubjectDialogFragment();
         dialog.show(getSupportFragmentManager(), "Dialog");
@@ -146,9 +148,12 @@ public class MainActivity extends AppCompatActivity
     
     public void subjectItem_Clicked(int position)
     {
-        Intent intent = new Intent(this,AddEventActivity.class);
-        intent.putExtra("ClassName", subjectsAdapter.getItem(position));
-        startActivity(intent);
+        // TODO: Need to replace with passing info to dialog directly
+        this.position = position;
+        
+        closeDrawerFunction();
+        SubjectDetailsDialogFragment dialog = new SubjectDetailsDialogFragment();
+        dialog.show(getSupportFragmentManager(), "Dialog");
     }
     
     // Public Methods
@@ -176,8 +181,7 @@ public class MainActivity extends AppCompatActivity
     // Private Methods
     private void closeDrawerFunction()
     {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
     }
     
     private void setUpFloatingActionButton()
