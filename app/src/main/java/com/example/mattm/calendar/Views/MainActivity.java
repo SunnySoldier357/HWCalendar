@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         AWSConnection awsConnection = null;
         try
         {
-            awsConnection = AWSConnection.getCurrentInstance(this); awsConnection.getAssignments()
+            awsConnection = AWSConnection.getCurrentInstance(this);
         }
         catch (Exception e)
         {
