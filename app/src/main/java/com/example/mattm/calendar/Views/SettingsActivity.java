@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,23 +20,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class SettingsActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
-
-    private Switch themeSwitch;
-    private TextView light;
-    private TextView dark;
+public class SettingsActivity extends AppCompatActivity implements OnCheckedChangeListener
+{
+    // Private Properties
     private boolean darkTheme;
-
+    
+    private Switch themeSwitch;
+    
+    private TextView dark;
+    private TextView light;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        light = findViewById(R.id.light);
+    
         dark = findViewById(R.id.dark);
-
-        themeSwitch = (Switch) findViewById(R.id.colorThemeSwitch);
+        light = findViewById(R.id.light);
+        
+        themeSwitch = findViewById(R.id.colorThemeSwitch);
         themeSwitch.setOnCheckedChangeListener(this);
 
         String read = readFromFile(this, "color_theme");
@@ -46,81 +50,89 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
     }
 
     // Event Handlers
-    public void aboutOnClick(View view) //if the user taps on the text that says "about"
+    public void aboutOnClick(View view)
     {
+        // If the user taps on the text that says "about"
         Toast.makeText(this, "\n Developed by KMS \n", Toast.LENGTH_SHORT).show();
     }
 
-    @Override           //if the user changes the switch from light theme to dark theme
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+    {
+        // If the user changes the switch from light theme to dark theme
         adjustText(isChecked);
     }
-
-    private void adjustText(boolean isChecked){
-        darkTheme = isChecked;
-
-        if (isChecked)
+    
+    // Public Methods
+    public String readFromFile(Context context, String fileName)
+    {
+        String ret = "";
+    
+        try
         {
-            darkTheme = true;
-            dark.setTextColor(getResources().getColor(R.color.colorFontDark));
-            dark.setTypeface(null, Typeface.BOLD);
-            light.setTextColor(getResources().getColor(R.color.colorFontReg));  //todo: fix this matt
+            InputStream inputStream = context.openFileInput(fileName);
+        
+            if (null != inputStream)
+            {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+            
+                while (null != (receiveString = bufferedReader.readLine()))
+                    stringBuilder.append(receiveString);
+            
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
         }
-        else
+        catch (FileNotFoundException e)
         {
-            darkTheme = false;
-            light.setTextColor(getResources().getColor(R.color.colorFontDark));
-            dark.setTextColor(getResources().getColor(R.color.colorFontReg));
-            dark.setTypeface(null, Typeface.NORMAL);
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
+            Log.e("login activity", "File not found: " + e.toString());
         }
-        writeToFile(String.valueOf(darkTheme), this, "color_theme");
+        catch (IOException e)
+        {
+            // TODO: UI - Show error message to User in a way they will understand for different error messages
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+    
+        return ret;
     }
 
-
-
-    //File IO to save the theme to a text file:
-    private void writeToFile(String data,Context context, String fileName) {
-        try {
+    // Private Methods
+    private void adjustText(boolean isChecked)
+    {
+        // TODO: Fix this (Mateo)
+        darkTheme = isChecked;
+        (isChecked ? dark : light).setTextColor(getResources().getColor(R.color.colorFontDark));
+        (isChecked ? light : dark).setTextColor(getResources().getColor(R.color.colorFontReg));
+        dark.setTypeface(null, isChecked ? Typeface.BOLD : Typeface.NORMAL);
+        
+        writeToFile(String.valueOf(darkTheme), this, "color_theme");
+    }
+    
+    /**
+     * File I/O to save the theme to a text file
+     * @param data
+     * @param context
+     * @param fileName
+     */
+    private void writeToFile(String data,Context context, String fileName)
+    {
+        try
+        {
             OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
+            // TODO: Remove when done testing
             Log.e("Exception", "File write failed: " + e.toString());
+            
             Toast.makeText(context, "Data save failed", Toast.LENGTH_SHORT).show();
         }
     }
-
-    public String readFromFile(Context context, String fileName) {
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput(fileName);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
-    }
-
-
-
 }
