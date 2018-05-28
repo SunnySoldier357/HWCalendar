@@ -17,7 +17,8 @@
                   android:layout_gravity="center_horizontal"
                   android:layout_marginTop="32dp"
                   android:text="Settings"
-                  android:textSize="18sp"/>
+                  android:textSize="18sp"
+                  android:textColor="@color/colorFontDark"/>
     </LinearLayout>
     
     <LinearLayout android:layout_width="match_parent"
