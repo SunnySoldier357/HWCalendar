@@ -31,7 +31,8 @@
                   android:layout_height="match_parent"
                   android:gravity="bottom"
                   android:orientation="vertical"
-                  android:paddingBottom="10dp">
+                  android:paddingBottom="10dp"
+                  android:layout_marginBottom="8dp">
 
         <Button android:layout_width="70dp"
                 android:layout_height="35dp"
