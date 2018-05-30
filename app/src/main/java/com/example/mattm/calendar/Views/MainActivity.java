@@ -134,14 +134,14 @@ public class MainActivity extends AppCompatActivity
         assignmentsAdapter.notifyDataSetChanged();
         Intent intent = new Intent(this,AuthenticatorActivity.class);
         startActivity(intent);
-        
+
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
         // TODO: Remove when done testing
         Log.d(LOG_TAG, "Logged Out");
         
         closeDrawerFunction();
     }
-    
+
     public void subjectAddButton_Clicked(View view)
     {
         closeDrawerFunction();

@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +65,10 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     }
     
     // Public Methods
+    public void onClickLogOut(View view) {
+            //todo: get this to logout
+    }
+
     public String readFromFile(Context context, String fileName)
     {
         String ret = "";
