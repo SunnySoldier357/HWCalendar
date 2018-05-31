@@ -156,7 +156,18 @@ public class MainActivity extends AppCompatActivity
         this.position = position;
         
         closeDrawerFunction();
+        
+        // String subjectSelected = subjects.get(position);
+        // String[] split = subjectSelected.split("_");
+        
+        Bundle bundle = new Bundle();
+        bundle.putString("Subject", "Test Subject");
+        bundle.putString("TeacherName", "Test Teacher");
+        bundle.putString("Period", "Test Period");
+        
+        
         SubjectDetailsDialogFragment dialog = new SubjectDetailsDialogFragment();
+        dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "Dialog");
     }
     
