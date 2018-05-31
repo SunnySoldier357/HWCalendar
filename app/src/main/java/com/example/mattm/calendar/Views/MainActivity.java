@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         try
         {
             subjects = awsConnection.getSubjectsAsStrings().execute().get();
-            assignments = awsConnection.getAssignments(subjects).execute().get();
+            assignments = awsConnection.getAssignmentsAsStrings(subjects).execute().get();
             subjects = ConvertArrayListToReadable(subjects);
         }
         catch (Exception e)

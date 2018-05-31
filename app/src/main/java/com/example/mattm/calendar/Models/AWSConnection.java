@@ -97,13 +97,46 @@ public class AWSConnection
         return task;
     }
     
+    public AsyncTask<Void, Void, ArrayList<Assignment>> getAssignments(final ArrayList<String> subjects)
+    {
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<Void, Void, ArrayList<Assignment>> task = new AsyncTask<Void, Void, ArrayList<Assignment>>()
+        {
+            @Override
+            protected ArrayList<Assignment> doInBackground(Void... voids)
+            {
+                ArrayList<Assignment> assignments = new ArrayList<>();
+    
+                for (String classes: subjects)
+                {
+                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    // TODO: For Future use
+                    String date = localDateFormat.format(new Date()) + "T";
+        
+                    Assignment template = new Assignment();
+                    template.setUserID(classes);
+        
+                    DynamoDBQueryExpression<Assignment> queryExpression = new DynamoDBQueryExpression<Assignment>()
+                            .withHashKeyValues(template);
+        
+                    List<Assignment> results = dynamoDBMapper.query(Assignment.class, queryExpression);
+                    assignments.addAll(results);
+                }
+    
+                return assignments;
+            }
+        };
+        
+        return task;
+    }
+    
     /**
      * Queries the AWS Database and returns all Assignments.
      * @param subjects An ArrayList that contains all the subjects of the user.
      * @return An AsyncTask that when executed returns an ArrayList of all the Assignments the user
      *         has.
      */
-    public AsyncTask<Void, Void, ArrayList<String>> getAssignments(final ArrayList<String> subjects)
+    public AsyncTask<Void, Void, ArrayList<String>> getAssignmentsAsStrings(final ArrayList<String> subjects)
     {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, ArrayList<String>> task = new AsyncTask<Void, Void, ArrayList<String>>()

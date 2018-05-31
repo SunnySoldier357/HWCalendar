@@ -1,5 +1,7 @@
 package com.example.mattm.calendar.Models;
 
+import android.util.Log;
+
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
@@ -64,9 +66,13 @@ public class Assignment
      */
     public Date getDate()
     {
+        if (!getDueDate().contains("T"))
+            return null;
+        
         String[] split = getDueDate()
-                .replace("T", "")
-                .split("-");
+            .replace("T", "")
+            .split("-");
+        Log.d("Sandeep", "getDate: " + split[0] + " " + split[1] + " " + split[2]);
         return new Date(Integer.parseInt(split[0]),
                 Integer.parseInt(split[1]),
                 Integer.parseInt(split[2]));
