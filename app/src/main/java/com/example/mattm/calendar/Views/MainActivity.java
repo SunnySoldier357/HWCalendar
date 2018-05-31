@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        //setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_main);
 
         // Hamburger menu
