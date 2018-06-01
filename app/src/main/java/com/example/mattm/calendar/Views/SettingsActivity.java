@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -35,20 +36,26 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme_Dark);
+        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {        //MODE_NIGHT = 2
+            setTheme(R.style.AppTheme_Dark);                                //todo: add this to all the classes
+        }
         setContentView(R.layout.activity_settings);
     
         dark = findViewById(R.id.dark);
         light = findViewById(R.id.light);
         
         themeSwitch = findViewById(R.id.colorThemeSwitch);
+
+
+        //String read = readFromFile(this, "color_theme");
+        //darkTheme = read.equals("true");
+
+        //themeSwitch.setChecked(darkTheme);
+        //adjustText(darkTheme);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {
+            themeSwitch.setChecked(true);
+        }
         themeSwitch.setOnCheckedChangeListener(this);
-
-        String read = readFromFile(this, "color_theme");
-        darkTheme = read.equals("true");
-
-        themeSwitch.setChecked(darkTheme);
-        adjustText(darkTheme);
     }
 
     // Event Handlers
@@ -61,11 +68,27 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
     {
-        // If the user changes the switch from light theme to dark theme
-        adjustText(isChecked);
+        if(isChecked){
+            changeToDark();
+        }
+        else {
+            changeToLight();
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     
     // Public Methods
+
+    public void changeToDark() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+    public void changeToLight() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+
     public void onClickLogOut(View view) {
             //todo: get this to logout
     }
