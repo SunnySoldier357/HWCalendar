@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
     
         GetCalendarDay();
     }
-    
+
     // Event Handlers
     public void logOutButton_Clicked(View view)
     {
