@@ -16,13 +16,17 @@
     
     <color name="colorFontReg">#808080</color>
 
-    <!-- dark color theme colors below-->
+    <!-- Dark Theme Colours -->
     <color name="colorPrimaryInverse">#000000</color>
+    
     <color name="colorPrimaryDarkInverse">#8e44ad</color>
+    
     <color name="colorAccentInverse">#f39c12</color>
+    
     <color name="colorBackgroundInverse">#2a363b</color>
+    
     <color name="colorFontDarkInverse">#ffffff</color>
+    
     <color name="colorFontRegInverse">#f4f2f2</color>
-
-
+    
 </resources>
