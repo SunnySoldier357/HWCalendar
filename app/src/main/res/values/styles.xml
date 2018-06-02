@@ -14,7 +14,6 @@
         <item name="windowActionBar">false</item>
         
         <item name="windowNoTitle">true</item>
-
     </style>
 
     <style name="AddViewStyle">
@@ -42,9 +41,13 @@
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimaryInverse</item>
+        
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInverse</item>
+        
         <item name="colorAccent">@color/colorAccentInverse</item>
+        
         <item name="windowActionBar">false</item>
+        
         <item name="windowNoTitle">true</item>
     </style>
 </resources>

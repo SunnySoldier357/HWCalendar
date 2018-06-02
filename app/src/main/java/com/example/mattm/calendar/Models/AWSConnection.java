@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 public class AWSConnection
 {
     // Constants
-    private final String LOG_TAG = "Testing AWSConnection";
+    private final String TAG = "Testing AWSConnection";
     
     // Private Properties
     private Context context;
@@ -45,7 +45,7 @@ public class AWSConnection
             @Override
             public void onComplete(AWSStartupResult awsStartupResult)
             {
-                Log.d(LOG_TAG, "AWSMobileClient is instantiated and you are connected to AWS!");
+                Log.d(TAG, "AWSMobileClient is instantiated and you are connected to AWS!");
             }
         }).execute();
         

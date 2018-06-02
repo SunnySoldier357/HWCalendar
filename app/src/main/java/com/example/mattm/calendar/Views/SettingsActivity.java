@@ -24,6 +24,9 @@ import java.io.OutputStreamWriter;
 
 public class SettingsActivity extends AppCompatActivity implements OnCheckedChangeListener
 {
+    // Constants
+    private final String TAG = "Settings Activity";
+    
     // Private Properties
     private boolean darkTheme;
     
@@ -36,25 +39,23 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {        //MODE_NIGHT = 2
-            setTheme(R.style.AppTheme_Dark);                                //todo: add this to all the classes
+        // TODO: Add this to all the classes
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            //MODE_NIGHT = 2
+            setTheme(R.style.AppTheme_Dark);
         }
+        
         setContentView(R.layout.activity_settings);
     
         dark = findViewById(R.id.dark);
         light = findViewById(R.id.light);
         
         themeSwitch = findViewById(R.id.colorThemeSwitch);
-
-
-        //String read = readFromFile(this, "color_theme");
-        //darkTheme = read.equals("true");
-
-        //themeSwitch.setChecked(darkTheme);
-        //adjustText(darkTheme);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {
+        
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             themeSwitch.setChecked(true);
-        }
+        
         themeSwitch.setOnCheckedChangeListener(this);
     }
 
@@ -65,32 +66,33 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         Toast.makeText(this, "\n Developed by KMS \n", Toast.LENGTH_SHORT).show();
     }
 
+    // Overridden Methods
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
     {
-        if(isChecked){
+        if (isChecked)
             changeToDark();
-        }
-        else {
+        else
             changeToLight();
-        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
     
+    public void onClickLogOut(View view)
+    {
+        // TODO: Get this to logout
+    }
+    
     // Public Methods
-
-    public void changeToDark() {
+    public void changeToDark()
+    {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
-    public void changeToLight() {
+    
+    public void changeToLight()
+    {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-    }
-
-
-    public void onClickLogOut(View view) {
-            //todo: get this to logout
     }
 
     public String readFromFile(Context context, String fileName)
@@ -118,12 +120,12 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         catch (FileNotFoundException e)
         {
             // TODO: UI - Show error message to User in a way they will understand for different error messages
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e(TAG, "File not found: " + e.toString());
         }
         catch (IOException e)
         {
             // TODO: UI - Show error message to User in a way they will understand for different error messages
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e(TAG, "Can not read file: " + e.toString());
         }
     
         return ret;

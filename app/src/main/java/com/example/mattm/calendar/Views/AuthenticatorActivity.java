@@ -15,7 +15,7 @@ import com.example.mattm.calendar.R;
 public class AuthenticatorActivity extends AppCompatActivity
 {
     // Constants
-    public final String LOG_TAG = "Authenticator";
+    public final String TAG = "Authenticator";
     
     // Private Properties
     private AWSConnection awsConnection;
@@ -42,7 +42,7 @@ public class AuthenticatorActivity extends AppCompatActivity
             public void onUserSignedIn()
             {
                 // TODO: Remove when done testing
-                Log.d(LOG_TAG, "User Signed In");
+                Log.d(TAG, "User Signed In");
                 
                 try
                 {

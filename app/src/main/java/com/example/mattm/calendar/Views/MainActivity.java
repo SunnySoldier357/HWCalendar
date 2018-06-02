@@ -37,7 +37,7 @@ import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadab
 public class MainActivity extends AppCompatActivity
 {
     // Constants
-    private final String LOG_TAG = "Testing MainActivity";
+    private final String TAG = "Testing MainActivity";
     
     // Public Properties
     public ArrayAdapter<String> assignmentsAdapter;
@@ -56,9 +56,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {        //MODE_NIGHT = 2
+        
+        // MODE_NIGHT = 2
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
-        }
+
         setContentView(R.layout.activity_main);
 
         // Hamburger menu
@@ -103,9 +105,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         // TODO: Remove when done testing
-        Log.d(LOG_TAG, "List of subjects: " + subjects.toString());
-        Log.d(LOG_TAG, "User: " + awsConnection.getUserID());
-        Log.d(LOG_TAG, "Assignments: " + assignments.toString());
+        Log.d(TAG, "List of subjects: " + subjects.toString());
+        Log.d(TAG, "User: " + awsConnection.getUserID());
+        Log.d(TAG, "Assignments: " + assignments.toString());
         
         subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, subjects);
         ListView subjectsListView = findViewById(R.id.periodsList);
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity
 
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
         // TODO: Remove when done testing
-        Log.d(LOG_TAG, "Logged Out");
+        Log.d(TAG, "Logged Out");
         
         closeDrawerFunction();
     }
@@ -168,7 +170,6 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("Subject", "Test Subject");
         bundle.putString("TeacherName", "Test Teacher");
         bundle.putString("Period", "Test Period");
-        
         
         SubjectDetailsDialogFragment dialog = new SubjectDetailsDialogFragment();
         dialog.setArguments(bundle);
