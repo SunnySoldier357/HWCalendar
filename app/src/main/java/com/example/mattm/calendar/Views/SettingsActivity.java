@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.mattm.calendar.Models.FileIO;
 import com.example.mattm.calendar.R;
 
-
 public class SettingsActivity extends AppCompatActivity implements OnCheckedChangeListener
 {
     // Constants
@@ -69,10 +68,12 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
             changeToDark();
             fileIO.writeToFile("true", this, "color_theme");
         }
-        else {
+        else
+        {
             changeToLight();
             fileIO.writeToFile("false", this, "color_theme");
         }
+        
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -103,6 +104,6 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         (isChecked ? light : dark).setTextColor(getResources().getColor(R.color.colorFontReg));
         dark.setTypeface(null, isChecked ? Typeface.BOLD : Typeface.NORMAL);
 
-        //fileIO.writeToFile(String.valueOf(darkTheme), this, "color_theme");
+        // fileIO.writeToFile(String.valueOf(darkTheme), this, "color_theme");
     }
 }

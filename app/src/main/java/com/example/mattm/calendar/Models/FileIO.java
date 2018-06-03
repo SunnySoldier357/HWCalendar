@@ -2,28 +2,33 @@ package com.example.mattm.calendar.Models;
 
 import android.content.Context;
 import android.widget.Toast;
+
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class FileIO {
-
+public class FileIO
+{
+    // Public Methods
     /**
      * File I/O to save the theme to a text file
-     * @param data
-     * @param context
-     * @param fileName
+     * @param data // TODO: Fill in parameter description
+     * @param context The Acivity which this method is being called in
+     * @param fileName // TODO: Fill in parameter description
      */
-    public void writeToFile(String data, Context context, String fileName) {
-        try {
+    public void writeToFile(String data, Context context, String fileName)
+    {
+        try
+        {
             OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             Toast.makeText(context, "Data save failed", Toast.LENGTH_SHORT).show();
         }
     }
@@ -31,7 +36,7 @@ public class FileIO {
 
     public String readFromFile(Context context, String fileName)
     {
-        String ret = "";    //string that is built upon to return
+        String ret = "";
 
         try
         {
@@ -41,7 +46,7 @@ public class FileIO {
             {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
+                String receiveString;
                 StringBuilder stringBuilder = new StringBuilder();
 
                 while (null != (receiveString = bufferedReader.readLine()))
@@ -51,10 +56,6 @@ public class FileIO {
                 ret = stringBuilder.toString();
             }
         }
-        catch (FileNotFoundException e)
-        {
-            Toast.makeText(context, "Data not found", Toast.LENGTH_SHORT).show();
-        }
         catch (IOException e)
         {
             Toast.makeText(context, "Data not found", Toast.LENGTH_SHORT).show();
@@ -62,8 +63,4 @@ public class FileIO {
 
         return ret;
     }
-
-
-
-
 }

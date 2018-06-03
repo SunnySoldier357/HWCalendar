@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
-import com.example.mattm.calendar.Models.FileIO;
 import com.example.mattm.calendar.R;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Set;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadable;
 
@@ -129,8 +127,7 @@ public class MainActivity extends AppCompatActivity
     
         GetCalendarDay();
     }
-
-
+    
     // Event Handlers
     public void logOutButton_Clicked(View view)
     {

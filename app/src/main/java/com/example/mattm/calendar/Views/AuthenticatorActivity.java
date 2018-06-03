@@ -76,13 +76,14 @@ public class AuthenticatorActivity extends AppCompatActivity
         showSignIn();
     }
 
-    public void checkForTheme() {
+    // Public Methods
+    public void checkForTheme()
+    {
         SettingsActivity settingsActivity = new SettingsActivity();
         FileIO fileIO = new FileIO();
         String darkTheme = fileIO.readFromFile(this, "color_theme");
-        if(Boolean.valueOf(darkTheme)){
+        if (Boolean.valueOf(darkTheme))
             settingsActivity.changeToDark();
-        }
     }
 
     // Private Method
