@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         }
         
         setContentView(R.layout.activity_settings);
-    
+
         dark = findViewById(R.id.dark);
         light = findViewById(R.id.light);
         
@@ -71,10 +71,14 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
     {
         if (isChecked)
+        {
             changeToDark();
-        else
+            writeToFile("true", this, "color_theme");
+        }
+        else {
             changeToLight();
-
+            writeToFile("false", this, "color_theme");
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -97,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
 
     public String readFromFile(Context context, String fileName)
     {
-        String ret = "";
+        String ret = "";    //string that is built upon to return
     
         try
         {
@@ -149,7 +153,7 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
      * @param context
      * @param fileName
      */
-    private void writeToFile(String data,Context context, String fileName)
+    private void writeToFile(String data, Context context, String fileName)
     {
         try
         {
@@ -160,9 +164,6 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         }
         catch (IOException e)
         {
-            // TODO: Remove when done testing
-            Log.e("Exception", "File write failed: " + e.toString());
-            
             Toast.makeText(context, "Data save failed", Toast.LENGTH_SHORT).show();
         }
     }

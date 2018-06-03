@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadable;
 
@@ -56,7 +57,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        
+
+        SettingsActivity settingsActivity = new SettingsActivity();
+        String darkTheme = settingsActivity.readFromFile(this, "color_theme");
+        if(Boolean.valueOf(darkTheme)){
+            settingsActivity.changeToDark();
+        }
+
         // MODE_NIGHT = 2
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
