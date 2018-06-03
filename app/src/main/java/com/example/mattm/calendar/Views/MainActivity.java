@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
+import com.example.mattm.calendar.Models.FileIO;
 import com.example.mattm.calendar.R;
 
 import java.text.SimpleDateFormat;
@@ -58,13 +59,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
-        SettingsActivity settingsActivity = new SettingsActivity();
-        String darkTheme = settingsActivity.readFromFile(this, "color_theme");
-        if(Boolean.valueOf(darkTheme)){
-            settingsActivity.changeToDark();
-        }
-
-        // MODE_NIGHT = 2
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
 
@@ -135,6 +129,7 @@ public class MainActivity extends AppCompatActivity
     
         GetCalendarDay();
     }
+
 
     // Event Handlers
     public void logOutButton_Clicked(View view)

@@ -11,6 +11,7 @@ import com.amazonaws.mobile.auth.core.SignInStateChangeListener;
 import com.amazonaws.mobile.auth.ui.SignInUI;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.example.mattm.calendar.Models.AWSConnection;
+import com.example.mattm.calendar.Models.FileIO;
 import com.example.mattm.calendar.R;
 
 public class AuthenticatorActivity extends AppCompatActivity
@@ -25,6 +26,9 @@ public class AuthenticatorActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        checkForTheme();
+
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_authenticator);
@@ -70,6 +74,15 @@ public class AuthenticatorActivity extends AppCompatActivity
         });
         
         showSignIn();
+    }
+
+    public void checkForTheme() {
+        SettingsActivity settingsActivity = new SettingsActivity();
+        FileIO fileIO = new FileIO();
+        String darkTheme = fileIO.readFromFile(this, "color_theme");
+        if(Boolean.valueOf(darkTheme)){
+            settingsActivity.changeToDark();
+        }
     }
 
     // Private Method
