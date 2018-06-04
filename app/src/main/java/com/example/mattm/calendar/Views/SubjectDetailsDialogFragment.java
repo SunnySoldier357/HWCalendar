@@ -33,10 +33,9 @@ public class SubjectDetailsDialogFragment extends DialogFragment
                 .setText(getArguments().getString("TeacherName"));
         ((TextView) view.findViewById(R.id.periodTextView))
                 .setText(getArguments().getString("Period"));
-        Log.d("Sandeep", ((TextView) view.findViewById(R.id.subjectNameTextView)).getText().toString());
         
         builder.setTitle("Details")
-                .setView(inflater.inflate(R.layout.fragment_subject_details_dialog, null))
+                .setView(view)
                 .setPositiveButton("Add Assignment", new OnClickListener()
                 {
                     @Override

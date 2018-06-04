@@ -162,11 +162,10 @@ public class MainActivity extends AppCompatActivity
         
         closeDrawerFunction();
         
-        // String subjectSelected = subjects.get(position);
-        // String[] split = subjectSelected.split("_");
+        String subjectName = subjects.get(position);
         
         Bundle bundle = new Bundle();
-        bundle.putString("Subject", "Test Subject");
+        bundle.putString("Subject", subjectName);
         bundle.putString("TeacherName", "Test Teacher");
         bundle.putString("Period", "Test Period");
         

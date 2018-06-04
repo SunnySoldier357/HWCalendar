@@ -172,8 +172,8 @@ public class AWSConnection
     
     /**
      * Queries the AWS Database and returns all Subjects.
-     * @return An AsyncTask that when executed returns an ArrayList of all the Subjects the user
-     *         has.
+     * @return An AsyncTask that when executed returns an ArrayList of all the Subjects in the AWS
+     * Database.
      */
     public AsyncTask<Void, Void, ArrayList<Subject>> getSubjects()
     {
@@ -203,7 +203,7 @@ public class AWSConnection
     }
     
     /**
-     * Queries the AWS Database and returns all Subjects.
+     * Queries the AWS Database and returns all Subjects for the current user.
      * @return An AsyncTask that when executed returns an ArrayList of all the Subjects the user
      *         has, formatted as Strings.
      */
