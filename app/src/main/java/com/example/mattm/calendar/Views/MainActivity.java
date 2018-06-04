@@ -1,6 +1,7 @@
 package com.example.mattm.calendar.Views;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
+import com.example.mattm.calendar.databinding.ActivityMainBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,11 +55,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        // Binding Data
+        ActivityMainBinding binding =
+                DataBindingUtil.setContentView(this, R.layout.activity_main);
+        String test = "testing";
+        binding.setTest(test);
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
 
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         // Hamburger menu
         Toolbar toolbar = findViewById(R.id.toolbar);
