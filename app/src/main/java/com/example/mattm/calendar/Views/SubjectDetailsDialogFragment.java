@@ -41,11 +41,8 @@ public class SubjectDetailsDialogFragment extends DialogFragment
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        MainActivity mainActivity = (MainActivity) getActivity();
-                        
                         Intent intent = new Intent(getActivity(), AddEventActivity.class);
-                        intent.putExtra("ClassName",
-                                mainActivity.subjectsAdapter.getItem(mainActivity.position));
+                        intent.putExtra("ClassName", getArguments().getString("ClassName"));
                         startActivity(intent);
                     }
                 })

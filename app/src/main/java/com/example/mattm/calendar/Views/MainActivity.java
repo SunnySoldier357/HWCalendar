@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity
     public ArrayList<String> assignments = new ArrayList<>();
     public ArrayList<String> subjects = new ArrayList<>();
     
-    // TODO: Figure a way to pass info from this page to SubjectDetailsDialogFragment
-    public int position;
-    
     // Private Properties
     private AWSConnection awsConnection = null;
     
@@ -157,9 +154,6 @@ public class MainActivity extends AppCompatActivity
     
     public void subjectItem_Clicked(int position)
     {
-        // TODO: Need to replace with passing info to dialog directly
-        this.position = position;
-        
         closeDrawerFunction();
         
         String subjectName = subjects.get(position);
@@ -168,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("Subject", subjectName);
         bundle.putString("TeacherName", "Test Teacher");
         bundle.putString("Period", "Test Period");
+        bundle.putString("ClassName", subjectsAdapter.getItem(position));
         
         SubjectDetailsDialogFragment dialog = new SubjectDetailsDialogFragment();
         dialog.setArguments(bundle);
