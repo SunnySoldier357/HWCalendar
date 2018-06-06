@@ -19,16 +19,20 @@
         <activity android:name=".Views.MainActivity" />
         <activity android:name=".Views.AddSubjectActivity" />
         <activity android:name=".Views.AddEventActivity" />
+
+        <activity android:name=".Views.SplashActivity" android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Views.AuthenticatorActivity"
             android:label="@string/title_activity_authenticator"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
         <activity android:name=".Views.SettingsActivity"></activity>
     </application>
 
