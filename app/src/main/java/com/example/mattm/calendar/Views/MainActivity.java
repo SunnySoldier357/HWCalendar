@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     
     public ArrayList<String> assignments = new ArrayList<>();
     public ArrayList<String> subjects = new ArrayList<>();
+    public ArrayList<String> readableSubjects = new ArrayList<>();
     
     // Private Properties
     private AWSConnection awsConnection = null;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         {
             subjects = awsConnection.getSubjectsAsStrings().execute().get();
             assignments = awsConnection.getAssignmentsAsStrings(subjects).execute().get();
-            subjects = ConvertArrayListToReadable(subjects);
+            readableSubjects = ConvertArrayListToReadable(subjects);
         }
         catch (Exception e)
         {
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "User: " + awsConnection.getUserID());
         Log.d(TAG, "Assignments: " + assignments.toString());
         
-        subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, subjects);
+        subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, readableSubjects);
         ListView subjectsListView = findViewById(R.id.periodsList);
         subjectsListView.setAdapter(subjectsAdapter);
 
@@ -162,13 +163,14 @@ public class MainActivity extends AppCompatActivity
     public void subjectItem_Clicked(int position)
     {
         closeDrawerFunction();
-        
-        String subjectName = subjects.get(position);
+
+        String dbKey = subjects.get(position);
+        String[] split = dbKey.split("_");
         
         Bundle bundle = new Bundle();
-        bundle.putString("Subject", subjectName);
-        bundle.putString("TeacherName", "Test Teacher");
-        bundle.putString("Period", "Test Period");
+        bundle.putString("Subject", split[2]);
+        bundle.putString("TeacherName", split[0]);
+        bundle.putString("Period", split[1]);
         bundle.putString("ClassName", subjectsAdapter.getItem(position));
         
         SubjectDetailsDialogFragment dialog = new SubjectDetailsDialogFragment();
