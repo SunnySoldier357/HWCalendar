@@ -6,6 +6,6 @@
           android:title="@string/action_settings"
           app:showAsAction="never"/>
 
-     <!-- TODO: Customise this to Mateo's liking -->
+     <!-- This XML is the settings dropdown-->
 
 </menu>

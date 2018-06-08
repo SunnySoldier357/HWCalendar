@@ -122,9 +122,6 @@ public class AddSubjectDialogFragment extends DialogFragment
         // but are not displayed
         // TODO: make it so the listView updates!!!
         // TODO: Remove when done testing
-        Log.d("TEMP", "\n");
-        Log.d("TEMP", showSubjects.toString() + "final");
-        Log.d("TEMP", readableSubjects.toString() + "final");
     }
     
     /**
@@ -152,7 +149,7 @@ public class AddSubjectDialogFragment extends DialogFragment
             }
         }
         
-        createLists();
+        // createLists();
     }
     
     /**
@@ -174,7 +171,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                 //TODO: Get the algorithm to work so it doesn't just remove items
                 // but also adds them back as the user deletes characters
                 
-                /*
+
                 if(s.toString().equals(""))
                     initList();   //resets listVew
                 else
@@ -182,7 +179,11 @@ public class AddSubjectDialogFragment extends DialogFragment
                     //Toast.makeText(getActivity(), s.toString(), Toast.LENGTH_SHORT).show();  //testing purposes:
                     searchLoop(s.toString());
                 }
-                */
+
+
+                Log.d("TEMP", "\n");
+                Log.d("TEMP", showSubjects.toString() + "showSubjects");
+                Log.d("TEMP", readableSubjects.toString() + "readableSubjects");
             }
 
             @Override

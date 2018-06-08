@@ -52,7 +52,7 @@ public class AddEventActivity extends AppCompatActivity
         // Get Information
         awsConnection.storeAssignment(
                 getIntent().getStringExtra("ClassName"),
-                String.format("%s-%s-%sT", GetYear(), GetMonth(), GetDay()),
+                String.format("%s-%s-%s", GetYear(), GetMonth(), GetDay()),
                 GetEventName(),
                 GetDescription()
         ).execute();
