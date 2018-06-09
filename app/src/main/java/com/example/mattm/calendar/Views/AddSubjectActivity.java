@@ -28,6 +28,9 @@ public class AddSubjectActivity extends AppCompatActivity
         String subjectName = getIntent().getStringExtra("SubjectName");
         ((EditText) findViewById(R.id.className)).setText(subjectName);
         
+        String teacherName = getIntent().getStringExtra("TeacherName");
+        ((EditText) findViewById(R.id.teacherName)).setText(teacherName);
+        
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(null);

@@ -54,6 +54,7 @@ public class ChoosePeriodDialogFragment extends DialogFragment
                 {
                     Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
                     intent.putExtra("SubjectName", subjectNameArgument);
+                    intent.putExtra("TeacherName", getArguments().get("TeacherName").toString());
                     startActivity(intent);
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> { });

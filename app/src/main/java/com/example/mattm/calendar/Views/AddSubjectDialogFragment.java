@@ -69,8 +69,12 @@ public class AddSubjectDialogFragment extends DialogFragment
                 .setAdapter(subjectsAdapter, (dialog, which) ->
                 {
                     Bundle bundle = new Bundle();
-                    bundle.putString("SubjectName",
-                            Subject.ConvertToReadable(showSubjects.get(which).toString()));
+                    
+                    String subject = showSubjects.get(which).toString();
+                    String[] split = subject.split("_");
+                    
+                    bundle.putString("SubjectName", split[2]);
+                    bundle.putString("TeacherName", split[0]);
 
                     ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
                     chooseDialog.setArguments(bundle);
