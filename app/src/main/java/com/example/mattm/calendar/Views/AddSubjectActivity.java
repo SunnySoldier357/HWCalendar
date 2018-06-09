@@ -25,6 +25,9 @@ public class AddSubjectActivity extends AppCompatActivity
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_add_class);
         
+        String subjectName = getIntent().getStringExtra("SubjectName");
+        ((EditText) findViewById(R.id.className)).setText(subjectName);
+        
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(null);

@@ -68,12 +68,12 @@ public class AddSubjectDialogFragment extends DialogFragment
                 .setView(input)
                 .setAdapter(subjectsAdapter, (dialog, which) ->
                 {
-                    // Do Something if the class is clicked
-                    awsConnection.addSubject(showSubjects.get(which)).execute();
-                    Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
-                            Toast.LENGTH_LONG).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("SubjectName",
+                            Subject.ConvertToReadable(showSubjects.get(which).toString()));
 
                     ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
+                    chooseDialog.setArguments(bundle);
                     chooseDialog.show(getActivity().getSupportFragmentManager(), "Dialog2");
                 })
                 .setPositiveButton("Create Class", (dialog, which) ->
