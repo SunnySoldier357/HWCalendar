@@ -1,5 +1,7 @@
 package com.example.mattm.calendar.Views;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
+import com.example.mattm.calendar.ViewModels.MainActivityViewModel;
 import com.example.mattm.calendar.databinding.ActivityMainBinding;
 
 import java.text.SimpleDateFormat;
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     // Private Properties
     private AWSConnection awsConnection = null;
     
+    private MainActivityViewModel viewModel;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,12 +62,9 @@ public class MainActivity extends AppCompatActivity
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.AppTheme_Dark);
-    
-        // Binding Data
-        ActivityMainBinding binding =
-                DataBindingUtil.setContentView(this, R.layout.activity_main);
-        String test = "testing";
-
+        
+        dataBinding();
+        
         // Hamburger menu
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity
     public void subjectItem_Clicked(int position)
     {
         closeDrawerFunction();
+        // TODO: Remove this! Testing DataBinding
+        viewModel.UserName.setValue("Kenneth");
 
         String dbKey = subjects.get(position);
         String[] split = dbKey.split("_");
@@ -208,6 +212,22 @@ public class MainActivity extends AppCompatActivity
         ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
     }
     
+    private void dataBinding()
+    {
+        ActivityMainBinding binding =
+                DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setLifecycleOwner(this);
+        
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        
+        // Creating the observer which updates the UI
+        final Observer<String> userNameObserver = newUserName ->
+            ((TextView) findViewById(R.id.username_header)).setText(newUserName);
+        
+        // Observing the LiveData
+        viewModel.UserName.observe(this, userNameObserver);
+    }
+    
     private void setUpFloatingActionButton()
     {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -225,8 +245,8 @@ public class MainActivity extends AppCompatActivity
         String emailh1 = "spamybox6@gmail.com";
 
         // Sets the Hamburger Menu header with login info
-        ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
-        ((TextView) findViewById(R.id.email_header)).setText(emailh1);
+        // ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
+        // ((TextView) findViewById(R.id.email_header)).setText(emailh1);
     }
     
     private void showAssignments(Date dateSelected)
