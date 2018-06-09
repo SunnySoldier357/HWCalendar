@@ -20,6 +20,7 @@ import com.example.mattm.calendar.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AddEventActivity extends AppCompatActivity
 {
@@ -29,6 +30,7 @@ public class AddEventActivity extends AppCompatActivity
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    private Date dateObject;
     private String year;
     private String month;
     private String day;
@@ -121,10 +123,17 @@ public class AddEventActivity extends AppCompatActivity
         mDisplayDate = findViewById(R.id.tvDate);
         String date = month + "/" + day + "/" + year;
         mDisplayDate.setText(date);
+        dateObject = new GregorianCalendar(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day)).getTime();
     }
 
 
      //Accessors
+    public Date getDate()
+    {
+        return dateObject;
+    }
+
+
     public String GetDay()
     {
         return day;
