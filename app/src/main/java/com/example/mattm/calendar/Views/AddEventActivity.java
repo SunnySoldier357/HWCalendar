@@ -43,9 +43,9 @@ public class AddEventActivity extends AppCompatActivity
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_add_event);
 
-        initializeDate();
-        showDate();
-        setUpDatePicker();
+        initializeDate();   //sets the initial date to current date
+        showDate();         //shows the date in the textView for date
+        setUpDatePicker();  //sets up the clickListener for the date
 
         try
         {
@@ -122,11 +122,12 @@ public class AddEventActivity extends AppCompatActivity
         };
     }
 
-    private void showDate()
+    private void showDate()                           //date is formatted and shows in date textView
     {
         mDisplayDate = findViewById(R.id.tvDate);
         String date = String.format("%s/%s/%s", month, day, year);
         mDisplayDate.setText(date);
+                                                        //date object is also updated
         dateObject = new GregorianCalendar(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day)).getTime();
     }
     
@@ -143,7 +144,6 @@ public class AddEventActivity extends AppCompatActivity
 
     public String GetMonth()
     {
-        // Should return integer for month
         return month;
     }
 
