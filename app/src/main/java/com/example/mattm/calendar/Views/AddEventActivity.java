@@ -19,14 +19,18 @@ import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.R;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AddEventActivity extends AppCompatActivity
 {
     // Private Properties
     private AWSConnection awsConnection;
     
-    private OnDateSetListener mDateSetListener;
+    private Date dateObject;
     
+    private OnDateSetListener mDateSetListener;
+
     private String day;
     private String month;
     private String year;
@@ -120,9 +124,15 @@ public class AddEventActivity extends AppCompatActivity
         mDisplayDate = findViewById(R.id.tvDate);
         String date = String.format("%s/%s/%s", month, day, year);
         mDisplayDate.setText(date);
+        dateObject = new GregorianCalendar(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day)).getTime();
+    }
+    
+    // Accessors
+    public Date GetDate()
+    {
+        return dateObject;
     }
 
-    // Accessors
     public String GetDay()
     {
         return day;

@@ -72,7 +72,7 @@ public class Assignment
         String[] split = getDueDate()
             .replace("T", "")
             .split("-");
-        Log.d("Sandeep", "getDate: " + split[0] + " " + split[1] + " " + split[2]);
+        Log.d("Sandeep", "GetDate: " + split[0] + " " + split[1] + " " + split[2]);
         return new Date(Integer.parseInt(split[0]),
                 Integer.parseInt(split[1]),
                 Integer.parseInt(split[2]));
