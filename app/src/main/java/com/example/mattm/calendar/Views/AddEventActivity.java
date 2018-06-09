@@ -43,9 +43,9 @@ public class AddEventActivity extends AppCompatActivity
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_add_event);
 
-        initializeDate();   //sets the initial date to current date
-        showDate();         //shows the date in the textView for date
-        setUpDatePicker();  //sets up the clickListener for the date
+        initializeDate();
+        showDate();
+        setUpDatePicker();
 
         try
         {
@@ -78,6 +78,10 @@ public class AddEventActivity extends AppCompatActivity
     }
     
     // Private Methods
+    
+    /**
+     * Sets the initial date to current date
+     */
     private void initializeDate()
     {
         Calendar cal = Calendar.getInstance();
@@ -89,7 +93,10 @@ public class AddEventActivity extends AppCompatActivity
         month = String.valueOf(m);
         day = String.valueOf(d);
     }
-
+    
+    /**
+     * Sets up the ClickListener for the date
+     */
     private void setUpDatePicker()
     {
         mDisplayDate.setOnClickListener(view ->
@@ -121,13 +128,17 @@ public class AddEventActivity extends AppCompatActivity
             showDate();
         };
     }
-
-    private void showDate()                           //date is formatted and shows in date textView
+    
+    /**
+     * Shows the formatted date in the TextView for date
+     */
+    private void showDate()
     {
         mDisplayDate = findViewById(R.id.tvDate);
         String date = String.format("%s/%s/%s", month, day, year);
         mDisplayDate.setText(date);
-                                                        //date object is also updated
+        
+        // Date object is also updated
         dateObject = new GregorianCalendar(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day)).getTime();
     }
     
