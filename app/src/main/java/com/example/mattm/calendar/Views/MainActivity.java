@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.example.mattm.calendar.Models.AWSConnection;
-import com.example.mattm.calendar.Models.Assignment;
 import com.example.mattm.calendar.R;
 import com.example.mattm.calendar.databinding.ActivityMainBinding;
 
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadable;
 
@@ -66,9 +64,6 @@ public class MainActivity extends AppCompatActivity
         ActivityMainBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_main);
         String test = "testing";
-        Log.d("AssTest", "ttemp");
-
-        //setContentView(R.layout.activity_main);
 
         // Hamburger menu
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -136,11 +131,6 @@ public class MainActivity extends AppCompatActivity
         GetCalendarDay();
         timeFormatter();
     }
-    public void timeFormatter(){
-
-
-    }
-
     
     // Event Handlers
     public void logOutButton_Clicked(View view)
@@ -217,6 +207,11 @@ public class MainActivity extends AppCompatActivity
                 Integer.parseInt(date[2]));
         
         showAssignments(current);
+    }
+    
+    public void timeFormatter()
+    {
+    
     }
 
     // Private Methods

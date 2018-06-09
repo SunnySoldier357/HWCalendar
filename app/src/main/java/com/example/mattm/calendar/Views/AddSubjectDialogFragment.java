@@ -117,11 +117,8 @@ public class AddSubjectDialogFragment extends DialogFragment
     {
         readableSubjects = ConvertListToReadable(showSubjects);
         removePeriodDuplicates(readableSubjects, showSubjects);
-        
-        // For testing purposes - do not delete - shows that listViews change in the log,
-        // but are not displayed
+
         // TODO: make it so the listView updates!!!
-        // TODO: Remove when done testing
     }
     
     /**
@@ -172,15 +169,11 @@ public class AddSubjectDialogFragment extends DialogFragment
                 // but also adds them back as the user deletes characters
                 
 
-                if(s.toString().equals(""))
-                    initList();   //resets listVew
+                if ("".equals(s.toString()))
+                    initList();   // Resets ListView
                 else
-                {
-                    //Toast.makeText(getActivity(), s.toString(), Toast.LENGTH_SHORT).show();  //testing purposes:
                     searchLoop(s.toString());
-                }
-
-
+                
                 Log.d("TEMP", "\n");
                 Log.d("TEMP", showSubjects.toString() + "showSubjects");
                 Log.d("TEMP", readableSubjects.toString() + "readableSubjects");
