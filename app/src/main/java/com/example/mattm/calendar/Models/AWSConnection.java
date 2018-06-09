@@ -3,7 +3,6 @@ package com.example.mattm.calendar.Models;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
@@ -13,18 +12,13 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpr
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AWSConnection
 {
-    // Constants
-    private final String TAG = "Testing AWSConnection";
-    
     // Private Properties
     private Context context;
     
@@ -37,9 +31,7 @@ public class AWSConnection
     {
         this.context = context;
         
-        AWSMobileClient.getInstance().initialize(context, awsStartupResult
-                -> Log.d(TAG, "AWSMobileClient is instantiated and you are connected to AWS!"))
-                .execute();
+        AWSMobileClient.getInstance().initialize(context, awsStartupResult -> { }).execute();
         
         dynamoDBMapper = initializeDynamoDBMapper();
         userId = updateUserID().execute().get();
@@ -49,7 +41,8 @@ public class AWSConnection
     
     /**
      * Adds a subject to the AWS Database and saves the changes to both the subject and the user.
-     * @param subject The Subject object that needs to be added to the AWS Database.
+     * @param subject The Subject object that needs to be added to the AWS Database as well as the
+     *                user's subscribed classes.
      * @return An AsyncTask that returns nothing but executes the command to insert the Subject
      *         into the database.
      */
@@ -74,7 +67,7 @@ public class AWSConnection
                         dataCollector.add(subject.toString());
                     else
                     {
-                        // TODO: MAKE TOAST THAT SAYS 'YOU ARE ALREADY ENROLLED IN THIS CLASS'
+                        // TODO: Make a Toast that says "You are already enrolled in this class"
                     }
                 }
                 User user = new User(userId, dataCollector);
@@ -89,6 +82,14 @@ public class AWSConnection
         return task;
     }
     
+    /**
+     * Accesses the AWS Database and retrives all Assignments that are associated with the user's
+     * subscribed classes.
+     * @param subjects An ArrayList of Subjects that has all the Subjects the user has subscribed
+     *                 to.
+     * @return An ArrayList of Assignments that has all the Assignments that are associated with
+     *         the user's subscribed classes.
+     */
     public AsyncTask<Void, Void, ArrayList<Assignment>> getAssignments(final ArrayList<String> subjects)
     {
         @SuppressLint("StaticFieldLeak")
@@ -101,10 +102,6 @@ public class AWSConnection
     
                 for (String classes: subjects)
                 {
-                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    // TODO: For Future use
-                    String date = localDateFormat.format(new Date()) + "T";
-        
                     Assignment template = new Assignment();
                     template.setUserID(classes);
         
@@ -123,10 +120,10 @@ public class AWSConnection
     }
     
     /**
-     * Queries the AWS Database and returns all Assignments.
+     * Queries the AWS Database and returns all Assignments formatted as Strings.
      * @param subjects An ArrayList that contains all the subjects of the user.
      * @return An AsyncTask that when executed returns an ArrayList of all the Assignments the user
-     *         has.
+     *         has formatted as Strings.
      */
     public AsyncTask<Void, Void, ArrayList<String>> getAssignmentsAsStrings(final ArrayList<String> subjects)
     {
@@ -140,10 +137,6 @@ public class AWSConnection
             
                 for (String classes: subjects)
                 {
-                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    // TODO: For Future use
-                    String date = localDateFormat.format(new Date()) + "T";
-                
                     Assignment template = new Assignment();
                     template.setUserID(classes);
                 
@@ -219,7 +212,14 @@ public class AWSConnection
         return task;
     }
     
-    public AsyncTask<Void, Void, Void> storeAssignment(
+    /**
+     * Stores an Assignment into the AWS Database.
+     * @param user The userID that is associated with the User adding the assignment
+     * @param dueDate The due date of the assignment formatted as a String: YYYY-MM-DD
+     * @param name The name of the Assignment.
+     * @param description The description of the Assignment.
+     */
+    public void storeAssignment(
             final String user, final String dueDate, final String name, final String description)
     {
         @SuppressLint("StaticFieldLeak")
@@ -241,9 +241,14 @@ public class AWSConnection
                 return null;
             }
         };
-        return task;
+        
+        task.execute();
     }
     
+    /**
+     * TODO: Fill in documentation (Kenneth) [I don't know how to describe this]
+     * @return
+     */
     public AsyncTask<Void, Void, String> updateUserID()
     {
         @SuppressLint("StaticFieldLeak")
@@ -267,6 +272,11 @@ public class AWSConnection
     }
     
     // Private Methods
+    
+    /**
+     * TODO: Fill in documentation (Kenneth) [I don't know how to describe this]
+     * @return
+     */
     private DynamoDBMapper initializeDynamoDBMapper()
     {
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());

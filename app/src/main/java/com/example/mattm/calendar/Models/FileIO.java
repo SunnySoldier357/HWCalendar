@@ -12,18 +12,19 @@ import java.io.OutputStreamWriter;
 public class FileIO
 {
     // Public Methods
+    
     /**
      * File I/O to save the theme to a text file
-     * @param data // TODO: Fill in parameter description
-     * @param context The Acivity which this method is being called in
-     * @param fileName // TODO: Fill in parameter description
+     * @param data // TODO: (Mateo) Fill in parameter description
+     * @param context The Acivity which this method is being called.
+     * @param fileName // TODO: (Mateo) Fill in parameter description
      */
     public void writeToFile(String data, Context context, String fileName)
     {
         try
         {
-            OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                    context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }

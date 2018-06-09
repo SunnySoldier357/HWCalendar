@@ -38,21 +38,38 @@ public class Subject
     }
     
     // Static Methods
+    
+    /**
+     * Converts am ArrayList of String that represents the Subject key in the Database into an
+     * ArrayList of String that only has the subject name for display purposes.
+     *
+     * @param list The ArrayList of String that contains Subject IDs.
+     *
+     * @return An ArrayList of String that only contains the Subject name.
+     */
     public static ArrayList<String> ConvertListToReadable(List<Subject> list)
     {
         ArrayList<String> result = new ArrayList<>();
         
-        for (Subject item: list)
+        for (Subject item : list)
             result.add(String.format("%s (%s)", item.getSubject(), item.getTeacherName()));
         
         return result;
     }
     
+    /**
+     * Converts a List of String that represents the Subject key in the Database into an ArrayList
+     * of String that only has the subject name for display purposes.
+     *
+     * @param list The List of String that contains Subject IDs.
+     *
+     * @return A List of String that only contains the Subject name.
+     */
     public static ArrayList<String> ConvertArrayListToReadable(List<String> list)
     {
         ArrayList<String> result = new ArrayList<>();
         
-        for (String dbKey: list)
+        for (String dbKey : list)
             result.add(ConvertToReadable(dbKey));
         
         return result;
@@ -60,9 +77,11 @@ public class Subject
     
     /**
      * Converts a string that represents the Subject key in the Database into a String that only has the subject
-     * for display purposes
-     * @param dbKey The String that represents the Database key for any Subject
-     * @return A String that represents the name of the Subject for display purposes
+     * for display purposes.
+     *
+     * @param dbKey The String that represents the Database key for any Subject.
+     *
+     * @return A String that represents the name of the Subject for display purposes.
      */
     public static String ConvertToReadable(String dbKey)
     {
@@ -116,7 +135,7 @@ public class Subject
     {
         this.teacherName = teacherName;
     }
-
+    
     // Overridden Methods
     @Override
     public String toString()

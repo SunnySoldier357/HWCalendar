@@ -71,7 +71,7 @@ public class AddEventActivity extends AppCompatActivity
                 String.format("%s-%s-%s", GetYear(), GetMonth(), GetDay()),
                 GetEventName(),
                 GetDescription()
-        ).execute();
+        );
 
         Intent intentHome = new Intent(this, MainActivity.class);
         startActivity(intentHome);
