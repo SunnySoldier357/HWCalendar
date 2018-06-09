@@ -1,6 +1,5 @@
 package com.example.mattm.calendar.Views;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,9 +80,14 @@ public class AddEventActivity extends AppCompatActivity
     // Private Methods
     private void initializeDate()
     {
-        year = String.valueOf(Calendar.YEAR);
-        month = String.valueOf(Calendar.MONTH + 1);
-        day = String.valueOf(Calendar.DAY_OF_MONTH);
+        Calendar cal = Calendar.getInstance();
+        int y = cal.get(Calendar.YEAR);
+        int m = cal.get(Calendar.MONTH) + 1;
+        int d = cal.get(Calendar.DAY_OF_MONTH);
+
+        year = String.valueOf(y);
+        month = String.valueOf(m);
+        day = String.valueOf(d);
     }
 
     private void setUpDatePicker()
