@@ -16,8 +16,6 @@ import java.util.ArrayList;
 public class ChoosePeriodDialogFragment extends DialogFragment
 {
     // Private Properties
-    private ArrayList<String> periods;
-    
     private ArrayList<Subject> subjects;
     
     private AWSConnection awsConnection;
@@ -39,7 +37,7 @@ public class ChoosePeriodDialogFragment extends DialogFragment
         String subjectNameArgument = getArguments().get("SubjectName").toString();
         
         subjects = getCorrectSubjects(subjects, subjectNameArgument);
-        periods = getPeriods(subjects);
+        ArrayList<String> periods = getPeriods(subjects);
     
         ArrayAdapter<String> periodList = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, periods);

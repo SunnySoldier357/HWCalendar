@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Subject;
@@ -88,12 +87,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                     Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
                     getActivity().startActivity(intent);
                 })
-                .setNegativeButton("Cancel", (dialog, which) ->
-                {
-                    // Nothing is required here
-                    // TODO: Remove when done testing
-                    Toast.makeText(getActivity(), "Dialog Canceled", Toast.LENGTH_LONG).show();
-                });
+                .setNegativeButton("Cancel", (dialog, which) -> { });
 
         // Create the AlertDialog object and return it
         return builder.create();
@@ -118,14 +112,11 @@ public class AddSubjectDialogFragment extends DialogFragment
     public void searchLoop(String s)
     {
         int size = showSubjects.size();
-        
-        // For testing purposes
-        String sample = s;
-        
+    
         // Removes classes that are not searched for
         for (int i = 0; i < size; i++)
         {
-            if (!showSubjects.get(i).getSubject().contains(sample))
+            if (!showSubjects.get(i).getSubject().contains(s))
             {
                 // TODO: Remove when done testing
                 Log.d("TEMP", showSubjects.toString());
@@ -156,7 +147,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                 searchLoop(s.toString());
 
                 //TODO: Get the algorithm to work so it doesn't just remove items
-                // but also adds them back as the user deletes characters
+                //      but also adds them back as the user deletes characters
                 
 
                 if ("".equals(s.toString()))

@@ -1,7 +1,7 @@
 package com.example.mattm.calendar.Views;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +38,6 @@ import static com.example.mattm.calendar.Models.Subject.ConvertArrayListToReadab
 
 public class MainActivity extends AppCompatActivity
 {
-    // Constants
-    private final String TAG = "Testing MainActivity";
-    
     // Public Properties
     public ArrayAdapter<String> assignmentsAdapter;
     public ArrayAdapter<String> subjectsAdapter;
@@ -81,18 +77,7 @@ public class MainActivity extends AppCompatActivity
         try
         {
             awsConnection = AWSConnection.getCurrentInstance(this);
-        }
-        catch (Exception e)
-        {
-            // TODO: UI - Show error message to User in a way they will understand for different error messages
-
-            // Temporary solution
-            e.printStackTrace();
-            Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
-        }
-
-        try
-        {
+    
             subjects = awsConnection.getSubjectsAsStrings().execute().get();
             assignments = awsConnection.getAssignmentsAsStrings(subjects).execute().get();
             readableSubjects = ConvertArrayListToReadable(subjects);
@@ -105,11 +90,6 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
             Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
-
-        // TODO: Remove when done testing
-        Log.d(TAG, "List of subjects: " + subjects.toString());
-        Log.d(TAG, "User: " + awsConnection.getUserID());
-        Log.d(TAG, "Assignments: " + assignments.toString());
         
         subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, readableSubjects);
         ListView subjectsListView = findViewById(R.id.periodsList);
@@ -131,16 +111,15 @@ public class MainActivity extends AppCompatActivity
     {
         // Logs out
         IdentityManager.getDefaultIdentityManager().signOut();
+        
         subjects.clear();
         subjectsAdapter.notifyDataSetChanged();
+        
         assignments.clear();
         assignmentsAdapter.notifyDataSetChanged();
+        
         Intent intent = new Intent(this, AuthenticatorActivity.class);
         startActivity(intent);
-
-        Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-        // TODO: Remove when done testing
-        Log.d(TAG, "Logged Out");
         
         closeDrawerFunction();
     }
@@ -156,8 +135,6 @@ public class MainActivity extends AppCompatActivity
     public void subjectItem_Clicked(int position)
     {
         closeDrawerFunction();
-        // TODO: Remove this! Testing DataBinding
-        viewModel.UserName.setValue("Kenneth");
 
         String dbKey = subjects.get(position);
         String[] split = dbKey.split("_");
@@ -203,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     
     public void timeFormatter()
     {
-    
+        // TODO: Doing something in this method?
     }
 
     // Private Methods
@@ -241,12 +218,6 @@ public class MainActivity extends AppCompatActivity
     private void setUpHeader()
     {
         // TODO: Connect this with AWS for the actual username - Kenneth
-        String usernameh1 = "mattTest sample";
-        String emailh1 = "spamybox6@gmail.com";
-
-        // Sets the Hamburger Menu header with login info
-        // ((TextView) findViewById(R.id.username_header)).setText(usernameh1);
-        // ((TextView) findViewById(R.id.email_header)).setText(emailh1);
     }
     
     private void showAssignments(Date dateSelected)
@@ -271,15 +242,15 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         
+        
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here. The action bar will automatically handle clicks on
+        // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

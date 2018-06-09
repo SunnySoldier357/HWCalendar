@@ -39,10 +39,7 @@ public class SubjectDetailsDialogFragment extends DialogFragment
                     intent.putExtra("ClassName", getArguments().getString("ClassName"));
                     startActivity(intent);
                 })
-                .setNegativeButton("Cancel", (dialog, which) ->
-                {
-                    // Nothing is needed here
-                });
+                .setNegativeButton("Cancel", (dialog, which) -> { });
     
         // Create the AlertDialog object and return it
         return builder.create();

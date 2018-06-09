@@ -16,9 +16,6 @@ import com.example.mattm.calendar.R;
 
 public class SettingsActivity extends AppCompatActivity implements OnCheckedChangeListener
 {
-    // Constants
-    private final String TAG = "Settings Activity";
-    
     // Private Properties
     private boolean darkTheme;
     
@@ -31,12 +28,9 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // TODO: Add this to all the classes
+
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
-        {
-            //MODE_NIGHT = 2
             setTheme(R.style.AppTheme_Dark);
-        }
         
         setContentView(R.layout.activity_settings);
 
@@ -93,8 +87,7 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
     {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
-
-
+    
     // Private Methods
     private void adjustText(boolean isChecked)
     {
@@ -103,7 +96,5 @@ public class SettingsActivity extends AppCompatActivity implements OnCheckedChan
         (isChecked ? dark : light).setTextColor(getResources().getColor(R.color.colorFontDark));
         (isChecked ? light : dark).setTextColor(getResources().getColor(R.color.colorFontReg));
         dark.setTypeface(null, isChecked ? Typeface.BOLD : Typeface.NORMAL);
-
-        // fileIO.writeToFile(String.valueOf(darkTheme), this, "color_theme");
     }
 }

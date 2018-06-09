@@ -3,7 +3,6 @@ package com.example.mattm.calendar.Views;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
@@ -16,12 +15,6 @@ import com.example.mattm.calendar.R;
 
 public class AuthenticatorActivity extends AppCompatActivity
 {
-    // Constants
-    public final String TAG = "Authenticator";
-    
-    // Private Properties
-    private AWSConnection awsConnection;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,7 +28,7 @@ public class AuthenticatorActivity extends AppCompatActivity
         
         try
         {
-            awsConnection = AWSConnection.getCurrentInstance(this);
+            AWSConnection.getCurrentInstance(this);
         }
         catch (Exception e)
         {
@@ -48,9 +41,6 @@ public class AuthenticatorActivity extends AppCompatActivity
             @Override
             public void onUserSignedIn()
             {
-                // TODO: Remove when done testing
-                Log.d(TAG, "User Signed In");
-                
                 try
                 {
                     AWSConnection.getCurrentInstance(null).updateUserID().execute().get();
@@ -66,11 +56,7 @@ public class AuthenticatorActivity extends AppCompatActivity
             }
 
             @Override
-            public void onUserSignedOut()
-            {
-                // TODO: Do something here like return to login page?
-                Toast.makeText(AuthenticatorActivity.this, "Does this logout?", Toast.LENGTH_LONG).show();
-            }
+            public void onUserSignedOut() { }
         });
         
         showSignIn();
@@ -89,9 +75,6 @@ public class AuthenticatorActivity extends AppCompatActivity
     // Private Method
     private void showSignIn()
     {
-        // TODO: Remove when done testing
-        Log.d("Authenticator", "showSignIn");
-
         SignInUI signin = (SignInUI) AWSMobileClient.getInstance().getClient(AuthenticatorActivity.this, SignInUI.class);
         signin.login(AuthenticatorActivity.this, MainActivity.class).execute();
     }
