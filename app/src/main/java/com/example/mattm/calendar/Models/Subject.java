@@ -21,12 +21,12 @@ public class Subject
     // Constructors
     public Subject()
     {
-        this("", "", "", new ArrayList<String>());
+        this("", "", "", new ArrayList<>());
     }
     
     public Subject(String subject, String teacherName, String period)
     {
-        this(subject, teacherName, period, new ArrayList<String>());
+        this(subject, teacherName, period, new ArrayList<>());
     }
     
     public Subject(String subject, String teacherName, String period, ArrayList<String> enrolledStudents)

@@ -3,7 +3,6 @@ package com.example.mattm.calendar.Views;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -119,14 +117,8 @@ public class MainActivity extends AppCompatActivity
         ListView assignmentsListView = findViewById(R.id.eventsList);
         assignmentsListView.setAdapter(assignmentsAdapter);
 
-        subjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                subjectItem_Clicked(position);
-            }
-        });
+        subjectsListView.setOnItemClickListener((parent, view, position, id) ->
+                subjectItem_Clicked(position));
     
         GetCalendarDay();
         timeFormatter();
@@ -182,20 +174,16 @@ public class MainActivity extends AppCompatActivity
     {
         CalendarView mainCalendarView = findViewById(R.id.calendar);
         
-        mainCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        mainCalendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
         {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
-            {
-                // Converts data to a Date object
-                Calendar cal = Calendar.getInstance();
-                cal.set(year, month, dayOfMonth);
-    
-                // Date object of selected day on calendar
-                Date d = cal.getTime();
-                
-                showAssignments(d);
-            }
+            // Converts data to a Date object
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, dayOfMonth);
+
+            // Date object of selected day on calendar
+            Date d = cal.getTime();
+            
+            showAssignments(d);
         });
         
         // Gets current day
@@ -223,15 +211,9 @@ public class MainActivity extends AppCompatActivity
     private void setUpFloatingActionButton()
     {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
+        fab.setOnClickListener(view ->
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+                .setAction("Action", null).show());
     
         setUpHeader();
     }

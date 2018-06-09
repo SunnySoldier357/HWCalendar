@@ -17,12 +17,12 @@ public class User
     // Constructors
     public User()
     {
-        this("", new ArrayList<String>());
+        this("", new ArrayList<>());
     }
     
     public User(String userId)
     {
-        this(userId, new ArrayList<String>());
+        this(userId, new ArrayList<>());
     }
     
     public User(String userId, ArrayList<String> classes)

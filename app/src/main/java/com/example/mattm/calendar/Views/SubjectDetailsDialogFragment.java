@@ -2,13 +2,10 @@ package com.example.mattm.calendar.Views;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -36,23 +33,15 @@ public class SubjectDetailsDialogFragment extends DialogFragment
         
         builder.setTitle("Details")
                 .setView(view)
-                .setPositiveButton("Add Assignment", new OnClickListener()
+                .setPositiveButton("Add Assignment", (dialog, which) ->
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        Intent intent = new Intent(getActivity(), AddEventActivity.class);
-                        intent.putExtra("ClassName", getArguments().getString("ClassName"));
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                    intent.putExtra("ClassName", getArguments().getString("ClassName"));
+                    startActivity(intent);
                 })
-                .setNegativeButton("Cancel", new OnClickListener()
+                .setNegativeButton("Cancel", (dialog, which) ->
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        // Nothing is needed here
-                    }
+                    // Nothing is needed here
                 });
     
         // Create the AlertDialog object and return it

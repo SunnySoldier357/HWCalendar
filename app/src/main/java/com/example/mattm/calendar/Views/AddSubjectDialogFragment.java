@@ -2,8 +2,6 @@ package com.example.mattm.calendar.Views;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -68,41 +66,29 @@ public class AddSubjectDialogFragment extends DialogFragment
 
         builder.setTitle("Classes")
                 .setView(input)
-                .setAdapter(subjectsAdapter, new OnClickListener()
+                .setAdapter(subjectsAdapter, (dialog, which) ->
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        // Do Something if the class is clicked
-                        awsConnection.addSubject(showSubjects.get(which)).execute();
-                        Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
-                                Toast.LENGTH_LONG).show();
+                    // Do Something if the class is clicked
+                    awsConnection.addSubject(showSubjects.get(which)).execute();
+                    Toast.makeText(getActivity(), String.format("'%s' class selected!", showSubjects.get(which)),
+                            Toast.LENGTH_LONG).show();
 
-                        ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
-                        chooseDialog.show(getActivity().getSupportFragmentManager(), "Dialog2");
-                    }
+                    ChoosePeriodDialogFragment chooseDialog = new ChoosePeriodDialogFragment();
+                    chooseDialog.show(getActivity().getSupportFragmentManager(), "Dialog2");
                 })
-                .setPositiveButton("Create Class", new OnClickListener()
+                .setPositiveButton("Create Class", (dialog, which) ->
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        // TODO: use this to search for classes, recommend using a thread - kenneth
-                        String search = input.getText().toString();
+                    // TODO: use this to search for classes, recommend using a thread - kenneth
+                    String search = input.getText().toString();
 
-                        Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
-                        getActivity().startActivity(intent);
-                    }
+                    Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
+                    getActivity().startActivity(intent);
                 })
-                .setNegativeButton("Cancel", new OnClickListener()
+                .setNegativeButton("Cancel", (dialog, which) ->
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        // Nothing is required here
-                        // TODO: Remove when done testing
-                        Toast.makeText(getActivity(), "Dialog Canceled", Toast.LENGTH_LONG).show();
-                    }
+                    // Nothing is required here
+                    // TODO: Remove when done testing
+                    Toast.makeText(getActivity(), "Dialog Canceled", Toast.LENGTH_LONG).show();
                 });
 
         // Create the AlertDialog object and return it

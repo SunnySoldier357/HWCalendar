@@ -7,8 +7,6 @@ import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
@@ -18,7 +16,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -40,14 +37,9 @@ public class AWSConnection
     {
         this.context = context;
         
-        AWSMobileClient.getInstance().initialize(context, new AWSStartupHandler()
-        {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult)
-            {
-                Log.d(TAG, "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
+        AWSMobileClient.getInstance().initialize(context, awsStartupResult
+                -> Log.d(TAG, "AWSMobileClient is instantiated and you are connected to AWS!"))
+                .execute();
         
         dynamoDBMapper = initializeDynamoDBMapper();
         userId = updateUserID().execute().get();
@@ -186,14 +178,7 @@ public class AWSConnection
                 List<Subject> result =  dynamoDBMapper.scan(Subject.class, new DynamoDBScanExpression());
                 
                 ArrayList<Subject> unsorted = new ArrayList<>(result);
-                Collections.sort(unsorted, new Comparator<Subject>()
-                {
-                    @Override
-                    public int compare(Subject o1, Subject o2)
-                    {
-                        return o1.getSubject().compareTo(o2.getSubject());
-                    }
-                });
+                Collections.sort(unsorted, (o1, o2) -> o1.getSubject().compareTo(o2.getSubject()));
                 
                 return unsorted;
             }
@@ -247,8 +232,8 @@ public class AWSConnection
                 Assignment assignment = new Assignment(
                         user,
                         dueDate,
-                        null != oldAssignment ? oldAssignment.getAssignments() : new ArrayList<String>(),
-                        null != oldAssignment ? oldAssignment.getDescriptions() : new ArrayList<String>()
+                        null != oldAssignment ? oldAssignment.getAssignments() : new ArrayList<>(),
+                        null != oldAssignment ? oldAssignment.getDescriptions() : new ArrayList<>()
                 );
                 assignment.addAssignment(name, "".equals(description) ? " " : description);
                 dynamoDBMapper.save(assignment);

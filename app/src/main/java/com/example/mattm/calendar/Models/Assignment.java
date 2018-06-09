@@ -24,12 +24,12 @@ public class Assignment
     // Constructors
     public Assignment()
     {
-        this("", "", new ArrayList<String>(), new ArrayList<String>());
+        this("", "", new ArrayList<>(), new ArrayList<>());
     }
     
     public Assignment(String userID, String dueDate)
     {
-        this(userID, dueDate, new ArrayList<String>(), new ArrayList<String>());
+        this(userID, dueDate, new ArrayList<>(), new ArrayList<>());
     }
     
     public Assignment(String userID, String dueDate, List<String> assignments, List<String> descriptions)
