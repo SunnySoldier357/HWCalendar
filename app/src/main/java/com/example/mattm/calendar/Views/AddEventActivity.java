@@ -79,10 +79,14 @@ public class AddEventActivity extends AppCompatActivity
     
     // Private Methods
     private void initializeDate() {
-        final Calendar c = Calendar.getInstance();
-        year = String.valueOf(c.YEAR);
-        month = String.valueOf(c.MONTH + 1);
-        day = String.valueOf(c.DAY_OF_MONTH);
+        Calendar cal = Calendar.getInstance();
+        int y = cal.get(Calendar.YEAR);
+        int m = cal.get(Calendar.MONTH) + 1;
+        int d = cal.get(Calendar.DAY_OF_MONTH);
+
+        year = String.valueOf(y);
+        month = String.valueOf(m);
+        day = String.valueOf(d);
     }
 
     private void setUpDatePicker() {
