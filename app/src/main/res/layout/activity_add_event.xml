@@ -41,20 +41,19 @@
               android:text="@string/ae4"
               android:textSize="18sp"/>
 
-    <!-- insert date picker here todo: change to colorFontReg-->
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Sunday,    June 4,    2018"
-        android:textSize="18sp"
-        android:background="@drawable/edittext_style"
-        android:paddingBottom="8dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="48dp"
-        android:paddingTop="8dp" />
+    <!-- Insert date picker here TODO: Change to colorFontReg-->
+    <TextView android:id="@+id/tvDate"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="16dp"
+              android:layout_gravity="center_horizontal"
+              android:text="Sunday,    June 4,    2018"
+              android:textSize="18sp"
+              android:background="@drawable/edittext_style"
+              android:paddingBottom="8dp"
+              android:paddingLeft="48dp"
+              android:paddingRight="48dp"
+              android:paddingTop="8dp"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
