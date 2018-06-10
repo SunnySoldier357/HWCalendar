@@ -8,12 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.example.mattm.calendar.Models.AWSConnection;
 import com.example.mattm.calendar.Models.Subject;
+import com.example.mattm.calendar.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +32,7 @@ public class AddSubjectDialogFragment extends DialogFragment
     
     private AWSConnection awsConnection;
 
-    private EditText input;
+    private EditText searchEditText;
     
     @NonNull
     @Override
@@ -46,10 +48,16 @@ public class AddSubjectDialogFragment extends DialogFragment
             // TODO: UI - Show error message to User in a way they will understand for different error messages
             e.printStackTrace();
         }
-    
+        
         // Using Builder class for convenient dialog construction
-        final Builder builder = new Builder(getActivity());
-        input =  new EditText(builder.getContext());
+        Builder builder = new Builder(getActivity());
+        
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        
+        View view = inflater.inflate(R.layout.fragment_add_subject_dialog, null);
+        
+        searchEditText = view.findViewById(R.id.SearchEditText);
+        searchEditText.setHint("Search Classes");
         
         // Temporary arrayList to show in the dialog
         showSubjects = subjects;
@@ -60,11 +68,9 @@ public class AddSubjectDialogFragment extends DialogFragment
         // TODO(Sandeep): Use the same adapter for both MainActivity and this fragment to save data
         final ArrayAdapter<String> subjectsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, readableSubjects);
-        
-        input.setHint("Search for a class");
 
         builder.setTitle("Classes")
-                .setView(input)
+                .setView(view)
                 .setAdapter(subjectsAdapter, (dialog, which) ->
                 {
                     Bundle bundle = new Bundle();
@@ -82,7 +88,7 @@ public class AddSubjectDialogFragment extends DialogFragment
                 .setPositiveButton("Create Class", (dialog, which) ->
                 {
                     // TODO: use this to search for classes, recommend using a thread - kenneth
-                    String search = input.getText().toString();
+                    String search = searchEditText.getText().toString();
 
                     Intent intent = new Intent(getActivity(), AddSubjectActivity.class);
                     getActivity().startActivity(intent);
@@ -118,9 +124,6 @@ public class AddSubjectDialogFragment extends DialogFragment
         {
             if (!showSubjects.get(i).getSubject().contains(s))
             {
-                // TODO: Remove when done testing
-                Log.d("TEMP", showSubjects.toString());
-                
                 showSubjects.remove(i);
                 i--;
                 size--;
@@ -135,7 +138,7 @@ public class AddSubjectDialogFragment extends DialogFragment
      */
     public void searchTextEntered()
     {
-        input.addTextChangedListener(new TextWatcher()
+        searchEditText.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -146,18 +149,10 @@ public class AddSubjectDialogFragment extends DialogFragment
                 // Goes to the search algorithm
                 searchLoop(s.toString());
 
-                //TODO: Get the algorithm to work so it doesn't just remove items
-                //      but also adds them back as the user deletes characters
-                
-
                 if ("".equals(s.toString()))
                     initList();   // Resets ListView
                 else
                     searchLoop(s.toString());
-                
-                Log.d("TEMP", "\n");
-                Log.d("TEMP", showSubjects.toString() + "showSubjects");
-                Log.d("TEMP", readableSubjects.toString() + "readableSubjects");
             }
 
             @Override
