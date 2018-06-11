@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     
             subjects = awsConnection.getSubjectsAsStrings().execute().get();
             assignments = awsConnection.getAssignmentsAsStrings(subjects).execute().get();
-            readableSubjects = ConvertArrayListToReadable(subjects);
+            viewModel.UserSubjects.setValue(ConvertArrayListToReadable(subjects));
         }
         catch (Exception e)
         {
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Unable to connect to network", Toast.LENGTH_LONG).show();
         }
         
-        subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, readableSubjects);
+        subjectsAdapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, viewModel.UserSubjects.getValue());
         ListView subjectsListView = findViewById(R.id.periodsList);
         subjectsListView.setAdapter(subjectsAdapter);
 
@@ -201,8 +202,12 @@ public class MainActivity extends AppCompatActivity
         final Observer<String> userNameObserver = newUserName ->
             ((TextView) findViewById(R.id.username_header)).setText(newUserName);
         
+        final Observer<ArrayList<String>> userSubjectObserver = newValue ->
+            subjectsAdapter.notifyDataSetChanged();
+    
         // Observing the LiveData
         viewModel.UserName.observe(this, userNameObserver);
+        viewModel.UserSubjects.observe(this, userSubjectObserver);
     }
     
     private void setUpFloatingActionButton()
