@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mattm.calendar.R;
 
@@ -39,7 +40,10 @@ public class SubjectDetailsDialogFragment extends DialogFragment
                     intent.putExtra("ClassName", getArguments().getString("ClassName"));
                     startActivity(intent);
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> { });
+                .setNegativeButton("Unsubscribe", (dialog, which) ->
+                {
+                    // TODO: (Kenneth) Remove this class from User's subjects
+                });
     
         // Create the AlertDialog object and return it
         return builder.create();
